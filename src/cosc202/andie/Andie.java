@@ -7,7 +7,9 @@ import javax.imageio.*;
 /**
  * <p>
  * Main class for A Non-Destructive Image Editor (ANDIE).
+ * hello
  * </p>
+ * Testing
  * 
  * <p>
  * This class is the entry point for the program.
