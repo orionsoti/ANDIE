@@ -33,7 +33,6 @@ public class SharpenFilter implements ImageOperation, java.io.Serializable{
                 
         // Applies the convolution to the input, outputting the result to the output image.
         convOp.filter(input, output);
-
         return output;
     }
     
