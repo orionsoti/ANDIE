@@ -35,6 +35,7 @@ public class FilterActions {
     public FilterActions() {
         actions = new ArrayList<Action>();
         actions.add(new MeanFilterAction("Mean filter", null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SharpenFilterAction("Sharpen filter", null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_V)));
     }
 
     /**
@@ -113,4 +114,59 @@ public class FilterActions {
         }
 
     }
+
+    /**
+     * <p>
+     * Action to sharpen an image with a sharpen filter.
+     * </p>
+     * 
+     * @see SharpenFilter
+     */
+    public class SharpenFilterAction extends ImageAction{
+        /**
+         * <p>
+         * Create a new sharpen-filter action.
+         * <p>
+         * 
+         * @param name The name of the action
+         * @param icon An icon to used to represent the action
+         * @param desc A brief description of the action
+         * @param mnemonic A mnemonic key to use as a shortcut
+         * @param accelerator An accelerator key to use as a shortcut
+         */
+        SharpenFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+        }
+
+        /**
+         * <p>
+         * Callback for when the convert-to-grey action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the SharpenFilterAction is triggered.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e){
+            // Pop-up dialog box to confirm user wishes to apply filter.
+            JLabel text = new JLabel("Apply Sharpen Filter?");
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, "Apply a sharpen filter?",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),
+                    null, null);
+
+            // Check the return value from the dialog box.
+            if (option != JOptionPane.OK_OPTION) {
+                return;
+            }
+            // Create and apply the filter
+            target.getImage().apply(new SharpenFilter());
+            target.repaint();
+            target.getParent().revalidate();
+        }
+
+    }
+
 }
+
