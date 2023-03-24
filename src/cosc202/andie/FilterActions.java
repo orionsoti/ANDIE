@@ -280,6 +280,5 @@ public class FilterActions {
         }
 
     }
-
 }
 

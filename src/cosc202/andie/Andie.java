@@ -73,10 +73,6 @@ public class Andie {
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
 
-        // View actions control how the image is displayed, but do not alter its actual content
-        ViewActions viewActions = new ViewActions();
-        menuBar.add(viewActions.createMenu());
-
         // Filters apply a per-pixel operation to the image, generally based on a local window
         FilterActions filterActions = new FilterActions();
         menuBar.add(filterActions.createMenu());
@@ -84,6 +80,10 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
+
+        // View actions control how the image is displayed, but do not alter its actual content
+        ViewActions viewActions = new ViewActions();
+        viewActions.createMenu(menuBar);
         
         frame.setJMenuBar(menuBar);
         frame.pack();
