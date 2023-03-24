@@ -85,6 +85,9 @@ public class Andie {
         ViewActions viewActions = new ViewActions();
         viewActions.createMenu(menuBar);
         
+        TransformActions transformActions = new TransformActions();
+        menuBar.add(transformActions.createMenu());
+
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
