@@ -80,14 +80,15 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
-
+        
+        // Transform actions
+        TransformActions transformActions = new TransformActions();
+        menuBar.add(transformActions.createMenu());
+        
         // View actions control how the image is displayed, but do not alter its actual content
         ViewActions viewActions = new ViewActions();
         viewActions.createMenu(menuBar);
         
-        TransformActions transformActions = new TransformActions();
-        menuBar.add(transformActions.createMenu());
-
         frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
