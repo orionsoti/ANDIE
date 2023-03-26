@@ -87,10 +87,10 @@ public class Andie {
         // Likewise Edit menus are very common, so should be clear what might go here.
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
-
+        //if there are errors this is the problem - tyler 
         // View actions control how the image is displayed, but do not alter its actual content
-        ViewActions viewActions = new ViewActions();
-        menuBar.add(viewActions.createMenu());
+        // ViewActions viewActions = new ViewActions();
+        // menuBar.add(viewActions.createMenu());
 
         // Filters apply a per-pixel operation to the image, generally based on a local window
         FilterActions filterActions = new FilterActions();
