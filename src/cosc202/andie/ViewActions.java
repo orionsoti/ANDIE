@@ -35,26 +35,43 @@ public class ViewActions {
      */
     public ViewActions() {
         actions = new ArrayList<Action>();
+    
+        
         actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, "Zoom In", Integer.valueOf(KeyEvent.VK_PLUS)));
         actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, "Zoom Out", Integer.valueOf(KeyEvent.VK_MINUS)));
         actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, "Zoom Full", Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ImageRotationAction("Rotate Right", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
+        actions.add(new ImageRotationAction("Rotate Right", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
     }
 
     /**
      * <p>
      * Create a menu containing the list of View actions.
      * </p>
-     * 
-     * @return The view menu UI element.
      */
-    public JMenu createMenu() {
-        JMenu viewMenu = new JMenu(LanguageSettings.getTranslated("view"));
 
-        for (Action action: actions) {
-            viewMenu.add(new JMenuItem(action));
-        }
+    // public JMenu createMenu() {
+    //     JMenu viewMenu = new JMenu(LanguageSettings.getTranslated("view"));
 
-        return viewMenu;
+    public void createMenu(JMenuBar menu) {
+        JButton rotateLeft = new JButton("<");
+        JButton rotateRight = new JButton(">");
+        JButton zoomIn = new JButton("+");
+        JButton zoomOut = new JButton("-");
+        JButton fitScreen = new JButton("[]");
+
+        rotateLeft.addActionListener(actions.get(3));
+        rotateRight.addActionListener(actions.get(4));
+        zoomOut.addActionListener(actions.get(1));
+        zoomIn.addActionListener(actions.get(0));
+        fitScreen.addActionListener(actions.get(2));
+
+
+        menu.add(rotateLeft);
+        menu.add(rotateRight);
+        menu.add(zoomIn);
+        menu.add(zoomOut);
+        menu.add(fitScreen);
     }
 
     /**
@@ -186,12 +203,64 @@ public class ViewActions {
          */
         public void actionPerformed(ActionEvent e) {
             target.setZoom(100);
-            target.revalidate();
+            target.repaint();
             target.getParent().revalidate();
         }
 
     }
 
+    
+    public class ImageRotationAction extends ImageAction {
+        int rotation;
+        /**
+         * <p>
+         * Create a new ImageRotation action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        ImageRotationAction(String name, ImageIcon iconName, String desc, Integer mnemonic, int rotation) {
+            super(name, iconName, desc, mnemonic);
+            this.rotation = rotation;
+        }
 
+        /**
+         * <p>
+         * Callback for when the convert-to-grey action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the GaussianBlurFilterAction is triggered.
+         * It prompts the user for a filter radius, then applys an appropriately sized
+         * {@link GaussianFilter}.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            // Determine the radius - ask the user.
+            // Pop-up dialog box to ask for the radius value.
+            // SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 3, 1);
+            // JSpinner radiusSpinner = new JSpinner(radiusModel);
+            // int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter rotation amount (90 degree increments)",
+            //         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+            //         null, null);
+            // // Returns early if the user cancels the operation.
+            // if (option == JOptionPane.CANCEL_OPTION) {
+            //     return;
+            // }else if(option ==JOptionPane.OK_OPTION){
+            //     radius = radiusModel.getNumber().intValue();
+            // }
+            // Create and apply the filter
+            target.getImage().apply(new ImageRotation(rotation));
+            target.repaint();
+            target.getParent().revalidate();
+        }
 
+    }
+    
+    
 }

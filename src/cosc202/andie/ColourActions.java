@@ -35,6 +35,9 @@ public class ColourActions {
     public ColourActions() {
         actions = new ArrayList<Action>();
         actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+
+        actions.add(new ContrastAdjustAction("Contrast", null, "Adjust the contrast", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAdjustAction("Brightness", null, "Adjust the brightness", Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -93,6 +96,125 @@ public class ColourActions {
             target.getImage().apply(new ConvertToGrey());
             target.repaint();
             target.getParent().revalidate();
+        }
+
+    }
+     /**
+     * <p>
+     * Action to adjust the contrast of an image.
+     * </p>
+     * 
+     * @see ContrastBrightnessAdjust
+     */
+    public class ContrastAdjustAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new contrast adjustment action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        ContrastAdjustAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        
+        /**
+         * <p>
+         * Callback for when the contrast adjustment action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the ContrasrAdjust is triggered.
+         * It changes the image's contrast.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+                        int intensity = 0;
+                        // Pop-up dialog box to ask for the intensity value.
+                        DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
+                        JSlider intensitySlider = new JSlider(intensityModel);
+                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100);
+                        intensitySlider.setLabelTable(sliderLabels);;
+                        intensitySlider.setPaintLabels(true);
+                        ImageIcon contrastIcon = new ImageIcon("src/contrast.png", "contrast icon");
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Contrast Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
+            
+                        // Check the return value from the dialog box.
+                        if (option == JOptionPane.CANCEL_OPTION) {
+                            return;
+                        } else if (option == JOptionPane.OK_OPTION) {
+                            intensity = intensityModel.getValue();
+                        }
+            
+                        // Create and apply the filter
+                        target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    
+        }
+
+    }
+    public class BrightnessAdjustAction extends ImageAction {
+
+        /**
+         * <p>
+         * Create a new brightness adjustment action.
+         * </p>
+         * 
+         * @param name The name of the action (ignored if null).
+         * @param icon An icon to use to represent the action (ignored if null).
+         * @param desc A brief description of the action  (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+         */
+        BrightnessAdjustAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+        }
+
+        
+        /**
+         * <p>
+         * Callback for when the brightness adjustment action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the brightness adjustment is triggered.
+         * It changes the image's brightness.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+                        // Determine the radius - ask the user.
+                        int brightness = 0;
+
+                        // Pop-up dialog box to ask for the intensity value.
+                        DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
+                        JSlider intensitySlider = new JSlider(intensityModel);
+                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100);
+                        intensitySlider.setLabelTable(sliderLabels);;
+                        intensitySlider.setPaintLabels(true);
+                        ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Brightness Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
+            
+                        // Check the return value from the dialog box.
+                        if (option == JOptionPane.CANCEL_OPTION) {
+                            return;
+                        } else if (option == JOptionPane.OK_OPTION) {
+                            brightness = intensityModel.getValue();
+                        }
+            
+                        // Create and apply the filter
+                        target.getImage().apply(new ContrastBrightnessAdjust(0,brightness));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    
         }
 
     }

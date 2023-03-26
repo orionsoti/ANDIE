@@ -1,91 +1,39 @@
 package cosc202.andie;
 
 import java.awt.image.*;
-import java.util.*;
 
-/**
- * <p>
- * ImageOperation to apply a Mean (simple blur) filter.
- * </p>
- * 
- * <p>
- * A Mean filter blurs an image by replacing each pixel by the average of the
- * pixels in a surrounding neighbourhood, and can be implemented by a convoloution.
- * </p>
- * 
- * <p> 
- * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
- * </p>
- * 
- * @see java.awt.image.ConvolveOp
- * @author Steven Mills
- * @version 1.0
- */
-public class SharpenFilter implements ImageOperation, java.io.Serializable {
-    
+public class SharpenFilter implements ImageOperation, java.io.Serializable{
     /**
-     * The size of filter to apply. A radius of 1 is a 3x3 filter, a radius of 2 a 5x5 filter, and so forth.
+     * <p>
+     * Constructor for sharpen filter
+     * <p>
      */
-    private int radius;
+    SharpenFilter(){}
 
     /**
      * <p>
-     * Construct a Mean filter with the given size.
+     * Apply a sharpen filter to an image.
      * </p>
      * 
-     * <p>
-     * The size of the filter is the 'radius' of the convolution kernel used.
-     * A size of 1 is a 3x3 filter, 2 is 5x5, and so on.
-     * Larger filters give a stronger blurring effect.
-     * </p>
-     * 
-     * @param radius The radius of the newly constructed MeanFilter
-     */
-    SharpenFilter(int radius) {
-        this.radius = radius;    
-    }
-
-    /**
-     * <p>
-     * Construct a Mean filter with the default size.
-     * </p
-     * >
-     * <p>
-     * By default, a Mean filter has radius 1.
-     * </p>
-     * 
-     * @see MeanFilter(int)
-     */
-    SharpenFilter() {
-        this(1);
-    }
-
-    /**
-     * <p>
-     * Apply a Mean filter to an image.
-     * </p>
-     * 
-     * <p>
-     * As with many filters, the Mean filter is implemented via convolution.
-     * The size of the convolution kernel is specified by the {@link radius}.  
-     * Larger radii lead to stronger blurring.
-     * </p>
-     * 
-     * @param input The image to apply the Mean filter to.
-     * @return The resulting (blurred)) image.
+     * @param input The image to be sharpened.
+     * @return The sharpened image as output.
      */
     public BufferedImage apply(BufferedImage input) {
-        int size = (2*radius+1) * (2*radius+1);
-        float [] array = new float[size];
-        Arrays.fill(array, 1.0f/size);
-
-        Kernel kernel = new Kernel(2*radius+1, 2*radius+1, array);
+        float [] array = new float[]{
+            0.0f, -0.5f, 0.0f,
+            -0.5f, 3.0f, -0.5f,
+            0.0f, -0.5f, 0.0f
+        };
+        //Create the ConvolveOp object with the kernel
+        Kernel kernel = new Kernel(3, 3, array);
         ConvolveOp convOp = new ConvolveOp(kernel);
-        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null), input.isAlphaPremultiplied(), null);
-        convOp.filter(input, output);
 
+        // Creates a copy of the buffered image
+        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null), input.isAlphaPremultiplied(), null);
+                
+        // Applies the convolution to the input, outputting the result to the output image.
+        convOp.filter(input, output);
         return output;
     }
-
-
+    
 }
