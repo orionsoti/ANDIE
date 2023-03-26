@@ -34,7 +34,7 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction("Greyscale", null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -45,7 +45,7 @@ public class ColourActions {
      * @return The colour menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Colour");
+        JMenu fileMenu = new JMenu(LanguageSettings.getTranslated("colour"));
 
         for(Action action: actions) {
             fileMenu.add(new JMenuItem(action));

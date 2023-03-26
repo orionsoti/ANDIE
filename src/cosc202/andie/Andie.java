@@ -1,6 +1,9 @@
 package cosc202.andie;
 
 import java.awt.*;
+
+
+
 import javax.swing.*;
 import javax.imageio.*;
 
@@ -48,6 +51,9 @@ public class Andie {
      * 
      * @throws Exception if something goes wrong.
      */
+
+    public static JFrame menuBar1;
+
     private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame
         JFrame frame = new JFrame("ANDIE");
@@ -61,8 +67,17 @@ public class Andie {
         ImageAction.setTarget(imagePanel);
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
-        
+        menuBar1 = frame;
         // Add in menus for various types of action the user may perform.
+        createMenuBar();
+        
+        // frame.setJMenuBar(menuBar);
+        // frame.pack();
+        // frame.setVisible(true);
+    }
+    
+    public static void createMenuBar(){
+        menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
 
         // File menus are pretty standard, so things that usually go in File menus go here.
@@ -84,10 +99,9 @@ public class Andie {
         // Actions that affect the representation of colour in the image
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
-        
-        frame.setJMenuBar(menuBar);
-        frame.pack();
-        frame.setVisible(true);
+        menuBar1.setJMenuBar(menuBar);
+        menuBar1.pack();
+        menuBar1.setVisible(true);
     }
 
     /**
@@ -104,6 +118,26 @@ public class Andie {
      * @see #createAndShowGUI()
      */
     public static void main(String[] args) throws Exception {
+
+        // ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.MessageBundle");           
+        // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
+
+        new LanguageSettings();//prefs, bundle);
+
+
+
+
+
+        // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
+
+        // Locale.setDefault(new Locale(prefs.get("language", "en"), 
+        //         prefs.get("country", "NZ")));
+    
+        //ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.MessageBundle");       
+        
+        // prefs.put("language", "mi");
+        // prefs.put("country", "NZ");
+
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {

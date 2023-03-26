@@ -1,5 +1,4 @@
 package cosc202.andie;
-
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -27,17 +26,65 @@ public class FileActions {
     /** A list of actions for the File menu. */
     protected ArrayList<Action> actions;
 
-    /**
-     * <p>
-     * Create a set of File menu actions.
-     * </p>
-     */
     public FileActions() {
         actions = new ArrayList<Action>();
-        actions.add(new FileOpenAction("Open", null, "Open a file", Integer.valueOf(KeyEvent.VK_O)));
-        actions.add(new FileSaveAction("Save", null, "Save the file", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new FileSaveAsAction("Save As", null, "Save a copy", Integer.valueOf(KeyEvent.VK_A)));
-        actions.add(new FileExitAction("Exit", null, "Exit the program", Integer.valueOf(0)));
+        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, "Open a file", Integer.valueOf(KeyEvent.VK_O)));
+        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), null, "Save the file", Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), null, "Save a copy", Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), null, "Choose your Langauge", Integer.valueOf(0)));
+        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), null, "Exit the program", Integer.valueOf(0)));
+        
+    }
+    /**
+     * <p>
+     * Action to change the ANDIE applications language.
+     * </p>
+     */
+
+    public class FileLanguage extends AbstractAction {
+
+        FileLanguage(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon);
+            putValue(SHORT_DESCRIPTION, desc);
+            putValue(MNEMONIC_KEY, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            /**
+             * <p>
+             * Action to open popup for language selection with a combo box displaying all options.
+             * </p>
+             */
+            
+            JFrame f = new JFrame("frame");
+            f.setSize(200,200);
+            String s1[] = {"English", "Spanish","Maori", "Pirate"};
+            JComboBox<String> c1 = new JComboBox<>(s1);
+            JButton b12 = new JButton("ok");
+            JPanel p = new JPanel();
+            p.setSize(200,200);
+            p.add(c1);
+            p.add(b12);
+            /**
+             * <p>
+             * Action when the ok button is pressed it calls a method todo multiple things:
+             * Calls the changelang method which updates prefrences and reloads appropriate bundle
+             * recalls the createMenuBar method with the now updated language
+             * brings the language box back to the front of the screen for user to change back or exit
+             * </p>
+             */
+            b12.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    String selc = c1.getSelectedItem().toString();
+                    LanguageSettings.changeLang(selc);
+                    Andie.createMenuBar();
+                    f.toFront();
+                }
+            });
+            f.add(p);
+            f.setSize(400,300);
+            f.setVisible(true);
+        }
     }
 
     /**
@@ -48,7 +95,7 @@ public class FileActions {
      * @return The File menu UI element.
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu(LanguageSettings.getTranslated("file"));
 
         for(Action action: actions) {
             fileMenu.add(new JMenuItem(action));
@@ -110,6 +157,7 @@ public class FileActions {
         }
 
     }
+
 
     /**
      * <p>
