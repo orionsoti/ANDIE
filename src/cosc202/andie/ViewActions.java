@@ -66,7 +66,6 @@ public class ViewActions {
         zoomIn.addActionListener(actions.get(0));
         fitScreen.addActionListener(actions.get(2));
 
-
         menu.add(rotateLeft);
         menu.add(rotateRight);
         menu.add(zoomIn);
@@ -229,35 +228,26 @@ public class ViewActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
+         * Callback for when the rotation action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the GaussianBlurFilterAction is triggered.
-         * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link GaussianFilter}.
+         * This method is called whenever the imageRotationAction is triggered.
+         * Whether the image rotates right or left is dependant on the input from
+         * the button the user clicks.
+         * {@link ImageRotation}.
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            // Determine the radius - ask the user.
-            // Pop-up dialog box to ask for the radius value.
-            // SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 3, 1);
-            // JSpinner radiusSpinner = new JSpinner(radiusModel);
-            // int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter rotation amount (90 degree increments)",
-            //         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-            //         null, null);
-            // // Returns early if the user cancels the operation.
-            // if (option == JOptionPane.CANCEL_OPTION) {
-            //     return;
-            // }else if(option ==JOptionPane.OK_OPTION){
-            //     radius = radiusModel.getNumber().intValue();
-            // }
-            // Create and apply the filter
-            target.getImage().apply(new ImageRotation(rotation));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new ImageRotation(rotation));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }

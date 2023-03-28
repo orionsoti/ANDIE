@@ -93,9 +93,13 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().apply(new ConvertToGrey());
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new ConvertToGrey());
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }
@@ -154,9 +158,13 @@ public class ColourActions {
                         }
             
                         // Create and apply the filter
-                        target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
-                        target.repaint();
-                        target.getParent().revalidate();
+                        try{
+                            target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
+                            target.repaint();
+                            target.getParent().revalidate();
+                        }catch(NullPointerException exception){
+                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                        }
                     
         }
 
@@ -211,9 +219,13 @@ public class ColourActions {
                         }
             
                         // Create and apply the filter
-                        target.getImage().apply(new ContrastBrightnessAdjust(0,brightness));
-                        target.repaint();
-                        target.getParent().revalidate();
+                        try{
+                            target.getImage().apply(new ContrastBrightnessAdjust(0,brightness));
+                            target.repaint();
+                            target.getParent().revalidate();
+                        }catch(NullPointerException exception){
+                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                        }
                     
         }
 
