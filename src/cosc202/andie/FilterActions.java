@@ -35,7 +35,7 @@ public class FilterActions {
     public FilterActions() {
         actions = new ArrayList<Action>();
         actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_N)));
         actions.add(new GaussianBlurFilterAction("Gaussian Blur", null, "Apply a guassian filter", Integer.valueOf(KeyEvent.VK_U)));
         actions.add(new MedianFilterAction("Median filter", null, "Apply a median filter", Integer.valueOf(KeyEvent.VK_N)));
     }
