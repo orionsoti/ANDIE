@@ -4,6 +4,7 @@ import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
+import javax.swing.JOptionPane;
 
 /**
  * <p>
@@ -212,7 +213,33 @@ class EditableImage {
         this.opsFilename = imageFilename + ".ops";
         save();
     }
-
+    
+     /** Export the image to a specified file 
+     * 
+     *<p> Saves a copy of the image with the operations that have been applied. 
+     */ 
+    public void exportImage(String imageFilename) throws Exception{
+       
+            this.imageFilename = imageFilename;
+            String filenameLowercase = imageFilename.toLowerCase(); // for checking that the user has added an extension
+           
+            String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase(); 
+           
+            if(extension.equals(filenameLowercase)){
+                extension = "png"; //default filetype to png may change later (something for exception handling?)
+                this.imageFilename = imageFilename + "." + extension;
+            } 
+             
+            try{
+            BufferedImage currentImage = getCurrentImage();
+            ImageIO.write(currentImage, extension, new File(this.imageFilename)); 
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
+    
+        
+    }
+        
     /**
      * <p>
      * Apply an {@link ImageOperation} to this image.
