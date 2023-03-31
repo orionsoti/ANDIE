@@ -35,7 +35,7 @@ public class FilterActions {
     public FilterActions() {
         actions = new ArrayList<Action>();
         actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_N)));
         actions.add(new GaussianBlurFilterAction("Gaussian Blur", null, "Apply a guassian filter", Integer.valueOf(KeyEvent.VK_U)));
         actions.add(new MedianFilterAction("Median filter", null, "Apply a median filter", Integer.valueOf(KeyEvent.VK_N)));
     }
@@ -110,9 +110,13 @@ public class FilterActions {
             }
 
             // Create and apply the filter
-            target.getImage().apply(new MeanFilter(radius));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new MeanFilter(radius));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }
@@ -170,9 +174,13 @@ public class FilterActions {
             }
 
             // Create and apply the filter
-            target.getImage().apply(new MedianFilter(radius));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new MedianFilter(radius));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }
@@ -223,9 +231,13 @@ public class FilterActions {
                 return;
             }
             // Create and apply the filter
-            target.getImage().apply(new SharpenFilter());
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new SharpenFilter());
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }
@@ -274,9 +286,13 @@ public class FilterActions {
                 radius = radiusModel.getNumber().intValue();
             }
             // Create and apply the filter
-            target.getImage().apply(new GaussianBlurFilter(radius));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new GaussianBlurFilter(radius));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
 
     }

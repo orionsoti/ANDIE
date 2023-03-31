@@ -51,9 +51,13 @@ public class TransformActions {
 
         public void actionPerformed(ActionEvent e){
             // Create and apply the filter
-            target.getImage().apply(new Flip(direction));
-            target.repaint();
-            target.getParent().revalidate();
+            try{
+                target.getImage().apply(new Flip(direction));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
         }
     }
 
@@ -67,38 +71,42 @@ public class TransformActions {
         }
 
         public void actionPerformed(ActionEvent e){
-            height = target.getImage().getCurrentImage().getHeight();
-            width = target.getImage().getCurrentImage().getWidth();
-            scale = 1.0;
+            try{
+                height = target.getImage().getCurrentImage().getHeight();
+                width = target.getImage().getCurrentImage().getWidth();
+                scale = 1.0;
 
-            SpinnerNumberModel heightSpinner = new SpinnerNumberModel(height, 0, 10000, 1);
-            SpinnerNumberModel widthSpinner = new SpinnerNumberModel(width, 0, 10000, 1);
-            SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale, 0.0, 100.0, 0.1);
+                SpinnerNumberModel heightSpinner = new SpinnerNumberModel(height, 0, 10000, 1);
+                SpinnerNumberModel widthSpinner = new SpinnerNumberModel(width, 0, 10000, 1);
+                SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale, 0.0, 100.0, 0.1);
 
-            JSpinner h = new JSpinner(heightSpinner);
-            JSpinner w = new JSpinner(widthSpinner);
-            JSpinner s = new JSpinner(scaleSpinner);
+                JSpinner h = new JSpinner(heightSpinner);
+                JSpinner w = new JSpinner(widthSpinner);
+                JSpinner s = new JSpinner(scaleSpinner);
 
-            JPanel myPanel = new JPanel();
-            myPanel.add(new JLabel("Height:"));
-            myPanel.add(h);
-            myPanel.add(Box.createHorizontalStrut(15));
-            myPanel.add(new JLabel("Width:"));
-            myPanel.add(w);
-            myPanel.add(Box.createHorizontalStrut(15));
-            myPanel.add(new JLabel("Scale:"));
-            myPanel.add(s);
+                JPanel myPanel = new JPanel();
+                myPanel.add(new JLabel("Height:"));
+                myPanel.add(h);
+                myPanel.add(Box.createHorizontalStrut(15));
+                myPanel.add(new JLabel("Width:"));
+                myPanel.add(w);
+                myPanel.add(Box.createHorizontalStrut(15));
+                myPanel.add(new JLabel("Scale:"));
+                myPanel.add(s);
 
-            int result = JOptionPane.showConfirmDialog(null, myPanel, 
-                       "Resize", JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION) {
-                updateValues((int) h.getValue(), (int) w.getValue(), (double) s.getValue());
-            
-                target.getImage().apply(new Resize(height, width, scale));
-                target.repaint();
-                target.getParent().revalidate();
+                int result = JOptionPane.showConfirmDialog(null, myPanel, 
+                        "Resize", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION) {
+                    updateValues((int) h.getValue(), (int) w.getValue(), (double) s.getValue());
+                
+                    target.getImage().apply(new Resize(height, width, scale));
+                    target.repaint();
+                    target.getParent().revalidate();
+                    
+                }
+            } catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
             }
-
         }
         
         public void updateValues(int outputHeight, int outputWidth, double outputScale) {
