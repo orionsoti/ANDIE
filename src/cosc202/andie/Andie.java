@@ -122,7 +122,7 @@ public class Andie {
         // ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.MessageBundle");           
         // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
-        new LanguageSettings();//prefs, bundle);
+        LanguageSettings settings = new LanguageSettings();//prefs, bundle);
 
 
 
