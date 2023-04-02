@@ -12,6 +12,10 @@ import javax.swing.*;
  * The Transform menu contains actions such as resize, rotate, and flip that affect the contents of the image.
  * <p>
  * 
+ * @author Orion Soti & Jacob Myron
+ * @version 1.0
+ * 2 April 2023
+ * 
  */
 public class TransformActions {
     /**
@@ -19,11 +23,20 @@ public class TransformActions {
     */
     protected ArrayList<Action> actions;
 
+    /**
+     * <p>
+     * Create a set of Transform menu actions.
+     * </p>
+     * 
+     */
     public TransformActions(){
         actions = new ArrayList<Action>();
+        actions.add(new ResizeAction("Resize", null, "Resize image", null));
+        actions.add(new ImageRotationAction("Rotate Left", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
+        actions.add(new ImageRotationAction("Rotate Right", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
         actions.add(new FlipAction("Flip Vertical", null, "Flip image vertically", null, Flip.FLIP_VERTICAL));
         actions.add(new FlipAction("Flip Horizontal", null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
-        actions.add(new ResizeAction("Resize", null, "Resize image", null));
+        
         
     }
     /*
@@ -37,6 +50,11 @@ public class TransformActions {
         return transformMenu;
     }
 
+    /**
+     * <p>
+     * Action to flip an image.
+     * </p>
+     */
     public class FlipAction extends ImageAction{
         private int direction;
 
@@ -61,6 +79,12 @@ public class TransformActions {
         }
     }
 
+    /**
+     * <p>
+     * Action to resize an image.
+     * </p>
+     * 
+     */
     public class ResizeAction extends ImageAction{
         public int height;
         public int width;
@@ -69,60 +93,107 @@ public class TransformActions {
         ResizeAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
         }
-
+        
+        /**
+         * <p>
+         * Callback for when the resize action is performed.
+         * </p>
+         * 
+         * @param e The event that triggered the action.
+         */
         public void actionPerformed(ActionEvent e){
             try{
                 height = target.getImage().getCurrentImage().getHeight();
                 width = target.getImage().getCurrentImage().getWidth();
                 scale = 1.0;
 
-                SpinnerNumberModel heightSpinner = new SpinnerNumberModel(height, 0, 10000, 1);
-                SpinnerNumberModel widthSpinner = new SpinnerNumberModel(width, 0, 10000, 1);
-                SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale, 0.0, 100.0, 0.1);
-
-                JSpinner h = new JSpinner(heightSpinner);
-                JSpinner w = new JSpinner(widthSpinner);
+                // Create a dialog to get the scale factor from the user
+                SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale * 100, 0.0, 1000.0, 1);
                 JSpinner s = new JSpinner(scaleSpinner);
-
                 JPanel myPanel = new JPanel();
-                myPanel.add(new JLabel("Height:"));
-                myPanel.add(h);
-                myPanel.add(Box.createHorizontalStrut(15));
-                myPanel.add(new JLabel("Width:"));
-                myPanel.add(w);
-                myPanel.add(Box.createHorizontalStrut(15));
-                myPanel.add(new JLabel("Scale:"));
+                ImageIcon resizeIcon = new ImageIcon("src/resize.png");
+                myPanel.add(new JLabel("Scale (%)"));
                 myPanel.add(s);
-
-                int result = JOptionPane.showConfirmDialog(null, myPanel, 
-                        "Resize", JOptionPane.OK_CANCEL_OPTION);
-                if (result == JOptionPane.OK_OPTION) {
-                    updateValues((int) h.getValue(), (int) w.getValue(), (double) s.getValue());
-                
-                    target.getImage().apply(new Resize(height, width, scale));
-                    target.repaint();
-                    target.getParent().revalidate();
-                    
+                int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, "Resize", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, null, null);
+                if (option == JOptionPane.OK_OPTION) {
+                    updateScale(scaleSpinner.getNumber().doubleValue()/100, width, height);
+                }else if (option == JOptionPane.CANCEL_OPTION){
+                    return;
                 }
+
+                target.getImage().apply(new Resize(height, width, scale));
+                target.repaint();
+                target.getParent().revalidate();
+                
             } catch(NullPointerException exception){
                 JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
             }
         }
         
-        public void updateValues(int outputHeight, int outputWidth, double outputScale) {
-            if (outputHeight != height) {
-                scale = ((double) outputHeight) / ((double)height);
-                width = (int) (scale * width);
-                height = outputHeight;
-            } else if (outputWidth != width) {
-                scale = ((double) outputWidth) / ((double) width);
-                height = (int) (scale * height);
-                width = outputWidth;
-            } else if (outputScale != scale) {
+        /**
+         * Updates the values of the height, width, and scale based on the user input.
+         * 
+         * @param outputScale The scale of the output image.
+         */
+        public void updateScale(double outputScale, int outputWidth, int outputHeight) {
+            if (outputScale != scale) {
                 scale = outputScale;
                 width = (int) (scale * width);
                 height = (int) (scale * height);
             }
         }
     }
+
+    /**
+     * <p>
+     * Action to rotate an image.
+     * </p>
+     * 
+     */
+    public class ImageRotationAction extends ImageAction {
+        int rotation;
+        /**
+         * <p>
+         * Create a new ImageRotation action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        ImageRotationAction(String name, ImageIcon iconName, String desc, Integer mnemonic, int rotation) {
+            super(name, iconName, desc, mnemonic);
+            this.rotation = rotation;
+        }
+
+        /**
+         * <p>
+         * Callback for when the rotation action is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the imageRotationAction is triggered.
+         * Whether the image rotates right or left is dependant on the input from
+         * the button the user clicks.
+         * {@link ImageRotation}.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            try{
+                target.getImage().apply(new ImageRotation(rotation));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+            }
+        }
+
+    }
+
+
+
+
 }
