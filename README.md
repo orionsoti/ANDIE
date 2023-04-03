@@ -37,13 +37,13 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Jacob Myron
 >
-> *Accessed via:* 
+> *Accessed via:* Filter Menu
 >
-> *Testing:* 
+> *Testing:* Tested applying multiple instances of the Median filter as well as testing it alongside other filters and actions
 >
-> *Description:* 
+> *Description:* Replaces each pixel with the median value of pixels in a surrounding area
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Brightness & Contrast Adjustment**
@@ -89,11 +89,11 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Jacob Myron
 > 
-> *Accessed via:* 
+> *Accessed via:* Transform menu
 >
-> *Testing:* 
+> *Testing:* Tested rotating the image both before and after applying other filters, orientation remains the same after export and saving.
 >
-> *Description:* 
+> *Description:* Rotates the image in 90 degree increments to the left or right
 >
 > *Errors:*
 ---

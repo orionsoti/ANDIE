@@ -12,7 +12,7 @@ import javax.swing.*;
  * <p>
  * The Filter menu contains actions that update each pixel in an image based on
  * some small local neighbourhood. 
- * This includes a mean filter (a simple blur) in the sample code, but more operations will need to be added.
+ * This includes a mean filter, median filter, sharpen filter and gaussian blur filter.
  * </p>
  * 
  * <p> 
@@ -82,7 +82,7 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
+         * Callback for when the meanFilterAction is triggered.
          * </p>
          * 
          * <p>
@@ -91,6 +91,7 @@ public class FilterActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
 
@@ -126,7 +127,7 @@ public class FilterActions {
      * Action to blur an image with a mean filter.
      * </p>
      * 
-     * @see MeanFilter
+     * @see MedianFilter
      */
     public class MedianFilterAction extends ImageAction {
 
@@ -146,7 +147,7 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
+         * Callback for when the medianFilterAction is triggered.
          * </p>
          * 
          * <p>
@@ -155,6 +156,7 @@ public class FilterActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
 
@@ -162,7 +164,7 @@ public class FilterActions {
             int radius = 1;
 
             // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
+            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 5, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
             int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
@@ -210,7 +212,7 @@ public class FilterActions {
 
         /**
          * <p>
-         * Callback for when the convert-to-grey action is triggered.
+         * Callback for when the sharpenFilterAction is triggered.
          * </p>
          * 
          * <p>
@@ -218,6 +220,7 @@ public class FilterActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e){
             // Pop-up dialog box to confirm user wishes to apply filter.
@@ -269,6 +272,7 @@ public class FilterActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
             // Determine the radius - ask the user.

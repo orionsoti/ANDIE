@@ -3,13 +3,35 @@ package cosc202.andie;
 import java.awt.image.*;
 // import java.util.*;
 
+/**
+ * <p>
+ * Rotates the image 90 degrees to the left or right.
+ * </p>
+ * 
+ * @author Jacob Myron
+ * @version 1.0
+ * 3 April 2023
+ */
 public class ImageRotation implements ImageOperation, java.io.Serializable{
     int rotation;
 
+    /**
+     * <p>
+     * Creates a new ImageRotation operation
+     * </p>
+     * @param rotation determines whether the image rotates left or right
+     */
     ImageRotation(int rotation){
         this.rotation = rotation;
     }
 
+    /**
+     * <p>
+     * Rotates the BufferedImage input left or right based on rotation
+     * </p>
+     * @param input The image to be rotated
+     * @return New rotated image
+     */
     public BufferedImage apply(BufferedImage input){
         BufferedImage output;
 

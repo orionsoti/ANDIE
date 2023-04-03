@@ -96,7 +96,7 @@ public class EditActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(EmptyStackException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noOperation"));
             }
         }
     }
@@ -144,7 +144,7 @@ public class EditActions {
                 target.getParent().revalidate();
 
             }catch(EmptyStackException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noOperation"));
             }
         }
     }

@@ -3,7 +3,7 @@ package cosc202.andie;
 import java.awt.*;
 import java.awt.image.*;
 
-/* 
+/**
  * <p>
  * Resize the image to a new width and height.
  * </p>

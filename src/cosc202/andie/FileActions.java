@@ -273,6 +273,11 @@ public class FileActions {
         }
 
     }
+    
+    /**
+     * Exports the Image to specified file
+     * @see EditableImage#exportImage(String)
+     */
     public class FileExportAction extends ImageAction {
 
         /**

@@ -54,6 +54,8 @@ public class TransformActions {
      * <p>
      * Action to flip an image.
      * </p>
+     * 
+     * @throws NullPointerException If there is no image loaded
      */
     public class FlipAction extends ImageAction{
         private int direction;
@@ -100,6 +102,7 @@ public class TransformActions {
          * </p>
          * 
          * @param e The event that triggered the action.
+         * @throws NullPointerException If there is no image loaded
          */
         public void actionPerformed(ActionEvent e){
             try{
@@ -148,7 +151,6 @@ public class TransformActions {
      * <p>
      * Action to rotate an image.
      * </p>
-     * 
      */
     public class ImageRotationAction extends ImageAction {
         int rotation;
@@ -180,6 +182,7 @@ public class TransformActions {
          * </p>
          * 
          * @param e The event triggering this callback.
+         * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
             try{

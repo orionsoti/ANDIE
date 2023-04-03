@@ -4,26 +4,35 @@ import java.awt.image.*;
 
 /**
  * <p>
- * ImageOperation to adsjust the contrast on an image.
+ * ImageOperation to adjust the brightness and contrast on an image.
  * </p>
-
+ * 
+ * @author Josiah Astwood Liam Hayward
+ * @version 1.0
  */
 public class ContrastBrightnessAdjust implements ImageOperation, java.io.Serializable {
 
     private int contrast;
     private int brightness;
+
     /**
      * <p>
-     * Create a new ContrastAdjust operation.
+     * Create a new ContrastBrightnessAdjust operation.
      * </p>
      */
     ContrastBrightnessAdjust(){
         contrast = 0;
         brightness = 0;
     }
+
+    /**
+     * Create a new ContrastBrightnessAdjust operation
+     * @param contrast The contrast value
+     * @param brightness The brightness value
+     */
     ContrastBrightnessAdjust(int contrast, int brightness) {
-                    this.contrast = contrast;
-                    this.brightness = brightness;
+        this.contrast = contrast;
+        this.brightness = brightness;
     }
     
     

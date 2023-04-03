@@ -40,11 +40,12 @@ public class LanguageSettings{
      * Method that is called when the language Combobox for FileActions.java is called:
      * When called will check which language has been selected then update prefrences and reload the new langBundle Resourse Bundle
      * </p>
+     * 
+     * @param s The language being switched to.
      */
     public static void changeLang(String s){
            
         if(s == "English"){
-           
             prefs.put("language", "en");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
@@ -74,9 +75,10 @@ public class LanguageSettings{
             langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
 
         }else{
-            System.out.println(s);
-            System.out.println("Somethings wrong here, ask tyler");
-
+            prefs.put("language", "en");
+            prefs.put("country", "NZ");
+            Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
         }       
 
     }
@@ -85,6 +87,9 @@ public class LanguageSettings{
      * <p>
      * method takes in a string input and returns a string from the current langBundle loaded
      * </p>
+     * 
+     * @param s the language to be translated to.
+     * @return The translated statement.
      */
     public static String getTranslated(String s){
         return langBundle.getString(s);

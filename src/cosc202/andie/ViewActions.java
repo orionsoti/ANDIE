@@ -45,13 +45,10 @@ public class ViewActions {
 
     /**
      * <p>
-     * Create a menu containing the list of View actions.
+     * Creates menu elements and adds them to menu
      * </p>
+     * @param menu The menu the elements will be added to
      */
-
-    // public JMenu createMenu() {
-    //     JMenu viewMenu = new JMenu(LanguageSettings.getTranslated("view"));
-
     public void createMenu(JMenuBar menu) {
         JButton zoomIn = new JButton("+");
         JButton zoomOut = new JButton("-");

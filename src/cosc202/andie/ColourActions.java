@@ -129,11 +129,11 @@ public class ColourActions {
         
         /**
          * <p>
-         * Callback for when the contrast adjustment action is triggered.
+         * Callback for when the contrastAdjustAction is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the ContrasrAdjust is triggered.
+         * This method is called whenever the ContrastAdjustAction is triggered.
          * It changes the image's contrast.
          * </p>
          * 
@@ -188,11 +188,11 @@ public class ColourActions {
         
         /**
          * <p>
-         * Callback for when the brightness adjustment action is triggered.
+         * Callback for when the brightnessAdjustAction action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the brightness adjustment is triggered.
+         * This method is called whenever the brightnessAdjustAction is triggered.
          * It changes the image's brightness.
          * </p>
          * 
