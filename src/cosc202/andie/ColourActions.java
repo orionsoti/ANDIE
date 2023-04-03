@@ -206,7 +206,7 @@ public class ColourActions {
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
                         Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100);
-                        intensitySlider.setLabelTable(sliderLabels);;
+                        intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, "Brightness Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
