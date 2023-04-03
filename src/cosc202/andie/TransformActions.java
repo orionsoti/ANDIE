@@ -35,7 +35,7 @@ public class TransformActions {
         actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
         actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, "Flip image vertically", null, Flip.FLIP_VERTICAL));
-        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
         
         
     }

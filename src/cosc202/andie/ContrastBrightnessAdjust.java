@@ -1,4 +1,4 @@
-package cosc202.andie;
+package cosc202.andie; //package for the andie project
 
 import java.awt.image.*;
 
@@ -20,16 +20,12 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
      * Create a new ContrastBrightnessAdjust operation.
      * </p>
      */
+
+     //default constructor
     ContrastBrightnessAdjust(){
         contrast = 0;
         brightness = 0;
     }
-
-    /**
-     * Create a new ContrastBrightnessAdjust operation
-     * @param contrast The contrast value
-     * @param brightness The brightness value
-     */
     ContrastBrightnessAdjust(int contrast, int brightness) {
         this.contrast = contrast;
         this.brightness = brightness;
@@ -52,11 +48,13 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
      * @param input The image to have it's constrast adjusted.
      * @return The resulting image.
      */
+
     public BufferedImage apply(BufferedImage input) {
         
         double contrast2 = (double)contrast;
         double brightness2 = (double)brightness;
            
+        //For loop to go through each pixel
         for (int y = 0; y < input.getHeight(); ++y) {
             for (int x = 0; x < input.getWidth(); ++x) {
                 
@@ -71,7 +69,8 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
                 int r2 = (int)((1 + contrast2/100)*(r - 127.5)+127.5*(1+ brightness2/100));
                 int g2 = (int)((1 + contrast2/100)*(g - 127.5)+127.5*(1 + brightness2/100));
                 int b2 = (int)((1 + contrast2/100)*(b - 127.5)+127.5*(1 + brightness2/100));
-               
+                
+                //Setting bounds for RGB
                 if(r2 > 255){
                     r2 = 255;
                 }if(r2 < 0){
