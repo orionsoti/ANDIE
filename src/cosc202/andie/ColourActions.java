@@ -216,7 +216,7 @@ public class ColourActions {
                         // Pop-up dialog box to ask for the intensity value of the brightness.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
-                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the 
+                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
                         intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
