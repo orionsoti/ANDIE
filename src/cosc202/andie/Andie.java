@@ -1,18 +1,13 @@
 package cosc202.andie;
 
 import java.awt.*;
-
-
-
 import javax.swing.*;
 import javax.imageio.*;
 
 /**
  * <p>
  * Main class for A Non-Destructive Image Editor (ANDIE).
- * hello
  * </p>
- * Testing - Josiah
  * 
  * <p>
  * This class is the entry point for the program.
@@ -114,7 +109,8 @@ public class Andie {
      * <p>
      * Main entry point to the ANDIE program.
      * </p>
-     * tyler was here 300000 Liam was also on this line     * <p>
+     * 
+     * <p>
      * Creates and launches the main GUI in a separate thread.
      * As a result, this is essentially a wrapper around {@code createAndShowGUI()}.
      * </p>
@@ -129,10 +125,6 @@ public class Andie {
         // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
         LanguageSettings settings = new LanguageSettings();//prefs, bundle);
-
-
-
-
 
         // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
 
