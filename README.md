@@ -1,9 +1,11 @@
 # Team Vista's Andie
 
 Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birkett*
+
 ----
 
 ## Features
+
 **Sharpen Filter**
 
 > *Contributors:* Orion Soti
@@ -15,6 +17,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:* Adjusts the sharpness of the image
 >
 > *Errors:* No known errors
+---
 
 
 **Gaussian Blur Filter**
@@ -28,6 +31,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:* Blurs high frequency areas of the image
 >
 > *Errors:*
+---
 
 **Median Filter**
 
@@ -40,6 +44,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:* 
 >
 > *Errors:*
+---
 
 **Brightness & Contrast Adjustment**
 
@@ -52,6 +57,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:* 
 >
 > *Errors:*
+---
 
 **Multilingual Support**
 
@@ -64,6 +70,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:*
 >
 > *Errors:*
+---
 
 **Resize**
 
@@ -76,6 +83,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:*
 >
 > *Errors:*
+---
 
 **Rotate**
 
@@ -88,6 +96,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:* 
 >
 > *Errors:*
+---
 
 **Flip**
 
@@ -100,6 +109,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:*
 >
 > *Errors:*
+---
 
 **Image Export**
 
@@ -112,6 +122,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:*
 >
 > *Errors:*
+---
 
 **Error Handling**
 
@@ -124,6 +135,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > *Description:*
 >
 > *Errors:*
+---
 
 
 
