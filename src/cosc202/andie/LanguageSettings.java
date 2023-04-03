@@ -61,10 +61,8 @@ public class LanguageSettings{
 
             prefs.put("language", "mi");
             prefs.put("country", "NZ");
-            
-             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            
-             langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
+            Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
            
 
         }else if(s == "Pirate"){

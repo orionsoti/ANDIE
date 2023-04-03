@@ -31,11 +31,11 @@ public class TransformActions {
      */
     public TransformActions(){
         actions = new ArrayList<Action>();
-        actions.add(new ResizeAction("Resize", null, "Resize image", null));
-        actions.add(new ImageRotationAction("Rotate Left", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
-        actions.add(new ImageRotationAction("Rotate Right", null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
-        actions.add(new FlipAction("Flip Vertical", null, "Flip image vertically", null, Flip.FLIP_VERTICAL));
-        actions.add(new FlipAction("Flip Horizontal", null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
+        actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), null, "Resize image", null));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, "Flip image vertically", null, Flip.FLIP_VERTICAL));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
         
         
     }
@@ -43,7 +43,7 @@ public class TransformActions {
      * Create a menu containing the list of Transform actions.
      */
     public JMenu createMenu(){
-        JMenu transformMenu = new JMenu("Transform");
+        JMenu transformMenu = new JMenu(LanguageSettings.getTranslated("transform"));
         for (Action action: actions) {
             transformMenu.add(new JMenuItem(action));
         }
