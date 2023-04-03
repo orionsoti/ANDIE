@@ -1,18 +1,141 @@
-## Getting Started
+# Team Vista's Andie
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birkett*
 
-## Folder Structure
+----
 
-The workspace contains two folders by default, where:
+## Features
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+**Sharpen Filter**
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+> *Contributors:* Orion Soti
+>
+> *Acccessed via:* Filter Menu
+>
+> *Testing:* Tested with other filter and colour changes
+>
+> *Description:* Adjusts the sharpness of the image
+>
+> *Errors:* No known errors
+---
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
 
-## Dependency Management
+**Gaussian Blur Filter**
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+> *Contributors:* Orion Soti
+>
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:* Blurs high frequency areas of the image
+>
+> *Errors:*
+---
+
+**Median Filter**
+
+> *Contributors:* Jacob Myron
+>
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:* 
+>
+> *Errors:*
+---
+
+**Brightness & Contrast Adjustment**
+
+> *Contributors:* Liam Hayward & Josiah Astwood
+>
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:* 
+>
+> *Errors:*
+---
+
+**Multilingual Support**
+
+> *Contributors:* Tyler Birkett
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:*
+>
+> *Errors:*
+---
+
+**Resize**
+
+> *Contributors:* Orion Soti
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:*
+>
+> *Errors:*
+---
+
+**Rotate**
+
+> *Contributors:* Jacob Myron
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:* 
+>
+> *Errors:*
+---
+
+**Flip**
+
+> *Contributors:* Orion Soti
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:*
+>
+> *Errors:*
+---
+
+**Image Export**
+
+> *Contributors:*
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:*
+>
+> *Errors:*
+---
+
+**Error Handling**
+
+> *Contributors:*
+> 
+> *Accessed via:* 
+>
+> *Testing:* 
+>
+> *Description:*
+>
+> *Errors:*
+---
+
+
+

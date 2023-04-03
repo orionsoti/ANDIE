@@ -57,7 +57,7 @@ public class FileActions {
              * </p>
              */
             
-            JFrame f = new JFrame("frame");
+            /*JFrame f = new JFrame("frame");
             f.setSize(200,200);
             String s1[] = {"English", "Spanish","Maori", "Pirate"};
             JComboBox<String> c1 = new JComboBox<>(s1);
@@ -65,8 +65,25 @@ public class FileActions {
             JPanel p = new JPanel();
             p.setSize(200,200);
             p.add(c1);
-            p.add(b12);
-            /**
+            p.add(b12);*/
+        
+            
+            JPanel langPanel = new JPanel();
+            langPanel.add(new JLabel("Select a language: "));
+
+            String[] langList = {"English", "Spanish", "Maori", "Pirate"};
+            JComboBox<String> langBox = new JComboBox<>(langList);
+            langPanel.add(langBox);
+            int option = JOptionPane.showOptionDialog(null, langPanel, "Language", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            if (option == JOptionPane.OK_OPTION) {
+                String selc = langBox.getSelectedItem().toString();
+                LanguageSettings.changeLang(selc);
+                Andie.createMenuBar();
+            }else{
+                return;
+            }
+
+            /** 
              * <p>
              * Action when the ok button is pressed it calls a method todo multiple things:
              * Calls the changelang method which updates prefrences and reloads appropriate bundle
@@ -74,7 +91,7 @@ public class FileActions {
              * brings the language box back to the front of the screen for user to change back or exit
              * </p>
              */
-            b12.addActionListener(new ActionListener(){
+            /*b12.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     String selc = c1.getSelectedItem().toString();
                     LanguageSettings.changeLang(selc);
@@ -84,7 +101,8 @@ public class FileActions {
             });
             f.add(p);
             f.setSize(400,300);
-            f.setVisible(true);
+            f.setVisible(true);*/
+
         }
     }
 
