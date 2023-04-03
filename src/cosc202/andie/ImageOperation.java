@@ -35,8 +35,8 @@ public interface ImageOperation {
      * create a new BufferedImage to store the result.
      * This decision is left to the implementer of specific operations.
      * 
-     * @param input The image to apply the operation to
+     * @param imageRotation The image to apply the operation to
      * @return The image resulting from the operation
      */
-    public BufferedImage apply(BufferedImage input);    
+    public BufferedImage apply(BufferedImage input);
 }

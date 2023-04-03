@@ -12,7 +12,6 @@ import javax.imageio.*;
  * Main class for A Non-Destructive Image Editor (ANDIE).
  * hello
  * </p>
- * Testing - Josiah
  * 
  * <p>
  * This class is the entry point for the program.
@@ -114,7 +113,7 @@ public class Andie {
      * <p>
      * Main entry point to the ANDIE program.
      * </p>
-     * tyler was here 300000 Liam was also on this line     * <p>
+     * <p>
      * Creates and launches the main GUI in a separate thread.
      * As a result, this is essentially a wrapper around {@code createAndShowGUI()}.
      * </p>
@@ -125,24 +124,7 @@ public class Andie {
      */
     public static void main(String[] args) throws Exception {
 
-        // ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.MessageBundle");           
-        // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
-
         LanguageSettings settings = new LanguageSettings();//prefs, bundle);
-
-
-
-
-
-        // Preferences prefs = Preferences.userNodeForPackage(Andie.class);
-
-        // Locale.setDefault(new Locale(prefs.get("language", "en"), 
-        //         prefs.get("country", "NZ")));
-    
-        //ResourceBundle bundle = ResourceBundle.getBundle("cosc202.andie.MessageBundle");       
-        
-        // prefs.put("language", "mi");
-        // prefs.put("country", "NZ");
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
