@@ -50,13 +50,13 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Liam Hayward & Josiah Astwood
 >
-> *Accessed via:* 
+> *Accessed via:* Colour Menu
 >
-> *Testing:* 
+> *Testing:* Testing involved making various adjustments to contrast and brightness, checking that operations are saved, and adding/testing sliders to limit user input.
 >
-> *Description:* 
+> *Description:* Adjusts the contrast or brightness of the current image.
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Multilingual Support**
@@ -113,15 +113,15 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 **Image Export**
 
-> *Contributors:*
+> *Contributors:* Liam Hayward
 > 
-> *Accessed via:* 
+> *Accessed via:* File Menu
 >
-> *Testing:* 
+> *Testing:*   
 >
-> *Description:*
+> *Description:* Alows users to export a copy of the current edited image. 
 >
-> *Errors:*
+> *Errors:* 
 ---
 
 **Error Handling**
