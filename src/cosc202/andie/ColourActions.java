@@ -34,9 +34,9 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), null, "Adjust the contrast", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), null, "Adjust the brightness", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), null, LanguageSettings.getTranslated("contrastDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), null, LanguageSettings.getTranslated("brightnessDesc"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -149,7 +149,7 @@ public class ColourActions {
                         intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon contrastIcon = new ImageIcon("src/contrast.png", "contrast icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Contrast Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
             
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {
@@ -220,7 +220,7 @@ public class ColourActions {
                         intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Brightness Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
             
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {
