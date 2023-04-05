@@ -5,9 +5,9 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 ----
 ## Getting Started:
 
->To get started navigate to the file menu and open the image you wish to edit.
+>To get started navigate to the file menu and open the image you wish to edit.  
 >There are many ways to edit your image from changing colour values, applying filters and transforming your image.
->These can be found in the corresponding menus, descriptions of each action can be found in the features section.
+>These can be found in the corresponding menus, descriptions of each action can be found in the features section.  
 >You can undo and redo any action you've made using the edit menu and adjust the view of your image in the view menu
 >(Note! view actions do not alter the image, only the way it is displayed within the application).
 >Supported File Types Include: PNG, JPG, JPEG, BMP, GIF
