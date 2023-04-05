@@ -177,20 +177,20 @@ public class FileActions {
                             flag = true;
                             JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
                         }else{
+                            target.repaint();
+                            target.getParent().revalidate();
                             flag = false;
+                            break;
                         }
                         
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                     }
+                }else if(result == JFileChooser.CANCEL_OPTION){ //File menu wouldn't close if an image that was too large was chosen, added this to counter-act
+                    flag = false;
+                    break;
                 }
             }while(flag == true);
-
-
-            if(flag == false){
-            target.repaint();
-            target.getParent().revalidate();
-            }
         }
 
     }

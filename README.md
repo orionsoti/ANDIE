@@ -44,15 +44,15 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 **Median Filter**
 
-> *Description:* Replaces each pixel with the median value of pixels in a surrounding area
+> *Description:* Replaces each pixel with the median value of pixels in a surrounding area.
 >
 > *Contributors:* Jacob Myron
 >
 > *Accessed via:* Filter Menu
 >
-> *Testing:* Tested applying multiple instances of the Median filter as well as testing it alongside other filters and actions
+> *Testing:* Tested applying multiple instances of the Median filter as well as testing it alongside other filters and actions.
 >
-> *Errors:* No known errors
+> *Errors:* No known errors.
 ---
 
 **Brightness & Contrast Adjustment**
@@ -102,9 +102,9 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > 
 > *Accessed via:* Transform menu
 >
-> *Testing:* Tested rotating the image both before and after applying other filters, orientation remains the same after export and saving.
+> *Testing:* Tested rotating the image both before and after applying a mixture of filters, colours and transform effects. Orientation remains the same after export and saving.
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Flip**
@@ -131,12 +131,16 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 >
 > *Testing:* Tested image types: png, jpg, jpeg, gif all are working. Also set up a check to stop users saving incorrect file types. 
 >
-> *Errors:* No known errors
+> *Errors:* No known errors.
 ---
 
 **Error Handling**
 
-> Error handling was done by all members in the group.
+> *Contributors* Jacob Myron, Liam Hayward, Orion Soti, Josiah Astoowd, Tyler Birkett
+>
+>*Testing* Known errors purposefully triggered after implementing a fix to ensure the desired outcome.
+>
+>*Errors* No known errors.
 ---
 
 
@@ -148,5 +152,5 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > 
 > *Accessed via:* AndieProject/andie/AndieTestingDocumentation.pdf
 >
-> *Code Refactoring/additions: Any changes to the original methods/classes/skeleton of the program are doccumented in the Testing doumentation PDF.
+> *Code Refactoring/additions: Any changes to the original methods/classes/skeleton of the program are documented in the Testing doumentation PDF.
 
