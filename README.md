@@ -125,12 +125,12 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > 
 > *Accessed via:* File Menu
 >
-> *Testing:*   
+> *Testing:* Tested image types: png, jpg, jpeg, gif all are working. Also set up a check to stop users saving incorrect file types. 
 >
 > *Description:* Alows users to export a copy of the current edited image. 
 >
-> *Errors:* 
----
+> *Errors:* No known errors
+
 
 **Error Handling**
 
