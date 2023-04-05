@@ -3,6 +3,8 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+
 
 /**
  * <p>
@@ -145,10 +147,15 @@ public class ColourActions {
                         // Pop-up dialog box to ask for the intensity value of the contrast.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
-                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
-                        intensitySlider.setLabelTable(sliderLabels);
+                        intensitySlider.setPreferredSize(new Dimension(300, 50));
+                        intensitySlider.setMajorTickSpacing(25);
+                        intensitySlider.setMinorTickSpacing(5);
+                        intensitySlider.setPaintTicks(true);
+                        intensitySlider.setSnapToTicks(enabled);
+                        //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
+                        //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
-                        ImageIcon contrastIcon = new ImageIcon("src/contrast.png", "contrast icon");
+                        ImageIcon contrastIcon = new ImageIcon("src/contrast-1.png", "contrast icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
             
                         // Check the return value from the dialog box.
@@ -216,10 +223,15 @@ public class ColourActions {
                         // Pop-up dialog box to ask for the intensity value of the brightness.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
-                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
-                        intensitySlider.setLabelTable(sliderLabels);
+                        intensitySlider.setPreferredSize(new Dimension(300, 50));
+                        intensitySlider.setMajorTickSpacing(25);
+                        intensitySlider.setMinorTickSpacing(5);
+                        intensitySlider.setPaintTicks(true);
+                        intensitySlider.setSnapToTicks(enabled);
+                        //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
+                        //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
-                        ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
+                        ImageIcon brightnessIcon = new ImageIcon("src/brightness-1.png", "Brightness Icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
             
                         // Check the return value from the dialog box.
