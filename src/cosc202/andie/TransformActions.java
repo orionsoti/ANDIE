@@ -116,7 +116,7 @@ public class TransformActions {
                 width = target.getImage().getCurrentImage().getWidth();
                 scale = 1.0;
 
-                // Create a dialog to get the scale factor from the user
+                // Create a dialog to get the scale factor, width and height from the user
                 SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale * 100, 0.0, 1000.0, 1);
                 SpinnerNumberModel widthSpinner = new SpinnerNumberModel(width, 1, Integer.MAX_VALUE, 1);
                 SpinnerNumberModel heightSpinner = new SpinnerNumberModel(height, 1, Integer.MAX_VALUE, 1);
