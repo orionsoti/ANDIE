@@ -84,8 +84,8 @@ public class Andie {
         menuBar.add(editActions.createMenu());
 
         // View actions control how the image is displayed, but do not alter its actual content
-        ViewActions viewActions = new ViewActions();
-        menuBar.add(viewActions.createMenu());
+        // ViewActions viewActions = new ViewActions();
+        // menuBar.add(viewActions.createMenu());
         
         // Filters apply a per-pixel operation to the image, generally based on a local window
         FilterActions filterActions = new FilterActions();
@@ -101,8 +101,8 @@ public class Andie {
         // View actions control how the image is displayed, but do not alter its actual content
         // Rather than making the menu and adding it to menuBar it directly adds the buttons to
         // menuBar
-        //ViewActions viewActions = new ViewActions();
-        //viewActions.createMenu(menuBar);
+        ViewActions viewActions = new ViewActions();
+        viewActions.createMenu(menuBar);
 
         menuBar1.setJMenuBar(menuBar);
         menuBar1.pack();
@@ -124,7 +124,7 @@ public class Andie {
      */
     public static void main(String[] args) throws Exception {
 
-        LanguageSettings settings = new LanguageSettings();//prefs, bundle);
+        LanguageSettings settings = new LanguageSettings();
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
