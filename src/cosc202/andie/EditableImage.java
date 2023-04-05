@@ -5,6 +5,7 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  * <p>
@@ -272,6 +273,7 @@ class EditableImage {
                 BufferedImage currentImage = getCurrentImage();
                 ImageIO.write(currentImage, extension, new File(this.imageFilename)); 
             }catch(Exception e){
+                UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                 JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
             }
     }
