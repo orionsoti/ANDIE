@@ -5,7 +5,6 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  * <p>
