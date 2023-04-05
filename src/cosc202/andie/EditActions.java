@@ -96,7 +96,10 @@ public class EditActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(EmptyStackException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noOperation"));
+                //JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noOperation"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noOperation"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
     }
@@ -144,7 +147,9 @@ public class EditActions {
                 target.getParent().revalidate();
 
             }catch(EmptyStackException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noOperation"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noOperation"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
     }

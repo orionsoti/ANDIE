@@ -156,7 +156,7 @@ public class ColourActions {
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon contrastIcon = new ImageIcon("src/images/contrast-1.png", "contrast icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {

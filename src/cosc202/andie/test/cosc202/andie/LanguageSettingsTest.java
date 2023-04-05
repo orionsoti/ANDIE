@@ -3,6 +3,8 @@ package cosc202.andie.test.cosc202.andie;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.*;
 
+import javax.swing.UIManager;
+
 import cosc202.andie.LanguageSettings;
 
 public class LanguageSettingsTest {
@@ -14,6 +16,8 @@ public class LanguageSettingsTest {
         LanguageSettings.changeLang("Maori");
         String translated = LanguageSettings.getTranslated("open");
         assertEquals("Tuwhera", translated);
+        UIManager.put("OptionPane.cancelButtonText", "nope");
+        UIManager.put("OptionPane.okButtonText", "yup");
     }
 
     @Test
