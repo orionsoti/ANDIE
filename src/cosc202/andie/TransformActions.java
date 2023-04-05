@@ -125,7 +125,7 @@ public class TransformActions {
                 JSpinner h = new JSpinner(heightSpinner);
 
                 JPanel myPanel = new JPanel(new GridLayout(3, 2));
-                ImageIcon resizeIcon = new ImageIcon("src/resize.png");
+                ImageIcon resizeIcon = new ImageIcon("src/images/resize.png");
                 myPanel.add(new JLabel(LanguageSettings.getTranslated("scale")));
                 myPanel.add(s);
                 myPanel.add(new JLabel(LanguageSettings.getTranslated("width")));

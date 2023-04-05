@@ -1,8 +1,10 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.Image;
 
 /**
  * <p>
@@ -50,17 +52,30 @@ public class ViewActions {
      * @param menu The menu the elements will be added to
      */
     public void createMenu(JMenuBar menu) {
-        JButton zoomIn = new JButton("+");
-        JButton zoomOut = new JButton("-");
-        JButton fitScreen = new JButton("[]");
+        //Creates new ImageIcons for each element
+        ImageIcon zoomInIcon = new ImageIcon("src/images/zoom_in.png", "Zoom In Icon");
+        ImageIcon zoomOutIcon = new ImageIcon("src/images/zoom_out.png", "Zoom Out Icon");
+        ImageIcon fullscreenIcon = new ImageIcon("src/images/fullscreen.png", "Fullscreen Icon");
 
+        //Creates a corresponding JButton element
+        JButton zoomIn = new JButton(zoomInIcon);
+        JButton zoomOut = new JButton(zoomOutIcon);
+        JButton fullscreen = new JButton(fullscreenIcon);
+
+        //Adds corresponding ActionListener
         zoomOut.addActionListener(actions.get(1));
         zoomIn.addActionListener(actions.get(0));
-        fitScreen.addActionListener(actions.get(2));
+        fullscreen.addActionListener(actions.get(2));
 
+        //Sets preferred size of the buttons
+        zoomIn.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
+        zoomOut.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
+        fullscreen.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
+
+        //Adds the buttons to the menu
         menu.add(zoomIn);
         menu.add(zoomOut);
-        menu.add(fitScreen);
+        menu.add(fullscreen);
     }
     /**
      * <p>

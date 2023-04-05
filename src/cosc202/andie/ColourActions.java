@@ -155,7 +155,7 @@ public class ColourActions {
                         //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
-                        ImageIcon contrastIcon = new ImageIcon("src/contrast-1.png", "contrast icon");
+                        ImageIcon contrastIcon = new ImageIcon("src/images/contrast-1.png", "contrast icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
             
                         // Check the return value from the dialog box.
@@ -231,7 +231,7 @@ public class ColourActions {
                         //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
-                        ImageIcon brightnessIcon = new ImageIcon("src/brightness-1.png", "Brightness Icon");
+                        ImageIcon brightnessIcon = new ImageIcon("src/images/brightness-1.png", "Brightness Icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
             
                         // Check the return value from the dialog box.
