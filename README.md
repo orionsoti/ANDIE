@@ -24,13 +24,13 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Orion Soti
 >
-> *Accessed via:* 
+> *Accessed via:* Filter Menu
 >
-> *Testing:* 
+> *Testing:* Tested it along with other image operations
 >
 > *Description:* Blurs high frequency areas of the image
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Median Filter**
@@ -76,13 +76,13 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Orion Soti
 > 
-> *Accessed via:* 
+> *Accessed via:* Transform Menu
 >
-> *Testing:* 
+> *Testing:* Tested it with maximum range values for scale (1000), width (5000), and height (5000) values. Also tested it along with other image operations
 >
-> *Description:*
+> *Description:* Click on Resize to open a pop up menu which asks for inputs for scale, width, and height. You can use the spinner or enter values manually by keyboard
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Rotate**
@@ -102,13 +102,13 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 > *Contributors:* Orion Soti
 > 
-> *Accessed via:* 
+> *Accessed via:* Transform Menu
 >
-> *Testing:* 
+> *Testing:* Tested it along with other image operations
 >
-> *Description:*
+> *Description:* Under the Transform menu, there are two options for flipping the image. One is to flip the image horizontally, and the other is to flip the image vertically
 >
-> *Errors:*
+> *Errors:* No known errors
 ---
 
 **Image Export**
