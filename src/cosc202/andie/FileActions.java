@@ -169,18 +169,20 @@ public class FileActions {
 
                 if (result == JFileChooser.APPROVE_OPTION) {
                     try {
-                        
+                       
                         String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                         target.getImage().open(imageFilepath);
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;
+                            UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                             JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
                         }else{
                             flag = false;
                         }
                         
                     } catch (Exception ex) {
+                        UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                         JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                     }
                 }
@@ -235,7 +237,9 @@ public class FileActions {
             try {
                 target.getImage().save();           
             } catch (Exception ex) {
+                UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                 JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
+
             }
         }
 
@@ -285,6 +289,7 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
                 } catch (Exception ex) {
+                    UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
@@ -333,6 +338,7 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().exportImage(imageFilepath);
                 } catch (Exception ex) {
+                    UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
