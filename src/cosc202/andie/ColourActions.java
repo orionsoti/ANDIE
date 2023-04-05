@@ -34,9 +34,9 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, "Convert to greyscale", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), null, "Adjust the contrast", Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), null, "Adjust the brightness", Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), null, LanguageSettings.getTranslated("contrastDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), null, LanguageSettings.getTranslated("brightnessDesc"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**
@@ -128,26 +128,28 @@ public class ColourActions {
         
         /**
          * <p>
-         * Callback for when the contrastAdjustAction is triggered.
+         * Callback for when the ContrastAdjustAction is triggered.
          * </p>
          * 
          * <p>
          * This method is called whenever the ContrastAdjustAction is triggered.
-         * It changes the image's contrast.
+         * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
+         * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
+         * and 0 to the brightness parameter.
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
                         int intensity = 0;
-                        // Pop-up dialog box to ask for the intensity value.
+                        // Pop-up dialog box to ask for the intensity value of the contrast.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
-                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100);
-                        intensitySlider.setLabelTable(sliderLabels);;
+                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
+                        intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon contrastIcon = new ImageIcon("src/contrast.png", "contrast icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Contrast Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, null, null);
             
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {
@@ -156,7 +158,7 @@ public class ColourActions {
                             intensity = intensityModel.getValue();
                         }
             
-                        // Create and apply the filter
+                        // Create and apply the filter.
                         try{
                             target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
                             target.repaint();
@@ -168,6 +170,14 @@ public class ColourActions {
         }
 
     }
+     /**
+     * <p>
+     * Action to adjust the brightness of an image.
+     * </p>
+     * 
+     * @see ContrastBrightnessAdjust
+     */
+
     public class BrightnessAdjustAction extends ImageAction {
 
         /**
@@ -192,7 +202,9 @@ public class ColourActions {
          * 
          * <p>
          * This method is called whenever the brightnessAdjustAction is triggered.
-         * It changes the image's brightness.
+         * It opens a JSlider window that allows the user to adjust the image's brightness in between -100 and 100.
+         * Once brightness has been selected the method will create an instance of ContrastBrightnessAdjust passing the value to the brightness parameter
+         * and 0 to the contrast parameter.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -201,14 +213,14 @@ public class ColourActions {
                         // Determine the radius - ask the user.
                         int brightness = 0;
 
-                        // Pop-up dialog box to ask for the intensity value.
+                        // Pop-up dialog box to ask for the intensity value of the brightness.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
-                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100);
+                        Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
                         intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon brightnessIcon = new ImageIcon("src/Brightness.png", "Brightness Icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, "Brightness Intensity", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
             
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {

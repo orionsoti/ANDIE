@@ -214,30 +214,62 @@ class EditableImage {
         save();
     }
     
-     /** Export the image to a specified file 
+     /**
+     * <p> 
+     * Export the image to a specified file 
+     * </p>
+     * Saves a copy of the image with the operations that have been applied.
+     * if the user doesn't enter a valid extension an option box will pop up prompting the selection of a valid file type
      * 
-     *<p> Saves a copy of the image with the operations that have been applied. 
+     * @param imageFilename the file location to export the image to.
+     * @throws Exception if there is no input or something happens during writing the file.
      */ 
     public void exportImage(String imageFilename) throws Exception{
        
             this.imageFilename = imageFilename;
-            String filenameLowercase = imageFilename.toLowerCase(); // for checking that the user has added an extension
            
+            boolean extensionCheck = false;
+            String[] imageExtensions = {"png", "jpeg", "jpg", "gif"}; // valid image extensions to be checked
+            
             String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase(); 
-           
-            if(extension.equals(filenameLowercase)){
-                extension = "png"; //default filetype to png may change later (something for exception handling?)
-                this.imageFilename = imageFilename + "." + extension;
+            
+            for(String check:imageExtensions){
+                if(check.equals(extension)){
+                    extensionCheck = true; 
+                    break; 
+                }
+            }
+            
+            if(!extensionCheck){
+                /// if the extension is invalid an option dialog will prompt the user to select a valid extension
+                int extensionChoice = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectFormat"), LanguageSettings.getTranslated("format"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
+            
+            switch(extensionChoice){
+                case 0:
+                    extension = "png";
+                    this.imageFilename = this.imageFilename + "." + extension;
+                    break;
+                case 1:
+                    extension = "jpeg";
+                    this.imageFilename = this.imageFilename + "." + extension;
+                    break;
+                case 2: 
+                    extension = "jpg";
+                    this.imageFilename = this.imageFilename + "." + extension;
+                    break;
+                case 3:
+                    extension = "gif";
+                    this.imageFilename = this.imageFilename + "." + extension;
+                    break;
             } 
-             
+        }  
+
             try{
-            BufferedImage currentImage = getCurrentImage();
-            ImageIO.write(currentImage, extension, new File(this.imageFilename)); 
+                BufferedImage currentImage = getCurrentImage();
+                ImageIO.write(currentImage, extension, new File(this.imageFilename)); 
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
             }
-    
-        
     }
         
     /**

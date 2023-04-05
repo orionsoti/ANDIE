@@ -7,7 +7,8 @@ import java.awt.image.*;
  * ImageOperation to adjust the brightness and contrast on an image.
  * </p>
  * 
- * @author Josiah Astwood Liam Hayward
+ * @author Josiah Astwood 
+ * @author Liam Hayward
  * @version 1.0
  */
 public class ContrastBrightnessAdjust implements ImageOperation, java.io.Serializable {
@@ -17,15 +18,21 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
 
     /**
      * <p>
-     * Create a new ContrastBrightnessAdjust operation.
+     * Create a new ContrastBrightnessAdjust operation.  
      * </p>
      */
 
-     //default constructor
+     // Default constructor, sets datafield values to 0 (no adjustment)
     ContrastBrightnessAdjust(){
         contrast = 0;
         brightness = 0;
     }
+    /**  Constructor takes brightness or contrast entered by a user and applies an adjustment to the image.
+     * If contrast is given a value, brightness will be set to 0 so as not to adjust both in one operation. 
+     * If brightness is given a value, contrast will be set to 0 so as not to adjust both in one operation. 
+     * @param contrast a value between -100 and 100 that the current image will have its contrast adjusted by.
+     * @param brightness a value between -100 and 100 that the current image wil have its brightness adjusted by.
+     */
     ContrastBrightnessAdjust(int contrast, int brightness) {
         this.contrast = contrast;
         this.brightness = brightness;
@@ -35,7 +42,7 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
                    
     /**
      * <p>
-     * Apply contrast adjustment  to an image.
+     * Apply contrast or brightness adjustment to an image.
      * </p>
      * 
      * <p>
@@ -51,10 +58,11 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
 
     public BufferedImage apply(BufferedImage input) {
         
+        
         double contrast2 = (double)contrast;
         double brightness2 = (double)brightness;
            
-        //For loop to go through each pixel
+        //For loop to go through and adjust the RGB value of each pixel
         for (int y = 0; y < input.getHeight(); ++y) {
             for (int x = 0; x < input.getWidth(); ++x) {
                 
@@ -65,12 +73,12 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
                 int g = (argb & 0x0000FF00) >> 8;
                 int b = (argb & 0x000000FF);
                 
-                
+                //Equation to adjust contrast and brightness
                 int r2 = (int)((1 + contrast2/100)*(r - 127.5)+127.5*(1+ brightness2/100));
                 int g2 = (int)((1 + contrast2/100)*(g - 127.5)+127.5*(1 + brightness2/100));
                 int b2 = (int)((1 + contrast2/100)*(b - 127.5)+127.5*(1 + brightness2/100));
                 
-                //Setting bounds for RGB
+                //Bounds for RGB (upper = 250, lower = 0)
                 if(r2 > 255){
                     r2 = 255;
                 }if(r2 < 0){
