@@ -236,8 +236,8 @@ public class ColourActions {
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon brightnessIcon = new ImageIcon("src/images/brightness-1.png", "Brightness Icon");
-                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, null, null);
-            
+                        int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), 
+                        JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
                         // Check the return value from the dialog box.
                         if (option == JOptionPane.CANCEL_OPTION) {
                             return;

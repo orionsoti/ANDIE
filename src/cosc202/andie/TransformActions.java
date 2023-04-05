@@ -135,7 +135,8 @@ public class TransformActions {
                 myPanel.add(new JLabel(LanguageSettings.getTranslated("height")));
                 myPanel.add(h);
 
-                int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, LanguageSettings.getTranslated("resize"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, null, null);
+                int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, LanguageSettings.getTranslated("resize"), 
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
                 if (option == JOptionPane.OK_OPTION) {
                     update(scaleSpinner.getNumber().doubleValue()/100, widthSpinner.getNumber().intValue(), heightSpinner.getNumber().intValue());
                 }else if (option == JOptionPane.CANCEL_OPTION){
