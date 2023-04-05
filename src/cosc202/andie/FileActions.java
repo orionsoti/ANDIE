@@ -154,6 +154,7 @@ public class FileActions {
          * <p>
          * This method is called whenever the FileOpenAction is triggered.
          * It prompts the user to select a file and opens it as an image.
+         * If this image is larger than our limit of 2160x3840 the applications will inform the user.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -166,9 +167,10 @@ public class FileActions {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
-                    if(target.getImage().getCurrentImage().getHeight() > 2160|| target.getImage().getCurrentImage().getWidth() > 3840){
+                    //Checks the size of the image to make sure it is not larger than 4k.
+                    if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                         flag = true;
-                        JOptionPane.showMessageDialog(null, "please enter an certain dimension");
+                        JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
                     }
                     
                     int height = target.getImage().getCurrentImage().getHeight();
