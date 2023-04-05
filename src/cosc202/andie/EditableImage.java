@@ -229,7 +229,7 @@ class EditableImage {
             this.imageFilename = imageFilename;
            
             boolean extensionCheck = false;
-            String[] imageExtensions = {"png", "jpeg", "jpg", "gif"}; // valid image extensions to be checked
+            String[] imageExtensions = {"png", "jpeg", "jpg", "gif", "bmp"}; // valid image extensions to be checked
             
             String extension = imageFilename.substring(1+imageFilename.lastIndexOf(".")).toLowerCase(); 
             
@@ -259,6 +259,10 @@ class EditableImage {
                     break;
                 case 3:
                     extension = "gif";
+                    this.imageFilename = this.imageFilename + "." + extension;
+                    break;
+                case 4:
+                    extension = "bmp";
                     this.imageFilename = this.imageFilename + "." + extension;
                     break;
             } 

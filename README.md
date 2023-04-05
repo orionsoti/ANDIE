@@ -76,7 +76,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > 
 > *Accessed via:* File Menu/Language Settings
 >
-> *Testing:* Testing was completed usings JUnit Test for the majority and Refer to the PDF of Testing for GUI Testing
+> *Testing:* Testing was completed using JUnit Test for the majority and Refer to the PDF of Testing for GUI Testing
 >
 > *Errors:* No known errors
 ---
@@ -136,7 +136,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 **Error Handling**
 
->Error handling was done by all members in the group.
+> Error handling was done by all members in the group.
 ---
 
 
