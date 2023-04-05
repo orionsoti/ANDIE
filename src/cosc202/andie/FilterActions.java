@@ -166,7 +166,8 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 5, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"), 
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
@@ -181,7 +182,9 @@ public class FilterActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(NullPointerException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
 
@@ -225,11 +228,7 @@ public class FilterActions {
         public void actionPerformed(ActionEvent e){
             // Pop-up dialog box to confirm user wishes to apply filter.
             JLabel text = new JLabel(LanguageSettings.getTranslated("sharpenAsk"));
-            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("sharpenAsk"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),
-                    null, null);
-
-            // Check the return value from the dialog box.
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("sharpenAsk"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             if (option != JOptionPane.OK_OPTION) {
                 return;
             }
@@ -239,7 +238,9 @@ public class FilterActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(NullPointerException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
 
@@ -282,7 +283,7 @@ public class FilterActions {
             JSpinner radiusSpinner = new JSpinner(radiusModel);
             int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    null, null);
+                    new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             // Returns early if the user cancels the operation.
             if (option == JOptionPane.CANCEL_OPTION) {
                 return;
@@ -295,7 +296,9 @@ public class FilterActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(NullPointerException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
 

@@ -74,7 +74,7 @@ public class FileActions {
             String[] langList = {"English", "Spanish", "Maori", "Pirate"};
             JComboBox<String> langBox = new JComboBox<>(langList);
             langPanel.add(langBox);
-            int option = JOptionPane.showOptionDialog(null, langPanel, LanguageSettings.getTranslated("language"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, langPanel, LanguageSettings.getTranslated("language"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             if (option == JOptionPane.OK_OPTION) {
                 String selc = langBox.getSelectedItem().toString();
                 LanguageSettings.changeLang(selc);
@@ -175,7 +175,9 @@ public class FileActions {
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;
-                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
+                            Object[] options = {LanguageSettings.getTranslated("ok")};
+                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("tooLarge"), LanguageSettings.getTranslated("alert"),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                         }else{
                             target.repaint();
                             target.getParent().revalidate();
@@ -184,7 +186,10 @@ public class FileActions {
                         }
                         
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
+                        Object[] options = {LanguageSettings.getTranslated("ok")};
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("incompatible"), LanguageSettings.getTranslated("alert"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                        
                     }
                 }else if(result == JFileChooser.CANCEL_OPTION){ //File menu wouldn't close if an image that was too large was chosen, added this to counter-act
                     flag = false;
@@ -235,7 +240,9 @@ public class FileActions {
             try {
                 target.getImage().save();           
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("unsaved"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
 
             }
         }
@@ -286,7 +293,9 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
+                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("unsaved"), LanguageSettings.getTranslated("alert"),
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                 }
             }
         }
@@ -334,7 +343,9 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().exportImage(imageFilepath);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
+                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("unsaved"), LanguageSettings.getTranslated("alert"),
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                 }
             }
         }
