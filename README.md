@@ -88,7 +88,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 > 
 > *Accessed via:* Transform Menu
 >
-> *Testing:* Tested it with maximum range values for scale (1000), width (5000), and height (5000) values. Also tested it along with other image operations
+> *Testing:* Tested it with large values for scale, width, and height values. Also tested it along with other image operations
 >
 > *Description:* Click on Resize to open a pop up menu which asks for inputs for scale, width, and height. You can use the spinner or enter values manually by keyboard
 >
