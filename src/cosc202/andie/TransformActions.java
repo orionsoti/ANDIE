@@ -1,5 +1,6 @@
 package cosc202.andie;
 import java.util.*;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -112,14 +113,24 @@ public class TransformActions {
 
                 // Create a dialog to get the scale factor from the user
                 SpinnerNumberModel scaleSpinner = new SpinnerNumberModel(scale * 100, 0.0, 1000.0, 1);
+                SpinnerNumberModel widthSpinner = new SpinnerNumberModel(width, 1, Integer.MAX_VALUE, 1);
+                SpinnerNumberModel heightSpinner = new SpinnerNumberModel(height, 1, Integer.MAX_VALUE, 1);
                 JSpinner s = new JSpinner(scaleSpinner);
-                JPanel myPanel = new JPanel();
+                JSpinner w = new JSpinner(widthSpinner);
+                JSpinner h = new JSpinner(heightSpinner);
+
+                JPanel myPanel = new JPanel(new GridLayout(3, 2));
                 ImageIcon resizeIcon = new ImageIcon("src/resize.png");
                 myPanel.add(new JLabel(LanguageSettings.getTranslated("scale")));
                 myPanel.add(s);
+                myPanel.add(new JLabel(LanguageSettings.getTranslated("width")));
+                myPanel.add(w);
+                myPanel.add(new JLabel(LanguageSettings.getTranslated("height")));
+                myPanel.add(h);
+
                 int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, LanguageSettings.getTranslated("resize"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, null, null);
                 if (option == JOptionPane.OK_OPTION) {
-                    updateScale(scaleSpinner.getNumber().doubleValue()/100, width, height);
+                    update(scaleSpinner.getNumber().doubleValue()/100, widthSpinner.getNumber().intValue(), heightSpinner.getNumber().intValue());
                 }else if (option == JOptionPane.CANCEL_OPTION){
                     return;
                 }
@@ -137,14 +148,27 @@ public class TransformActions {
          * Updates the values of the height, width, and scale based on the user input.
          * 
          * @param outputScale The scale of the output image.
+         * @param outputWidth The width of the output image.
+         * @param outputHeight The height of the output image.
+         * 
          */
-        public void updateScale(double outputScale, int outputWidth, int outputHeight) {
+        public void update(double outputScale, int outputWidth, int outputHeight) {
             if (outputScale != scale) {
                 scale = outputScale;
                 width = (int) (scale * width);
                 height = (int) (scale * height);
+            } else if (outputWidth != width) {
+                width = outputWidth;
+                scale = (double) width / (double) this.width;
+                height = (int) (scale * height);
+            } else if (outputHeight != height) {
+                height = outputHeight;
+                scale = (double) height / (double) this.height;
+                width = (int) (scale * width);
             }
         }
+
+
     }
 
     /**
