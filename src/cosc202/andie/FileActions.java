@@ -175,7 +175,6 @@ public class FileActions {
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;
-                            UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                             JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
                         }else{
                             target.repaint();
@@ -185,7 +184,6 @@ public class FileActions {
                         }
                         
                     } catch (Exception ex) {
-                        UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                         JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                     }
                 }else if(result == JFileChooser.CANCEL_OPTION){ //File menu wouldn't close if an image that was too large was chosen, added this to counter-act
@@ -237,7 +235,6 @@ public class FileActions {
             try {
                 target.getImage().save();           
             } catch (Exception ex) {
-                UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                 JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
 
             }
@@ -289,7 +286,6 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
                 } catch (Exception ex) {
-                    UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
@@ -338,7 +334,6 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().exportImage(imageFilepath);
                 } catch (Exception ex) {
-                    UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
