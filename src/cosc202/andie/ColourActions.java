@@ -99,7 +99,9 @@ public class ColourActions {
                 target.repaint();
                 target.getParent().revalidate();
             }catch(NullPointerException exception){
-                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
 
@@ -171,7 +173,9 @@ public class ColourActions {
                             target.repaint();
                             target.getParent().revalidate();
                         }catch(NullPointerException exception){
-                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                            Object[] options = {LanguageSettings.getTranslated("ok")};
+                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                         }
                     
         }
@@ -247,7 +251,9 @@ public class ColourActions {
                             target.repaint();
                             target.getParent().revalidate();
                         }catch(NullPointerException exception){
-                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("noInput"));
+                            Object[] options = {LanguageSettings.getTranslated("ok")};
+                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                         }
                     
         }
