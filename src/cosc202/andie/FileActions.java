@@ -235,7 +235,7 @@ public class FileActions {
             try {
                 target.getImage().save();           
             } catch (Exception ex) {
-                System.exit(1);
+                JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
             }
         }
 
@@ -285,7 +285,7 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
                 } catch (Exception ex) {
-                    System.exit(1);
+                    JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
         }
@@ -333,7 +333,7 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().exportImage(imageFilepath);
                 } catch (Exception ex) {
-                    System.exit(1);
+                    JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
         }
