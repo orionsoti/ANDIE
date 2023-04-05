@@ -161,18 +161,26 @@ public class FileActions {
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showOpenDialog(target);
-
+            boolean flag = false;
             if (result == JFileChooser.APPROVE_OPTION) {
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().open(imageFilepath);
+                    if(target.getImage().getCurrentImage().getHeight() > 2160|| target.getImage().getCurrentImage().getWidth() > 3840){
+                        flag = true;
+                        JOptionPane.showMessageDialog(null, "please enter an certain dimension");
+                    }
+                    
+                    int height = target.getImage().getCurrentImage().getHeight();
+                    System.out.println(height);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                 }
             }
-
+            if(flag == false){
             target.repaint();
             target.getParent().revalidate();
+            }
         }
 
     }
