@@ -289,7 +289,7 @@ public class FileActions {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                     target.getImage().saveAs(imageFilepath);
                 } catch (Exception ex) {
-                    UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
+                UIManager.put("OptionPane.okButtonText", LanguageSettings.getTranslated("ok"));
                     JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("unsaved"));
                 }
             }
