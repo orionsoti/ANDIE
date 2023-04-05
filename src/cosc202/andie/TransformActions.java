@@ -158,7 +158,7 @@ public class TransformActions {
          * 
          */
         public void update(double outputScale, int outputWidth, int outputHeight) {
-            if (outputScale != scale) {
+            /**if (outputScale != scale) {
                 scale = outputScale;
                 width = (int) (scale * width);
                 height = (int) (scale * height);
@@ -170,6 +170,15 @@ public class TransformActions {
                 height = outputHeight;
                 scale = (double) height / (double) this.height;
                 width = (int) (scale * width);
+            }*/
+            if (outputScale != scale){
+                scale = outputScale;
+                width = (int) (scale * width);
+                height = (int) (scale * height);
+            }else{
+                width = outputWidth;
+                height = outputHeight;
+                scale = (double) width / (double) this.width;
             }
         }
 
