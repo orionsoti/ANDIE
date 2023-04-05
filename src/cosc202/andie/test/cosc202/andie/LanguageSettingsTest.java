@@ -8,9 +8,6 @@ import cosc202.andie.LanguageSettings;
 public class LanguageSettingsTest {
 
     LanguageSettings newLS = new LanguageSettings();
-    
-
- 
  
     @Test
     void getTranslatedMaoriTest(){

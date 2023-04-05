@@ -160,25 +160,33 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            int result = fileChooser.showOpenDialog(target);
             boolean flag = false;
-            if (result == JFileChooser.APPROVE_OPTION) {
-                try {
-                    String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                    target.getImage().open(imageFilepath);
-                    //Checks the size of the image to make sure it is not larger than 4k.
-                    if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
-                        flag = true;
-                        JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
+            
+            do{
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showOpenDialog(target);
+                
+
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        
+                        String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
+                        target.getImage().open(imageFilepath);
+                        //Checks the size of the image to make sure it is not larger than 4k.
+                        if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
+                            flag = true;
+                            JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("tooLarge"));
+                        }else{
+                            flag = false;
+                        }
+                        
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                     }
-                    
-                    int height = target.getImage().getCurrentImage().getHeight();
-                    System.out.println(height);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, LanguageSettings.getTranslated("incompatible"));
                 }
-            }
+            }while(flag == true);
+
+
             if(flag == false){
             target.repaint();
             target.getParent().revalidate();

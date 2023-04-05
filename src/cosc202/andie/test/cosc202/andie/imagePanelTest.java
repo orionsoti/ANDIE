@@ -7,32 +7,23 @@ import cosc202.andie.ImagePanel;
 
 public class imagePanelTest {
 
-    
-    @Test
-    void initialDummyTest(){
-
-    }
-
     @Test
     void getZoomInitialValue(){
         ImagePanel testPanel = new ImagePanel();
-        Assertions.assertEquals(100, testPanel.getZoom());
-        
+        Assertions.assertEquals(100, testPanel.getZoom());    
     }
 
     @Test
     void getUpperLimitZoomTest(){
         ImagePanel testPanel = new ImagePanel();
         testPanel.setZoom(400);
-        Assertions.assertEquals(200, testPanel.getZoom());
-        
+        Assertions.assertEquals(200, testPanel.getZoom());    
     }
 
     @Test
     void getLowerLimitZoomTest(){
         ImagePanel testPanel = new ImagePanel();
         testPanel.setZoom(20);
-        Assertions.assertEquals(50, testPanel.getZoom());
-        
+        Assertions.assertEquals(50, testPanel.getZoom());   
     }
 }

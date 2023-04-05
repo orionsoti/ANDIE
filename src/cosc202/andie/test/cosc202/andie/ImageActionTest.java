@@ -8,9 +8,7 @@ import cosc202.andie.ImagePanel;
 
 public class ImageActionTest {
     
-
     ImagePanel testPanel = new ImagePanel();
-    
     
     @Test
     void setAndGetPanelTest(){

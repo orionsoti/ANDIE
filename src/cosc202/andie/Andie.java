@@ -30,20 +30,8 @@ public class Andie {
      * 
      * <p>
      * This method sets up an interface consisting of an active image (an {@code ImagePanel})
-     * and various menus which can be used to trigger operations to load, save, edit, etc. 
-     * These operations are implemented {@link ImageOperation}s and triggerd via 
-     * {@code ImageAction}s grouped by their general purpose into menus.
-     * </p>
-     * 
-     * @see ImagePanel
-     * @see ImageAction
-     * @see ImageOperation
-     * @see FileActions
-     * @see EditActions
-     * @see ViewActions
-     * @see FilterActions
-     * @see ColourActions
-     * 
+     * Calls upon createMenuBar to complete the set up of the program
+     * </P>
      * @throws Exception if something goes wrong.
      */
 
@@ -65,12 +53,33 @@ public class Andie {
         menuBar1 = frame;
         // Add in menus for various types of action the user may perform.
         createMenuBar();
-        
-        // frame.setJMenuBar(menuBar);
-        // frame.pack();
-        // frame.setVisible(true);
     }
-    
+    /**
+     * <p>
+     * Launches the main GUI for the ANDIE program.
+     * </p>
+     * 
+     * <p>
+     * This method sets various menus which can be used to trigger operations to load, save, edit, etc. 
+     * These operations are implemented {@link ImageOperation}s and triggerd via 
+     * {@code ImageAction}s grouped by their general purpose into menus.
+     * </p>
+     * 
+     * <P>
+     * This has been seperated from the createAndShowGUI() method for the purpose of recalling when the language changes.
+     * See LanguageSettings class for more details.
+     * </P>
+     * 
+     * @see ImagePanel
+     * @see ImageAction
+     * @see ImageOperation
+     * @see FileActions
+     * @see EditActions
+     * @see ViewActions
+     * @see FilterActions
+     * @see ColourActions
+     * 
+     */
     public static void createMenuBar(){
         menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
