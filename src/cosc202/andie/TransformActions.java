@@ -31,11 +31,11 @@ public class TransformActions {
      */
     public TransformActions(){
         actions = new ArrayList<Action>();
-        actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), null, "Resize image", null));
-        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 2));
-        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, "Rotate the Image", Integer.valueOf(KeyEvent.VK_R), 1));
-        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, "Flip image vertically", null, Flip.FLIP_VERTICAL));
-        actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, "Flip image horizontally", null, Flip.FLIP_HORIZONTAL));
+        actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), null, LanguageSettings.getTranslated("resizeDesc"), null));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, LanguageSettings.getTranslated("rotateLeftDesc"), Integer.valueOf(KeyEvent.VK_R), 2));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
         
         
     }
@@ -115,9 +115,9 @@ public class TransformActions {
                 JSpinner s = new JSpinner(scaleSpinner);
                 JPanel myPanel = new JPanel();
                 ImageIcon resizeIcon = new ImageIcon("src/resize.png");
-                myPanel.add(new JLabel("Scale (%)"));
+                myPanel.add(new JLabel(LanguageSettings.getTranslated("scale")));
                 myPanel.add(s);
-                int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, "Resize", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, null, null);
+                int option = JOptionPane.showOptionDialog(target.getParent(), myPanel, LanguageSettings.getTranslated("resize"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, resizeIcon, null, null);
                 if (option == JOptionPane.OK_OPTION) {
                     updateScale(scaleSpinner.getNumber().doubleValue()/100, width, height);
                 }else if (option == JOptionPane.CANCEL_OPTION){

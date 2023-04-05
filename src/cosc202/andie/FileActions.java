@@ -28,12 +28,12 @@ public class FileActions {
 
     public FileActions() {
         actions = new ArrayList<Action>();
-        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, "Open a file", Integer.valueOf(KeyEvent.VK_O)));
-        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), null, "Save the file", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), null, "Save a copy", Integer.valueOf(KeyEvent.VK_A)));
-        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), null, "Export a copy", Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), null, "Choose your Langauge", Integer.valueOf(0)));
-        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), null, "Exit the program", Integer.valueOf(0)));
+        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));
+        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), null, LanguageSettings.getTranslated("saveDesc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), null, LanguageSettings.getTranslated("saveAsDesc") , Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), null, LanguageSettings.getTranslated("exportDesc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), null, LanguageSettings.getTranslated("languageDesc") , Integer.valueOf(0)));
+        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), null, LanguageSettings.getTranslated("exitDesc"), Integer.valueOf(0)));
         
     }
     /**
@@ -69,12 +69,12 @@ public class FileActions {
         
             
             JPanel langPanel = new JPanel();
-            langPanel.add(new JLabel("Select a language: "));
+            langPanel.add(new JLabel(LanguageSettings.getTranslated("langSelect")));
 
             String[] langList = {"English", "Spanish", "Maori", "Pirate"};
             JComboBox<String> langBox = new JComboBox<>(langList);
             langPanel.add(langBox);
-            int option = JOptionPane.showOptionDialog(null, langPanel, "Language", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, langPanel, LanguageSettings.getTranslated("language"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
             if (option == JOptionPane.OK_OPTION) {
                 String selc = langBox.getSelectedItem().toString();
                 LanguageSettings.changeLang(selc);

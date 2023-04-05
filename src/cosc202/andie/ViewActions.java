@@ -37,15 +37,15 @@ public class ViewActions {
         actions = new ArrayList<Action>();
     
         
-        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, "Zoom In", Integer.valueOf(KeyEvent.VK_PLUS)));
-        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, "Zoom Out", Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, "Zoom Full", Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_PLUS)));
+        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
        
     }
 
     /**
      * <p>
-     * Creates menu elements and adds them to menu
+     * Creates menu elements with buttons and adds them to menu
      * </p>
      * @param menu The menu the elements will be added to
      */
@@ -61,6 +61,19 @@ public class ViewActions {
         menu.add(zoomIn);
         menu.add(zoomOut);
         menu.add(fitScreen);
+    }
+    /**
+     * <p>
+     * Create a menu containing the list of View actions.
+     * </p>
+     * @return
+     */
+    public JMenu createMenu() {
+        JMenu viewMenu = new JMenu(LanguageSettings.getTranslated("view"));
+        for (Action action: actions) {
+            viewMenu.add(new JMenuItem(action));
+        }
+        return viewMenu;
     }
 
     /**

@@ -34,10 +34,10 @@ public class FilterActions {
      */
     public FilterActions() {
         actions = new ArrayList<Action>();
-        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, "Apply a mean filter", Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, "Apply a sharpen filter", Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), null, "Apply a guassian filter", Integer.valueOf(KeyEvent.VK_U)));
-        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, "Apply a median filter", Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), null, LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
+        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
     }
 
     /**
@@ -101,7 +101,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
@@ -166,7 +166,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 5, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 
             // Check the return value from the dialog box.
             if (option == JOptionPane.CANCEL_OPTION) {
@@ -224,8 +224,8 @@ public class FilterActions {
          */
         public void actionPerformed(ActionEvent e){
             // Pop-up dialog box to confirm user wishes to apply filter.
-            JLabel text = new JLabel("Apply Sharpen Filter?");
-            int option = JOptionPane.showOptionDialog(target.getParent(), text, "Apply a sharpen filter?",
+            JLabel text = new JLabel(LanguageSettings.getTranslated("sharpenAsk"));
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("sharpenAsk"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),
                     null, null);
 
@@ -280,7 +280,7 @@ public class FilterActions {
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
             JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, "Enter filter radius",
+            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     null, null);
             // Returns early if the user cancels the operation.
