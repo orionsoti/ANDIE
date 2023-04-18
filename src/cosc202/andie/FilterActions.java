@@ -248,6 +248,11 @@ public class FilterActions {
         }
 
     }
+        /**
+     * <p>
+     * Gaus boi fixed
+     * </p>
+     */
     public class GaussianBlurFilterAction extends ImageAction {
 
         /**
@@ -272,7 +277,7 @@ public class FilterActions {
          * <p>
          * This method is called whenever the GaussianBlurFilterAction is triggered.
          * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link GaussianFilter}.
+         * {@link GaussianBlurFilter}.
          * </p>
          * 
          * @param e The event triggering this callback.

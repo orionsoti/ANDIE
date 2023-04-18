@@ -7,13 +7,13 @@ import javax.swing.*;
 /**
  * <p>
  * Actions provided by the Transform
- * <p>
+ * </p>
  * 
  * <p>
  * The Transform menu contains actions such as resize, rotate, and flip that affect the contents of the image.
- * <p>
+ * </p>
  * 
- * @author Orion Soti & Jacob Myron
+ * @author Orion Soti Jacob Myron
  * @version 1.0
  * 2 April 2023
  * 
@@ -61,7 +61,7 @@ public class TransformActions {
      * Action to flip an image.
      * </p>
      * 
-     * @throws NullPointerException If there is no image loaded
+     * 
      */
     public class FlipAction extends ImageAction{
         private int direction;
@@ -74,6 +74,14 @@ public class TransformActions {
             super(name, icon, desc, mnemonic);
             this.direction = direction;
         }
+
+        /**
+         * <p>
+         * When button is clicked
+         * </p>
+         * 
+         * @throws NullPointerException If there is no image loaded
+         */
 
         public void actionPerformed(ActionEvent e){
             // Create and apply the filter
