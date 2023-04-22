@@ -2,7 +2,6 @@
 package cosc202.andie;
 
 import java.awt.image.*;
-import java.awt.*;
 
 /**
  * <p>
@@ -64,23 +63,15 @@ public class GaussianBlurFilter implements ImageOperation, java.io.Serializable{
         }
         //Creates a convolution kernel with the calculated values
         Kernel kernel = new Kernel(size, size, array);
-        //Creates a new convolution operation with the kernel
-        ConvolveOp convOp = new ConvolveOp(kernel);
-        //Calculates size of borders and new image dimensions
-        int border = radius * 2;
-        int newWidth = input.getWidth() + border;
-        int newHeight = input.getHeight() + border;
-        //Creates a new BufferedImage with padded dimensions
-        BufferedImage paddedInput = new BufferedImage(newWidth, newHeight, input.getType());
-        Graphics2D g = paddedInput.createGraphics();
-        g.drawImage(input, radius, radius, null);
-        g.dispose();
-        //Apply the convolution operation to the input image
-        BufferedImage output = convOp.filter(paddedInput, null);
-        //Crops the output image to the original size
-        output = output.getSubimage(radius, radius, input.getWidth(), input.getHeight());
-        //Returns the output image
+        // Creates a new convolution operation with the kernel
+        ConvolutionOperation convOp = new ConvolutionOperation(kernel);
+        // Creates a copy of the input image to apply the filter to
+        BufferedImage output = new BufferedImage(input.getColorModel(), input.copyData(null),
+                input.isAlphaPremultiplied(), null);
+        // Applies the filter
+        convOp.filter(input, output);
         return output;
+
     }
     
     /**
