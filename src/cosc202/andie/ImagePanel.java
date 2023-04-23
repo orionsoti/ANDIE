@@ -1,6 +1,9 @@
 package cosc202.andie;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
 import javax.swing.*;
 
 /**
@@ -39,6 +42,13 @@ public class ImagePanel extends JPanel {
      */
     private double scale;
 
+    // start and end points of the current selection
+    private Point selectionStart;
+    private Point selectionEnd;
+
+    // true if the user is currently selecting a region
+    private boolean isSelecting;
+
     /**
      * <p>
      * Create a new ImagePanel.
@@ -51,6 +61,64 @@ public class ImagePanel extends JPanel {
     public ImagePanel() {
         image = new EditableImage();
         scale = 1.0;
+        isSelecting = false;
+
+        /**
+         * <p>
+         * Add a mouse listener to the panel to allow for selection of a region of the image.
+         * </p>
+         */
+        MouseAdapter mouseAdapter = new MouseAdapter() {
+            /**
+             * <p>
+             * When the mouse is clicked, the selection is reset.
+             * </p>
+             * 
+             */
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    isSelecting = true;
+                    selectionStart = e.getPoint();
+                    selectionEnd = e.getPoint();
+                }
+            }
+        
+            /**
+             * <p>
+             * When the mouse is released, the selection is complete.
+             * </p>
+             * 
+             */
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    isSelecting = false;
+                    if (selectionStart.equals(selectionEnd)){
+                        selectionStart = null;
+                        selectionEnd = null;
+                    }
+                    repaint();   
+                }
+            }
+
+            /**
+             * <p>
+             * Update the selection rectangle as the mouse is dragged.
+             * </p>
+             */
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if (isSelecting) {
+                    selectionEnd = e.getPoint();
+                    repaint();
+                }
+            }
+        };
+        addMouseListener(mouseAdapter);
+        addMouseMotionListener(mouseAdapter);
+
+
     }
 
     /**
@@ -64,6 +132,17 @@ public class ImagePanel extends JPanel {
         return image;
     }
 
+    /**
+     * <p>
+     * New method added to get the image panel to be used for cropping 
+     * </p>
+     * @return
+     */
+    public ImagePanel getImagePanel(){
+        return this;
+        
+
+    }
     /**
      * <p>
      * Get the current zoom level as a percentage.
@@ -135,7 +214,66 @@ public class ImagePanel extends JPanel {
             Graphics2D g2  = (Graphics2D) g.create();
             g2.scale(scale, scale);
             g2.drawImage(image.getCurrentImage(), null, 0, 0);
+            g2.scale(1 / scale, 1 / scale); // Reset the scale for drawing the selection rectangle
+            drawSelectionRectangle(g2);
             g2.dispose();
         }
     }
+
+    /** 
+     * <p>
+     * Draw the selection rectangle on the image.
+     * </p>
+     * 
+     */
+    private void drawSelectionRectangle(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            int x = Math.min(selectionStart.x, selectionEnd.x);
+            int y = Math.min(selectionStart.y, selectionEnd.y);
+            int width = Math.abs(selectionStart.x - selectionEnd.x);
+            int height = Math.abs(selectionStart.y - selectionEnd.y);
+    
+            g2.setColor(new Color(0, 0, 0, 128));
+            Area fullArea = new Area(new Rectangle(0, 0, getWidth(), getHeight()));
+            Area selectedArea = new Area(new Rectangle(x, y, width, height));
+            fullArea.subtract(selectedArea);
+            g2.fill(fullArea);
+    
+            g2.setColor(Color.YELLOW);
+            g2.setStroke(new BasicStroke(2));
+            g2.drawRect(x, y, width, height);
+        }
+    }
+
+    /**
+     * <p>
+     * Get the current selection rectangle.
+     * </p>
+     * 
+     * @return The current selection rectangle, or null if no selection is present.
+     */
+    public Rectangle getSelectionRectangle() {
+        if (selectionStart == null || selectionEnd == null) {
+            return null;
+        }
+        int x = Math.min(selectionStart.x, selectionEnd.x);
+        int y = Math.min(selectionStart.y, selectionEnd.y);
+        int width = Math.abs(selectionStart.x - selectionEnd.x);
+        int height = Math.abs(selectionStart.y - selectionEnd.y);
+        return new Rectangle(x, y, width, height);
+    }
+
+    /**
+     * <p>
+     * Reset the selection rectangle.
+     * </p>
+     */
+    public void resetSelection() {
+        selectionStart = null;
+        selectionEnd = null;
+        repaint();
+    }
+    
+    
+    
 }
