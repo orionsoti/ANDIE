@@ -2,19 +2,21 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 /**
  * <p>
  * Actions provided by the Transform
- * <p>
+ * </p>
  * 
  * <p>
  * The Transform menu contains actions such as resize, rotate, and flip that affect the contents of the image.
- * <p>
+ * </p>
  * 
- * @author Orion Soti & Jacob Myron
+ * @author Orion Soti Jacob Myron
  * @version 1.0
  * 2 April 2023
  * 
@@ -38,7 +40,8 @@ public class TransformActions {
         actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
-        
+        actions.add(new CropAction("Crop", null, "cropDesc", null));
+
         
     }
 
@@ -90,7 +93,7 @@ public class TransformActions {
      * Action to flip an image.
      * </p>
      * 
-     * @throws NullPointerException If there is no image loaded
+     * 
      */
     public class FlipAction extends ImageAction{
         private int direction;
@@ -103,6 +106,14 @@ public class TransformActions {
             super(name, icon, desc, mnemonic);
             this.direction = direction;
         }
+
+        /**
+         * <p>
+         * When button is clicked
+         * </p>
+         * 
+         * @throws NullPointerException If there is no image loaded
+         */
 
         public void actionPerformed(ActionEvent e){
             // Create and apply the filter
@@ -270,7 +281,52 @@ public class TransformActions {
 
     }
 
-
-
-
+    /**
+     * <p>
+     * Action to crop an image.
+     * </p>
+     *
+     */
+    public class CropAction extends ImageAction{
+        
+        /**
+         * <p>
+         * Create a new Crop action.
+         * </p>
+         * @param name
+         * @param icon
+         * @param desc
+         * @param mnemonic
+         */
+        CropAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+            super(name, icon, desc, mnemonic);
+        }
+        
+        /**
+         * <p>
+         * Callback for when the crop action is performed.
+         * </p>
+         * 
+         * @param e The event that triggered the action.
+         * @throws NullPointerException If there is no image loaded
+         */
+        public void actionPerformed(ActionEvent e) {
+            try {
+                Rectangle selection =  target.getImagePanel().getSelectionRectangle();
+                if (selection != null) {
+                    target.getImage().apply(new Crop(selection, target.getImagePanel().getZoom() / 100, 0, 0));
+                    target.getImagePanel().resetSelection();
+                    target.getImagePanel().repaint();
+                }else{
+                    JOptionPane.showMessageDialog(target.getImagePanel(), "No selection made. Please make a selection before cropping. ", "Alert", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (NullPointerException exception) {
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            }
+        }
+        
+    }
 }
+     

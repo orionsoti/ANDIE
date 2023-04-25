@@ -23,6 +23,7 @@ import javax.imageio.*;
  */
 public class Andie {
 
+    public static JFrame menuBar1;
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
@@ -31,11 +32,12 @@ public class Andie {
      * <p>
      * This method sets up an interface consisting of an active image (an {@code ImagePanel})
      * Calls upon createMenuBar to complete the set up of the program
-     * </P>
+     * </p>
+     * 
      * @throws Exception if something goes wrong.
      */
 
-    public static JFrame menuBar1;
+    
 
     private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame

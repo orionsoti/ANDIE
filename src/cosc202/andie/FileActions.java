@@ -25,7 +25,11 @@ public class FileActions {
     
     /** A list of actions for the File menu. */
     protected ArrayList<Action> actions;
-
+    /**
+     * <p>
+     * Creating a menu for file actions from array
+     * </p>
+     */
     public FileActions() {
         actions = new ArrayList<Action>();
         actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));

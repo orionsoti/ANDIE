@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -38,6 +39,8 @@ public class FilterActions {
         actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
         actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), null, LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
         actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new EmbossFilterAction("Emboss Filter", null, "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new SobelFilterAction("Sobel Filter", null, "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
     }
 
     /**
@@ -96,7 +99,7 @@ public class FilterActions {
         public void actionPerformed(ActionEvent e) {
 
             // Determine the radius - ask the user.
-            int radius = 1;
+            int radius = 0;
 
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
@@ -164,7 +167,7 @@ public class FilterActions {
         public void actionPerformed(ActionEvent e) {
 
             // Determine the radius - ask the user.
-            int radius = 1;
+            int radius = 0;
 
             // Pop-up dialog box to ask for the radius value.
             SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 5, 1);
@@ -248,6 +251,11 @@ public class FilterActions {
         }
 
     }
+        /**
+     * <p>
+     * Gaussian blur filter action.
+     * </p>
+     */
     public class GaussianBlurFilterAction extends ImageAction {
 
         /**
@@ -272,7 +280,7 @@ public class FilterActions {
          * <p>
          * This method is called whenever the GaussianBlurFilterAction is triggered.
          * It prompts the user for a filter radius, then applys an appropriately sized
-         * {@link GaussianFilter}.
+         * {@link GaussianBlurFilter}.
          * </p>
          * 
          * @param e The event triggering this callback.
@@ -306,5 +314,133 @@ public class FilterActions {
         }
 
     }
+    
+    /**
+     * <p>
+     * Emboss filter action.
+     * </p>
+     * 
+     */
+    public class EmbossFilterAction extends ImageAction {
+        /**
+         * <p>
+         * Create a new EmbossFilter action.
+         * </p>
+         *
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        EmbossFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
+            super(name, iconName, desc, mnemonic);
+        }
+        
+        /**
+         * <p>
+         * Callback for when the embossFilterAction is triggered.
+         * </p>
+         * 
+         */
+        public void actionPerformed(ActionEvent e) {
+            String[] directions = {"Northwest", "North", "Northeast", "West", "East", "Southwest", "South", "Southeast"};
+            JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
+            ButtonGroup buttonGroup = new ButtonGroup();
+            int[] buttonValues = {EmbossFilter.NORTHWEST, EmbossFilter.NORTH, EmbossFilter.NORTHEAST, EmbossFilter.WEST, EmbossFilter.EAST, EmbossFilter.SOUTHWEST, EmbossFilter.SOUTH, EmbossFilter.SOUTHEAST};
+                
+            for (int i = 0; i < directions.length; i++) {
+                JToggleButton button = new JToggleButton(directions[i]);
+                button.setActionCommand(String.valueOf(buttonValues[i]));
+                buttonGroup.add(button);
+                buttonPanel.add(button);
+            }
+                
+            buttonPanel.add(new JLabel(), 4); // Add an empty label in the center of the grid
+            
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
+                
+            if (option == JOptionPane.CANCEL_OPTION || buttonGroup.getSelection() == null) {
+                return;
+            }
+            
+            int direction = Integer.parseInt(buttonGroup.getSelection().getActionCommand());
+            
+            try {
+                target.getImage().apply(new EmbossFilter(direction));
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException exception) {
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            }
+        }
+    }
+
+    /**
+     * <p>
+     * Sobel filter action.
+     */
+    public class SobelFilterAction extends ImageAction {
+        /**
+         * <p>
+         * Create a new SobelFilter action.
+         * </p>
+         *
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        SobelFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
+            super(name, iconName, desc, mnemonic);
+        }
+        
+        /**
+         * <p>
+         * Callback for when the SobelFilter action is triggered.
+         * </p>
+         * 
+         */
+        public void actionPerformed(ActionEvent e) {
+            String[] directions = {"Horizontal", "Vertical"};
+            JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
+            ButtonGroup buttonGroup = new ButtonGroup();
+            boolean[] buttonValues = {SobelFilter.HORIZONTAL, SobelFilter.VERTICAL};
+                
+            for (int i = 0; i < directions.length; i++) {
+                JToggleButton button = new JToggleButton(directions[i]);
+                button.setActionCommand(String.valueOf(buttonValues[i]));
+                buttonGroup.add(button);
+                buttonPanel.add(button);
+            }
+            
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
+                
+            if (option == JOptionPane.CANCEL_OPTION || buttonGroup.getSelection() == null) {
+                return;
+            }
+            
+            boolean direction = Boolean.parseBoolean(buttonGroup.getSelection().getActionCommand());
+            
+            try {
+                target.getImage().apply(new SobelFilter(direction));
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException exception) {
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            }
+        }
+    }
 }
+
+
+
+  
 
