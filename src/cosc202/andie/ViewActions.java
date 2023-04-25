@@ -51,7 +51,9 @@ public class ViewActions {
      * </p>
      * @param menu The menu the elements will be added to
      */
-    public void createMenu(JMenuBar menu) {
+    public void createToolMenu(JMenuBar viewTools) {
+        // JMenu viewTools = new JMenu();
+
         //Creates new ImageIcons for each element
         ImageIcon zoomInIcon = new ImageIcon("src/images/zoom_in.png", "Zoom In Icon");
         ImageIcon zoomOutIcon = new ImageIcon("src/images/zoom_out.png", "Zoom Out Icon");
@@ -67,15 +69,16 @@ public class ViewActions {
         zoomIn.addActionListener(actions.get(0));
         fullscreen.addActionListener(actions.get(2));
 
-        //Sets preferred size of the buttons
-        zoomIn.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
-        zoomOut.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
-        fullscreen.setPreferredSize(new Dimension(menu.getHeight(), menu.getHeight()));
+        zoomOut.setPreferredSize(new Dimension(25,25));
+        zoomIn.setPreferredSize(new Dimension(25,25));
+        fullscreen.setPreferredSize(new Dimension(25,25));
 
         //Adds the buttons to the menu
-        menu.add(zoomIn);
-        menu.add(zoomOut);
-        menu.add(fullscreen);
+        viewTools.add(zoomIn);
+        viewTools.add(zoomOut);
+        viewTools.add(fullscreen);
+
+        // return viewTools;
     }
     /**
      * <p>

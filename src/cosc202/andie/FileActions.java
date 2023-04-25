@@ -2,7 +2,7 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.awt.Dimension;
 /**
  * <p>
  * Actions provided by the File menu.
@@ -121,6 +121,23 @@ public class FileActions {
         }
 
         return fileMenu;
+    }
+
+    public void createToolMenu(JMenuBar toolBar){
+        ImageIcon saveIcon = new ImageIcon("src/images/save.png");
+        ImageIcon openIcon = new ImageIcon("src/images/open.png");
+
+        JButton save = new JButton(saveIcon);
+        JButton open = new JButton(openIcon);
+
+        save.addActionListener(actions.get(1));
+        open.addActionListener(actions.get(0));
+
+        save.setPreferredSize(new Dimension(25,25));
+        open.setPreferredSize(new Dimension(25,25));
+
+        toolBar.add(save);
+        toolBar.add(open);
     }
 
     /**

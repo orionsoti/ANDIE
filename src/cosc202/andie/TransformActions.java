@@ -1,5 +1,6 @@
 package cosc202.andie;
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -54,6 +55,34 @@ public class TransformActions {
             transformMenu.add(new JMenuItem(action));
         }
         return transformMenu;
+    }
+
+    public void createToolMenu(JMenuBar toolBar){
+        ImageIcon rotateLeftIcon = new ImageIcon("src/images/rotate_left.png");
+        ImageIcon rotateRightIcon = new ImageIcon("src/images/rotate_right.png");
+        ImageIcon flipVertIcon = new ImageIcon("src/images/flip_vert.png");
+        ImageIcon flipHorIcon = new ImageIcon("src/images/flip_hor.png");
+
+
+        JButton rotateLeft= new JButton(rotateLeftIcon);
+        JButton rotateRight = new JButton(rotateRightIcon);
+        JButton flipVert = new JButton(flipVertIcon);
+        JButton flipHor = new JButton(flipHorIcon);
+
+        rotateLeft.addActionListener(actions.get(1));
+        rotateRight.addActionListener(actions.get(2));
+        flipVert.addActionListener(actions.get(4));
+        flipHor.addActionListener(actions.get(3));
+
+        rotateLeft.setPreferredSize(new Dimension(25,25));
+        rotateRight.setPreferredSize(new Dimension(25,25));
+        flipVert.setPreferredSize(new Dimension(25,25));
+        flipHor.setPreferredSize(new Dimension(25,25));
+
+        toolBar.add(rotateLeft);
+        toolBar.add(rotateRight);
+        toolBar.add(flipVert);
+        toolBar.add(flipHor);
     }
 
     /**

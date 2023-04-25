@@ -53,6 +53,7 @@ public class Andie {
         menuBar1 = frame;
         // Add in menus for various types of action the user may perform.
         createMenuBar();
+        createToolMenu();
     }
     /**
      * <p>
@@ -83,15 +84,14 @@ public class Andie {
     public static void createMenuBar(){
         menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
-
         // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
         menuBar.add(fileActions.createMenu());
-
+        
         // Likewise Edit menus are very common, so should be clear what might go here.
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
-
+        
         // View actions control how the image is displayed, but do not alter its actual content
         ViewActions viewActions = new ViewActions();
         menuBar.add(viewActions.createMenu());
@@ -106,19 +106,39 @@ public class Andie {
         
         TransformActions transformActions = new TransformActions();
         menuBar.add(transformActions.createMenu());
-
+        
         // View actions control how the image is displayed, but do not alter its actual content
         // Rather than making the menu and adding it to menuBar it directly adds the buttons to
         // menuBar
         //create menu to the right of the menu bar
-        ViewActions viewActions2 = new ViewActions();
-        viewActions2.createMenu(menuBar);
+
+        // ViewActions viewActions2 = new ViewActions();
+        // menuBar.add(viewActions2.createToolMenu());
 
         menuBar1.setJMenuBar(menuBar);
         menuBar1.pack();
         menuBar1.setVisible(true);
     }
     
+    public static void createToolMenu(){
+        menuBar1.setVisible(false);
+        JMenuBar toolBar = new JMenuBar();
+
+        FileActions fileActions = new FileActions();
+        ViewActions viewActions = new ViewActions();
+        EditActions editActions = new EditActions();
+        TransformActions transformActions = new TransformActions();
+
+        fileActions.createToolMenu(toolBar);
+        editActions.createToolMenu(toolBar);
+        viewActions.createToolMenu(toolBar);
+        transformActions.createToolMenu(toolBar);
+
+        menuBar1.add(toolBar, BorderLayout.NORTH);
+        menuBar1.setVisible(true);
+        menuBar1.pack();
+    }
+
     /**
      * <p>
      * Main entry point to the ANDIE program.

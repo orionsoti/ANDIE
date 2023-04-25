@@ -3,7 +3,7 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-
+import java.awt.Dimension;
  /**
  * <p>
  * Actions provided by the Edit menu.
@@ -53,6 +53,23 @@ public class EditActions {
         }
 
         return editMenu;
+    }
+
+    public void createToolMenu(JMenuBar toolBar){
+        ImageIcon undoIcon = new ImageIcon("src/images/undo.png");
+        ImageIcon redoIcon = new ImageIcon("src/images/redo.png");
+        
+        JButton undo = new JButton(undoIcon);
+        JButton redo = new JButton(redoIcon);
+
+        undo.addActionListener(actions.get(0));
+        redo.addActionListener(actions.get(1));
+
+        undo.setPreferredSize(new Dimension(25,25));
+        redo.setPreferredSize(new Dimension(25,25));
+
+        toolBar.add(undo);
+        toolBar.add(redo);
     }
 
     /**
