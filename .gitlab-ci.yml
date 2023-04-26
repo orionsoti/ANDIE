@@ -78,6 +78,6 @@ unit-test-job: #junittests
     - javac -d bin src/cosc202/andie/*.java
     - javac -d bin -classpath
       bin:lib/junit-platform-console-standalone-1.9.2.jar
-      src/test/cosc202/andie/*.java
+      src/cosc202/andie/test/cosc202/andie*.java
     - java -jar lib/junit-platform-console-standalone-1.9.2.jar -classpath
       bin --select-package test.cosc202.andie
