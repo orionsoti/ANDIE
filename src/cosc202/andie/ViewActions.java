@@ -41,14 +41,14 @@ public class ViewActions {
         actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_PLUS)));
         actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
         actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
-       
+
     }
 
     /**
      * <p>
      * Creates menu elements with buttons and adds them to menu
      * </p>
-     * @param menu The menu the elements will be added to
+     * @param viewTools The menu the elements will be added to
      */
     public void createToolMenu(JMenuBar viewTools) {
         // JMenu viewTools = new JMenu();

@@ -5,11 +5,13 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 
-/**
- * The Crop class implements an image cropping operation that allows cropping a
+/**<p>
+ * Fuction to allow crop capibilities
+ * </p>
+ * <p>The Crop class implements an image cropping operation that allows cropping a
  * specific Shape from a given input image and returns the cropped image.
- * 
- * @Author Orion Soti
+ * </p>
+ * @author Orion Soti
  */
 public class Crop implements ImageOperation, java.io.Serializable {
 

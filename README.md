@@ -2,6 +2,8 @@
 
 Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birkett*
 
+https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
+
 ----
 ## Getting Started:
 
