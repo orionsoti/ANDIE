@@ -3,6 +3,7 @@ package cosc202.andie;
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.*;
+import java.awt.Dimension;
 
 /**
  * <p>
@@ -22,6 +23,8 @@ import javax.imageio.*;
  * @version 1.0
  */
 public class Andie {
+
+    public static Dimension buttonSize = new Dimension(35,35);
 
     public static JFrame menuBar1;
     /**

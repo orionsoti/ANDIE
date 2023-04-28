@@ -60,28 +60,38 @@ public class TransformActions {
         return transformMenu;
     }
 
+    /**
+     * <p>
+     * Creates and adds transform action buttons to the toolBar.
+     * </p>
+     * 
+     * @param toolBar Target JMenuBar that the buttons are added to.
+     */
     public void createToolMenu(JMenuBar toolBar){
-        ImageIcon rotateLeftIcon = new ImageIcon("src/images/rotate_left.png");
-        ImageIcon rotateRightIcon = new ImageIcon("src/images/rotate_right.png");
-        ImageIcon flipVertIcon = new ImageIcon("src/images/flip_vert.png");
-        ImageIcon flipHorIcon = new ImageIcon("src/images/flip_hor.png");
+        //Creates Buttons
+        JButton rotateLeft= new JButton(new ImageIcon("src/images/rotate_left.png"));
+        JButton rotateRight = new JButton(new ImageIcon("src/images/rotate_right.png"));
+        JButton flipVert = new JButton(new ImageIcon("src/images/flip_vert.png"));
+        JButton flipHor = new JButton(new ImageIcon("src/images/flip_hor.png"));
 
-
-        JButton rotateLeft= new JButton(rotateLeftIcon);
-        JButton rotateRight = new JButton(rotateRightIcon);
-        JButton flipVert = new JButton(flipVertIcon);
-        JButton flipHor = new JButton(flipHorIcon);
-
+        //Adds action Listeners
         rotateLeft.addActionListener(actions.get(1));
         rotateRight.addActionListener(actions.get(2));
         flipVert.addActionListener(actions.get(4));
         flipHor.addActionListener(actions.get(3));
 
-        rotateLeft.setPreferredSize(new Dimension(25,25));
-        rotateRight.setPreferredSize(new Dimension(25,25));
-        flipVert.setPreferredSize(new Dimension(25,25));
-        flipHor.setPreferredSize(new Dimension(25,25));
+        //Sets the buttons sizes
+        rotateLeft.setPreferredSize(Andie.buttonSize);
+        rotateRight.setPreferredSize(Andie.buttonSize);
+        flipVert.setPreferredSize(Andie.buttonSize);
+        flipHor.setPreferredSize(Andie.buttonSize);
+        
+        rotateLeft.setToolTipText(LanguageSettings.getTranslated("rotateLeft"));
+        rotateRight.setToolTipText(LanguageSettings.getTranslated("rotateRight"));
+        flipVert.setToolTipText(LanguageSettings.getTranslated("flipHorizontal"));
+        flipHor.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
 
+        //Adds the buttons to the toolBar
         toolBar.add(rotateLeft);
         toolBar.add(rotateRight);
         toolBar.add(flipVert);

@@ -55,19 +55,30 @@ public class EditActions {
         return editMenu;
     }
 
+    /**
+     * <p>
+     * Creates and adds edit action buttons to the toolBar.
+     * </p>
+     * 
+     * @param toolBar Target JMenuBar that the buttons are added to.
+     */
     public void createToolMenu(JMenuBar toolBar){
-        ImageIcon undoIcon = new ImageIcon("src/images/undo.png");
-        ImageIcon redoIcon = new ImageIcon("src/images/redo.png");
-        
-        JButton undo = new JButton(undoIcon);
-        JButton redo = new JButton(redoIcon);
+        //Creates the buttons
+        JButton undo = new JButton(new ImageIcon("src/images/undo.png"));
+        JButton redo = new JButton(new ImageIcon("src/images/redo.png"));
 
+        //Adds action listeners
         undo.addActionListener(actions.get(0));
         redo.addActionListener(actions.get(1));
 
-        undo.setPreferredSize(new Dimension(25,25));
-        redo.setPreferredSize(new Dimension(25,25));
+        //Sets the button size
+        undo.setPreferredSize(Andie.buttonSize);
+        redo.setPreferredSize(Andie.buttonSize);
 
+        undo.setToolTipText(LanguageSettings.getTranslated("undo"));
+        redo.setToolTipText(LanguageSettings.getTranslated("redo"));
+
+        //Adds to toolBar
         toolBar.add(undo);
         toolBar.add(redo);
     }

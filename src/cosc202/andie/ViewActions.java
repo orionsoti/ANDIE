@@ -46,38 +46,34 @@ public class ViewActions {
 
     /**
      * <p>
-     * Creates menu elements with buttons and adds them to menu
+     * Creates and adds viewAction buttons to the toolBar.
      * </p>
-     * @param viewTools The menu the elements will be added to
+     * @param viewTools Target JMenuBar that the buttons are added to.
      */
     public void createToolMenu(JMenuBar viewTools) {
-        // JMenu viewTools = new JMenu();
-
-        //Creates new ImageIcons for each element
-        ImageIcon zoomInIcon = new ImageIcon("src/images/zoom_in.png", "Zoom In Icon");
-        ImageIcon zoomOutIcon = new ImageIcon("src/images/zoom_out.png", "Zoom Out Icon");
-        ImageIcon fullscreenIcon = new ImageIcon("src/images/fullscreen.png", "Fullscreen Icon");
-
-        //Creates a corresponding JButton element
-        JButton zoomIn = new JButton(zoomInIcon);
-        JButton zoomOut = new JButton(zoomOutIcon);
-        JButton fullscreen = new JButton(fullscreenIcon);
+        //Creates JButton elements
+        JButton zoomIn = new JButton(new ImageIcon("src/images/zoom_in.png"));
+        JButton zoomOut = new JButton(new ImageIcon("src/images/zoom_out.png"));
+        JButton fullscreen = new JButton(new ImageIcon("src/images/fullscreen.png"));
 
         //Adds corresponding ActionListener
         zoomOut.addActionListener(actions.get(1));
         zoomIn.addActionListener(actions.get(0));
         fullscreen.addActionListener(actions.get(2));
 
-        zoomOut.setPreferredSize(new Dimension(25,25));
-        zoomIn.setPreferredSize(new Dimension(25,25));
-        fullscreen.setPreferredSize(new Dimension(25,25));
+        //Sets button size
+        zoomOut.setPreferredSize(Andie.buttonSize);
+        zoomIn.setPreferredSize(Andie.buttonSize);
+        fullscreen.setPreferredSize(Andie.buttonSize);
 
+        zoomOut.setToolTipText(LanguageSettings.getTranslated("zoomOut"));
+        zoomIn.setToolTipText(LanguageSettings.getTranslated("zoomIn"));
+        fullscreen.setToolTipText(LanguageSettings.getTranslated("zoomFull"));
+        
         //Adds the buttons to the menu
         viewTools.add(zoomIn);
         viewTools.add(zoomOut);
         viewTools.add(fullscreen);
-
-        // return viewTools;
     }
     /**
      * <p>

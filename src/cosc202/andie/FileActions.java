@@ -127,19 +127,30 @@ public class FileActions {
         return fileMenu;
     }
 
+    /**
+     * <p>
+     * Creates and adds file action buttons to the toolBar.
+     * </p>
+     * 
+     * @param toolBar Target JMenuBar that the buttons are added to.
+     */
     public void createToolMenu(JMenuBar toolBar){
-        ImageIcon saveIcon = new ImageIcon("src/images/save.png");
-        ImageIcon openIcon = new ImageIcon("src/images/open.png");
+        //Creates the buttons
+        JButton save = new JButton(new ImageIcon("src/images/save.png"));
+        JButton open = new JButton(new ImageIcon("src/images/open.png"));
 
-        JButton save = new JButton(saveIcon);
-        JButton open = new JButton(openIcon);
-
+        //Adds the action listeners
         save.addActionListener(actions.get(1));
         open.addActionListener(actions.get(0));
 
-        save.setPreferredSize(new Dimension(25,25));
-        open.setPreferredSize(new Dimension(25,25));
+        //Sets the size of the buttons
+        save.setPreferredSize(Andie.buttonSize);
+        open.setPreferredSize(Andie.buttonSize);
 
+        save.setToolTipText(LanguageSettings.getTranslated("save"));
+        open.setToolTipText(LanguageSettings.getTranslated("open"));
+        
+        //Adds the buttons to the tool bar
         toolBar.add(save);
         toolBar.add(open);
     }
