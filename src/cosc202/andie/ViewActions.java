@@ -1,7 +1,6 @@
 package cosc202.andie;
 
 import java.util.*;
-import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
 

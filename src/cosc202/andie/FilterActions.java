@@ -41,6 +41,7 @@ public class FilterActions {
         actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
         actions.add(new EmbossFilterAction("Emboss Filter", null, "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
         actions.add(new SobelFilterAction("Sobel Filter", null, "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new MatrixFilterAction("Matrix Filter", null, "MatrixDesc", Integer.valueOf(KeyEvent.VK_M)));
     }
 
     /**
@@ -435,6 +436,41 @@ public class FilterActions {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            }
+        }
+    }
+
+    public class MatrixFilterAction extends ImageAction{
+        /**
+         * <p>
+         * Create a new MatrixFilter action.
+         * </p>
+         *
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        MatrixFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
+            super(name, iconName, desc, mnemonic);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            // Pop-up dialog box to confirm user wishes to apply filter.
+            JLabel text = new JLabel("Apply matrix filter?");
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, "Apply matrix filter?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            if (option != JOptionPane.OK_OPTION) {
+                return;
+            }
+            // Create and apply the filter
+            try{
+                target.getImage().apply(new MatrixFilter());
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
             }
         }
     }
