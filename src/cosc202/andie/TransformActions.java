@@ -321,14 +321,8 @@ public class TransformActions {
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                Rectangle selection =  target.getImagePanel().getSelectionRectangle();
-                if (selection != null) {
-                    target.getImage().apply(new Crop(selection, target.getImagePanel().getZoom() / 100, 0, 0));
-                    target.getImagePanel().resetSelection();
-                    target.getImagePanel().repaint();
-                }else{
-                    JOptionPane.showMessageDialog(target.getImagePanel(), "No selection made. Please make a selection before cropping. ", "Alert", JOptionPane.WARNING_MESSAGE);
-                }
+                ImagePanel imagePanel = target.getImagePanel();
+                imagePanel.setCropMode(true);
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),

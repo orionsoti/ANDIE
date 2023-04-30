@@ -49,6 +49,10 @@ public class ImagePanel extends JPanel {
     // true if the user is currently selecting a region
     private boolean isSelecting;
 
+    // true if the user is currently cropping
+    private boolean cropMode;
+
+
     /**
      * <p>
      * Create a new ImagePanel.
@@ -77,7 +81,7 @@ public class ImagePanel extends JPanel {
              */
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == MouseEvent.BUTTON1 && cropMode) {
                     isSelecting = true;
                     selectionStart = e.getPoint();
                     selectionEnd = e.getPoint();
@@ -92,13 +96,18 @@ public class ImagePanel extends JPanel {
              */
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == MouseEvent.BUTTON1 && cropMode) {
                     isSelecting = false;
                     if (selectionStart.equals(selectionEnd)){
                         selectionStart = null;
                         selectionEnd = null;
                     }
-                    repaint();   
+                    if (getSelectionRectangle() != null) {
+                        image.apply(new Crop(getSelectionRectangle(), getZoom()/100, 0, 0));
+                        resetSelection();
+                        setCropMode(false);
+                    }
+                    repaint();
                 }
             }
 
@@ -238,9 +247,14 @@ public class ImagePanel extends JPanel {
             Area selectedArea = new Area(new Rectangle(x, y, width, height));
             fullArea.subtract(selectedArea);
             g2.fill(fullArea);
-    
+            if (cropMode){
+                float[] dash = {10.0f};
+                g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
+            }else{
+                g2.setStroke(new BasicStroke(2));
+            }
             g2.setColor(Color.YELLOW);
-            g2.setStroke(new BasicStroke(2));
+            //g2.setStroke(new BasicStroke(2));
             g2.drawRect(x, y, width, height);
         }
     }
@@ -272,6 +286,19 @@ public class ImagePanel extends JPanel {
         selectionStart = null;
         selectionEnd = null;
         repaint();
+    }
+
+    public boolean getCropMode(){
+        return cropMode;
+    }
+
+    public void setCropMode(boolean cropMode){
+        this.cropMode = cropMode;
+        if (cropMode){
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        }else{
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
     }
     
     
