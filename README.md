@@ -14,6 +14,7 @@ https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
 >You could also use the added button shortcuts for the view menu to zoom in, zoom out and reset zoom.
 >(Note! view actions do not alter the image, only the way it is displayed within the application).
 >Supported File Types Include: PNG, JPG, JPEG, BMP, GIF
+>Hotkeys: Save(Ctrl+S), SaveAs(Ctrl+Shift+S), Open(Ctr+O), Export(Ctrl+Shift+E)
 ---
 
 ## Features
@@ -130,7 +131,7 @@ https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
 >
 > *Contributors:* Liam Hayward
 > 
-> *Accessed via:* File Menu
+> *Accessed via:* File Menu or HotKey: CTRL + SHIFT + E.
 >
 > *Testing:* Tested image types: png, jpg, jpeg, gif all are working. Also set up a check to stop users saving incorrect file types. 
 >
@@ -156,4 +157,5 @@ https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
 > *Accessed via:* AndieProject/andie/AndieTestingDocumentation.pdf
 >
 > *Code Refactoring/additions: Any changes to the original methods/classes/skeleton of the program are documented in the Testing doumentation PDF.
+
 
