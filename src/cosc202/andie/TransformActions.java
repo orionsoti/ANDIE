@@ -35,7 +35,7 @@ public class TransformActions {
     public TransformActions(){
         actions = new ArrayList<Action>();
         actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), null, LanguageSettings.getTranslated("resizeDesc"), null));
-        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, LanguageSettings.getTranslated("rotateLeftDesc"), Integer.valueOf(KeyEvent.VK_R), 2));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, LanguageSettings.getTranslated("rotateLeftDesc"), Integer.valueOf(KeyEvent.VK_L), 2));
         actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
@@ -249,6 +249,7 @@ public class TransformActions {
         /**
          * <p>
          * Create a new ImageRotation action.
+         * Sets the hotkey for image rotation as 'ctrl + r'
          * </p>
          * 
          * @param name     The name of the action (ignored if null).
@@ -259,6 +260,15 @@ public class TransformActions {
         ImageRotationAction(String name, ImageIcon iconName, String desc, Integer mnemonic, int rotation) {
             super(name, iconName, desc, mnemonic);
             this.rotation = rotation;
+           
+            // Sets 'ctrl + r' as the hotkey triggering an image-rotation action (right)
+            KeyStroke r = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, r);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(r, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -301,6 +311,7 @@ public class TransformActions {
         /**
          * <p>
          * Create a new Crop action.
+         * Sets 'ctrl + shift + c' as the hotkey for crop.
          * </p>
          * @param name
          * @param icon
@@ -309,6 +320,16 @@ public class TransformActions {
          */
         CropAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
+
+            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, c);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(c, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
+
+            
         }
         
         /**
