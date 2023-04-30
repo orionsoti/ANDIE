@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Toolkit;
 import javax.swing.*;
  /**
  * <p>
@@ -39,7 +40,7 @@ public class EditActions {
 
     /**
      * <p>
-     * Create a menu contianing the list of Edit actions.
+     * Create a menu containing the list of Edit actions.
      * </p>
      * 
      * @return The edit menu UI element.
@@ -94,6 +95,7 @@ public class EditActions {
         /**
          * <p>
          * Create a new undo action.
+         * Sets 'ctrl + z' as the hotkey for undo
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -103,6 +105,16 @@ public class EditActions {
          */
         UndoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+             // Sets the hotkey as 'ctrl + z' to trigger an undo action.
+             KeyStroke z = KeyStroke.getKeyStroke(KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+             putValue(Action.ACCELERATOR_KEY, z);
+             
+             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             inputMap.put(z, getValue(Action.NAME));
+     
+             target.getActionMap().put(getValue(Action.NAME), this);
+            
         }
 
         /**
@@ -143,6 +155,7 @@ public class EditActions {
         /**
          * <p>
          * Create a new redo action.
+         * Sets 'ctrl + y' as the redo hotkey.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -152,6 +165,14 @@ public class EditActions {
          */
         RedoAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+             // Sets the hotkey as 'ctrl + y' to trigger a redo action.
+             KeyStroke y = KeyStroke.getKeyStroke(KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+             putValue(Action.ACCELERATOR_KEY, y);
+             
+             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             inputMap.put(y, getValue(Action.NAME));
+     
+             target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         

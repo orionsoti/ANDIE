@@ -14,7 +14,7 @@ https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
 >You could also use the added button shortcuts for the view menu to zoom in, zoom out and reset zoom.
 >(Note! view actions do not alter the image, only the way it is displayed within the application).
 >Supported File Types Include: PNG, JPG, JPEG, BMP, GIF
->Hotkeys: Save(Ctrl+S), SaveAs(Ctrl+Shift+S), Open(Ctr+O), Export(Ctrl+Shift+E)
+>Hotkeys: Save(Ctrl+S), SaveAs(Ctrl+Shift+S), Open(Ctr+O), Export(Ctrl+Shift+E),           Undo(Ctrl+Z), Redo(Ctrl+Y)
 ---
 
 ## Features
