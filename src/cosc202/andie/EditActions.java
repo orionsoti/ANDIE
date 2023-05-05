@@ -3,7 +3,6 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.awt.Dimension;
  /**
  * <p>
  * Actions provided by the Edit menu.
