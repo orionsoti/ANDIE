@@ -293,6 +293,10 @@ class EditableImage {
             MacroActions.addToStack(op);
         }
     }
+    
+    public void preview(ImageOperation op){
+        current = op.apply(current);
+    }
 
     /**
      * <p>
@@ -324,6 +328,10 @@ class EditableImage {
         return current;
     }
 
+
+    public void setCurrentImage(BufferedImage newImage){
+        current = newImage;
+    }
     /**
      * <p>
      * Reapply the current list of operations to the original.
