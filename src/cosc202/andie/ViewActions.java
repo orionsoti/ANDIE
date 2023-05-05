@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Toolkit;
 import javax.swing.*;
 
 /**
@@ -37,7 +38,7 @@ public class ViewActions {
         actions = new ArrayList<Action>();
     
         
-        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_PLUS)));
+        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_EQUALS)));
         actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
         actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
 
@@ -102,6 +103,7 @@ public class ViewActions {
         /**
          * <p>
          * Create a new zoom-in action.
+         * Sets the hotkey as 'ctrl + '+'' for zoom-in.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -111,6 +113,15 @@ public class ViewActions {
          */
         ZoomInAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            
+            //Sets the hotkey as 'ctrl + =' for the zoom-in action.
+            KeyStroke plus = KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, plus);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(plus, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -147,6 +158,7 @@ public class ViewActions {
         /**
          * <p>
          * Create a new zoom-out action.
+         * Sets the hotkey for zoom-out as 'ctrl + -'.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -156,11 +168,20 @@ public class ViewActions {
          */
         ZoomOutAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+            //Sets 'ctrl + -' as the hotkey for the zoom-out action.
+            KeyStroke minus = KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, minus);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(minus, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
          * <p>
-         * Callback for when the zoom-iout action is triggered.
+         * Callback for when the zoom-out action is triggered.
          * </p>
          * 
          * <p>
@@ -192,6 +213,7 @@ public class ViewActions {
         /**
          * <p>
          * Create a new zoom-full action.
+         * Sets hotkey as ctrl + 1 for zoom-full.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -201,6 +223,17 @@ public class ViewActions {
          */
         ZoomFullAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+            //Sets the hotkey as 'ctrl + 1' for the zoom-full action.
+            KeyStroke one = KeyStroke.getKeyStroke(KeyEvent.VK_1, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, one);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(one, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
+
+
         }
 
         /**

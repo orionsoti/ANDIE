@@ -1,6 +1,7 @@
 package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
+import java.awt.*;
 import javax.swing.*;
 /**
  * <p>
@@ -166,6 +167,7 @@ public class FileActions {
         /**
          * <p>
          * Create a new file-open action.
+         * Sets the hotkey for file-open as 'ctrl + o'. 
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -175,6 +177,16 @@ public class FileActions {
          */
         FileOpenAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+           
+            // Set the hotkey 'ctrl + o' to trigger a file-open action.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
+             
         }
 
         /**
@@ -244,6 +256,7 @@ public class FileActions {
         /**
          * <p>
          * Create a new file-save action.
+         * Sets 'ctrl + s' (windows) and 'cmd + s' (mac) as the hotkey for file-save.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -253,6 +266,16 @@ public class FileActions {
          */
         FileSaveAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+        
+             // Sets the hotkey as 'ctrl + s' to trigger a file-save action.
+             KeyStroke s = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+             putValue(Action.ACCELERATOR_KEY, s);
+             
+             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             inputMap.put(s, getValue(Action.NAME));
+     
+             target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -292,6 +315,7 @@ public class FileActions {
         /**
          * <p>
          * Create a new file-save-as action.
+         * Sets 'ctrl + shift + s' as the hotkey for save-as.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -301,6 +325,15 @@ public class FileActions {
          */
         FileSaveAsAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+             // Sets the hotkey to 'ctrl + shift + s' to trigger a Save-as action.
+             KeyStroke sA = KeyStroke.getKeyStroke(KeyEvent.VK_S,  InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
+             putValue(Action.ACCELERATOR_KEY, sA);
+             
+             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             inputMap.put(sA, getValue(Action.NAME));
+     
+             target.getActionMap().put(getValue(Action.NAME), this);
         }
 
          /**
@@ -342,6 +375,7 @@ public class FileActions {
         /**
          * <p>
          * Create a new file export action.
+         * Sets the hotkey as 'ctrl + shift + e' for file-export.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -351,6 +385,16 @@ public class FileActions {
          */
         FileExportAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+            // Sets the hotkey to 'ctrl + shift + e' to trigger a File-Export action.
+            KeyStroke eX = KeyStroke.getKeyStroke(KeyEvent.VK_E,  InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, eX);
+            
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(eX, getValue(Action.NAME));
+    
+            target.getActionMap().put(getValue(Action.NAME), this);
+            
         }
 
          /**
@@ -392,6 +436,7 @@ public class FileActions {
         /**
          * <p>
          * Create a new file-exit action.
+         *
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -403,6 +448,8 @@ public class FileActions {
             super(name, icon);
             putValue(SHORT_DESCRIPTION, desc);
             putValue(MNEMONIC_KEY, mnemonic);
+            
+            
         }
 
          /**
