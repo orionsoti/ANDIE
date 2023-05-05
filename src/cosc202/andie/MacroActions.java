@@ -281,7 +281,7 @@ public class MacroActions {
 
 
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu(LanguageSettings.getTranslated("colour"));
+        JMenu fileMenu = new JMenu("Macros");
 
         for(Action action: actions) {
             fileMenu.add(new JMenuItem(action));
