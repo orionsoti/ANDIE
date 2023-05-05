@@ -1,0 +1,2 @@
+Preset1=FlipSobel.ops
+Preset2=GreyScaleRoate.ops

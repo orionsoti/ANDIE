@@ -161,6 +161,7 @@ class EditableImage {
             // Could be no file or something else. Carry on for now.
         }
         this.refresh();
+
     }
 
     /**
@@ -279,6 +280,7 @@ class EditableImage {
     /**
      * <p>
      * Apply an {@link ImageOperation} to this image.
+     * Also checks if a macro is currently recording and if so, passes the operation through to a Macro stack.
      * </p>
      * 
      * @param op The operation to apply.
@@ -286,6 +288,10 @@ class EditableImage {
     public void apply(ImageOperation op) {
         current = op.apply(current);
         ops.add(op);
+        
+        if(MacroActions.isRecording() == true){
+            MacroActions.addToStack(op);
+        }
     }
 
     /**
@@ -335,6 +341,28 @@ class EditableImage {
         for (ImageOperation op: ops) {
             current = op.apply(current);
         }
+    }
+    /** 
+    * <p>
+    * Adds ImageOperations from a Macro stack then calls the Refesh Method
+    * </p>
+    * 
+    * <p>
+    * Implemented this way to allow for the undo and redo to work with each operation applied within the macro also.
+    * Once added to the stack the image call reefresh to refresh the new stack with current operations and the macro added to thee end 
+    * @param macroOps the stack of Macro operations to be added to the current ops file.
+    * </p>
+    */
+
+    public void MacroAddition(Stack<ImageOperation> macroOps){
+        for (ImageOperation op: macroOps) {
+            ops.add(op);
+        }
+        refresh();
+        // current = deepCopy(original);
+        // for (ImageOperation op: ops) {
+        //     current = op.apply(current);
+        // }
     }
 
 }
