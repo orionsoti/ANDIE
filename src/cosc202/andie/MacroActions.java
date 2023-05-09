@@ -22,61 +22,82 @@ import javax.swing.*;
  */
 public class MacroActions {
     
-    /** A list of actions for the Colour menu. */
+     /** A list of actions for the Colour menu. */
     protected ArrayList<Action> actions;
     
-    //Mine
+     //Holder for current macro recordings gets wiped when user ends recording
     static Stack<ImageOperation> CurrentMacroStack;
+     //Stacks that hold the loaded in presets for when the user calls for the macro
     static Stack<ImageOperation> Preset1;
     static Stack<ImageOperation> Preset2;
+     //flag to make sure there is a preset loaded in before adding it to the menu
     static Boolean preset1check = false;
     static Boolean preset2check = false;
+     //Added here as many methods need these names and path and only requires the scanner to be called once
     static String Preset1Name;
     static String Preset2Name;
     static String macroFolderPath;
+     //Used for many methods to not preform actions when recording
     static Boolean recording = false;
 
-    /**
+
+
+     /**
      * <p>
      * Creates the menu bar, initializes variables and creates a path for the read and write features
      * </p>
      */
     public MacroActions() {
+         //initilizes the stack used for recording
         CurrentMacroStack = new Stack<ImageOperation>();
+         //creats the file path for the Macros folder
         File file = new File("");
         String path = file.getAbsolutePath();
         macroFolderPath = path + "/src/cosc202/andie/macros/";
+         //Creates the menu
         ReloadPresets();
     }
 
-    /**
+
+
+     /**
      * <p>
      * Loads the actions menu with all the drop down options. Has been relocated from MacroActions 
      * to allow for reloading when a macro preset has been changed. 
      * </p>
      */
-    public void ReloadPresets(){
-        
-        actions = new ArrayList<Action>();
-       
-        //calls the loadPresets method to load in any presets and flag the presets as true to allow menus to be created for them
-        loadPresets();
-
-        //creates instances of each macro menu option
-        actions.add(new MacroStart("Start Macro", null, LanguageSettings.getTranslated("contrastDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new MacroEnd("End Macro", null, LanguageSettings.getTranslated("brightnessDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new MacroLoad("Load From File", null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        
-        //checks to make sure there is a preset in the txt file before loading it to the actions menu
-        if(preset1check == true){
-            actions.add(new Macro1("Preset1 ("+Preset1Name+")", null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
+    public JMenu createMenu() {
+        JMenu fileMenu = new JMenu(LanguageSettings.getTranslated("macros"));
+        for(Action action: actions) {
+            fileMenu.add(new JMenuItem(action));
         }
-        if(preset2check == true){
-            actions.add(new Macro2("Preset2 ("+Preset2Name+")", null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        }
+        return fileMenu;
     }
 
-    /**
+
+
+     /**
+     * <p>
+     * Loads the actions menu with all the drop down options. Has been relocated from MacroActions 
+     * to allow for reloading when a macro preset has been changed. 
+     * </p>
+     */
+    public void ReloadPresets(){       
+        actions = new ArrayList<Action>();      
+         //calls the loadPresets method to load in any presets and flag the presets as true to allow menus to be created for them
+        loadPresets();
+         //creates instances of each macro menu option
+        actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), null, LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), null, LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroLoad(LanguageSettings.getTranslated("loadFromFile"), null, LanguageSettings.getTranslated("loadMDesc"), Integer.valueOf(KeyEvent.VK_G)));        
+         //checks to make sure there is a preset in the txt file before loading it to the actions menu
+        if(preset1check == true){actions.add(new Macro1(LanguageSettings.getTranslated("preset1") + " ("+Preset1Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
+        if(preset2check == true){actions.add(new Macro2(LanguageSettings.getTranslated("preset2") + " ("+Preset2Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
+    }
+
+
+
+     /**
      * <p>
      * Creates and adds edit action buttons to the toolBar.
      * </p>
@@ -84,176 +105,70 @@ public class MacroActions {
      * @param toolBar Target JMenuBar that the buttons are added to.
      */
     public void createToolMenu(JMenuBar toolBar){
-        
-        //Creates the buttons
+         //Creates the buttons
         JButton m1 = new JButton(new ImageIcon("src/images/macroOne.png"));
         JButton m2 = new JButton(new ImageIcon("src/images/macroTwo.png"));
-
-        //Adds action listeners
+         //Adds action listeners
         m1.addActionListener(actions.get(3));
         m2.addActionListener(actions.get(4));
-
-        //Sets the button size
+         //Sets the button size and tooltips
         m1.setPreferredSize(Andie.buttonSize);
         m2.setPreferredSize(Andie.buttonSize);
-
         //m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         //m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
-
-        //Adds to toolBar
+         //Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);
     }
 
-    /**
+
+    
+     /**
      * <p>
-     * Create a menu contianing the list of Colour actions.
+     * Used to check if a recording is currently running to stop actions that can effect the recording.
+     * Used in EditableImage.apply() to check if an operation should be added to a the macro stack 
      * </p>
-     */
-    public void loadPresets(){
-
-        String macroPresetFileLocation = macroFolderPath + "Presets.txt";
-        
-        //attepts to read the Presets text file and if presets are avalible will load them into the class
-        try{    
-            File macroTxtFile = new File(macroPresetFileLocation);
-            Scanner sc = new Scanner(macroTxtFile);
-
-            //isolates the first preset name to allow for menu naming and loading of file
-            String mac1 = sc.nextLine();
-            int mac1Leng = mac1.length();
-            String subMac =  mac1.substring(8, mac1Leng-4);
-            Preset1Name = subMac;
-            mac1 = macroFolderPath + subMac + ".ops" ;
-
-            //checks to make sure there is something in the file then procedes to load in the first preset
-            if(subMac.length() > 0){
-                preset1check = true;
-                try {
-                    FileInputStream fileIn = new FileInputStream(mac1);
-                    ObjectInputStream objIn = new ObjectInputStream(fileIn);
-        
-                    @SuppressWarnings("unchecked")
-                    Stack<ImageOperation> opsForPreset1 = (Stack<ImageOperation>) objIn.readObject();
-
-                    Preset1 = opsForPreset1;
-
-                    objIn.close();
-                    fileIn.close();
-
-                } catch (Exception ex) {
-                    // Could be no file or something else. Carry on for now.
-                }
-            }
-
-            //isolates the second preset name to allow for menu naming and loading of file
-            String mac2 = sc.nextLine();
-            int mac2Leng = mac2.length();
-            String subMac2 =  mac2.substring(8, mac2Leng-4);
-            Preset2Name = subMac2;
-            mac2 = macroFolderPath + subMac2 + ".ops" ;
-            
-            //checks to make sure there is something in the file then procedes to load in the second preset.
-            if(subMac2.length() > 0){
-                preset2check = true;
-                try {
-                    FileInputStream fileIn = new FileInputStream(mac2);
-                    ObjectInputStream objIn = new ObjectInputStream(fileIn);
-        
-                    @SuppressWarnings("unchecked")
-                    Stack<ImageOperation> opsForPreset2 = (Stack<ImageOperation>) objIn.readObject();
-
-                    Preset2 = opsForPreset2;
-
-                    objIn.close();
-                    fileIn.close();
-
-                } catch (Exception ex) {
-                    // Could be no file or something else. Carry on for now.
-                }
-            }
-            sc.close();
-
-        //Displays an error message if the preset fails to load, will only happen when a user edits the preset.txt file cannot happen while using the ANDIE interface.
-        }catch(FileNotFoundException e){
-            System.out.println("Grabbing macros from txt file failed");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * <p>
-     * Create a menu contianing the list of Colour actions.
-     * </p>
-     */
-    public void rewriteFile(String presetName, int presetChosen){
-        
-        try{
-            //creates a new scanner to make variables for what is already in the Presets txt file
-            Scanner sc = new Scanner(new File(macroFolderPath + "Presets.txt"));
-            String preset1 = sc.nextLine();
-            String preset2 = sc.nextLine();
-            String presetText = preset1 + "\n" + preset2;
-            String newPresetText = "";
-            StringBuffer sb = new StringBuffer();
-            sb.append(preset1 + System.lineSeparator());
-            sb.append(preset2);
-            
-            switch(presetChosen){
-                case 0:
-                    newPresetText = presetText.replace(preset1,"Preset1="+ presetName);
-                    break;
-                case 1:
-                    newPresetText = presetText.replace(preset2,"Preset2="+ presetName);
-                    break;
-                case 2:
-                    System.out.println("See yaaaaaaaa"); 
-                    break;
-            }
-
-            FileWriter fw = new FileWriter(macroFolderPath + "Presets.txt");
-
-            fw.append(newPresetText);
-            fw.flush();
-            fw.close();
-            sc.close();
-        }catch(IOException ex){
-            System.out.println("Yo shit is wack duuuude");
-        }
-        
+     */   
+    public static boolean isRecording(){
+        return recording;
     }
 
 
 
+     /**
+     * <p>
+     * Used for EditableImage.apply() along side MacroActions.isRecording() allows the image operation being applied to be passed over 
+     * to Macroactions and saved to the macro stack
+     * </p>
+     */
+    public static void addToStack(ImageOperation op){
+        CurrentMacroStack.add(op);
+    }
 
 
 
-
-
-
-    /**
+     /**
      * <p>
      * Create a menu contianing the list of Colour actions.
      * </p>
      */
     public void changePreset(String presetName, Stack<ImageOperation> loadedOps){
         System.out.println(presetName);
-     String[] imageExtensions = {"Preset 1", "Preset 2", "cancel",}; // valid image extensions to be checked
-     int presetChosen = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectFormat"), LanguageSettings.getTranslated("format"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
-     //ADD SWITCH AND NEW OPEN ENDED METHOD TO ACEPT BOTH OPTIOONS
+        String[] imageExtensions = {LanguageSettings.getTranslated("preset1"), LanguageSettings.getTranslated("preset2"), LanguageSettings.getTranslated("cancel"),}; // valid image extensions to be checked
+        int presetChosen = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectPreset"), LanguageSettings.getTranslated("presets"), 
+            JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
 
-     try{
+        try{
+            //creates a new scanner to make variables for what is already in the Presets txt file
         Scanner sc = new Scanner(new File(macroFolderPath + "Presets.txt"));
         String preset1 = sc.nextLine();
         String preset2 = sc.nextLine();
         String presetText = preset1 + "\n" + preset2;
         String newPresetText = "";
-
-
         StringBuffer sb = new StringBuffer();
         sb.append(preset1 + System.lineSeparator());
         sb.append(preset2);
-        
+            //takes the chosen preset and makes a string to replace the old file with the new preset included
         switch(presetChosen){
             case 0:
                 newPresetText = presetText.replace(preset1,"Preset1="+ presetName);
@@ -265,44 +180,82 @@ public class MacroActions {
                 System.out.println("See yaaaaaaaa"); 
                 break;
         }
-
+            //takes the newly created string and re writes the txt file 
         FileWriter fw = new FileWriter(macroFolderPath + "Presets.txt");
-
         fw.append(newPresetText);
         fw.flush();
-        fw.close();     
-    }
-    catch(IOException ex){
-        ex.printStackTrace();
-    }
-        
+        fw.close();
+        sc.close();
+            //catch incase string is invalid
+        }catch(IOException ex){
+        System.out.println("Yo shit is wack duuuude");
+        }
+         //reloads the menu bar with the new preset in place    
         Andie.createMenuBar();
     }
 
 
-    public JMenu createMenu() {
-        JMenu fileMenu = new JMenu("Macros");
 
-        for(Action action: actions) {
-            fileMenu.add(new JMenuItem(action));
+     /**
+     * <p>
+     * Create a menu contianing the list of Colour actions.
+     * </p>
+     */
+    public void loadPresets(){
+        String macroPresetFileLocation = macroFolderPath + "Presets.txt";
+         //attepts to read the Presets text file and if presets are avalible will load them into the class
+        try{    
+            File macroTxtFile = new File(macroPresetFileLocation);
+            Scanner sc = new Scanner(macroTxtFile);
+             //isolates the first preset name to allow for menu naming and loading of file
+            String mac1 = sc.nextLine();
+            int mac1Leng = mac1.length();
+            String subMac =  mac1.substring(8, mac1Leng-4);
+            Preset1Name = subMac;
+            mac1 = macroFolderPath + subMac + ".ops" ;
+             //checks to make sure there is something in the file then procedes to load in the first preset
+            if(subMac.length() > 0){
+                preset1check = true;
+                try {
+                    FileInputStream fileIn = new FileInputStream(mac1);
+                    ObjectInputStream objIn = new ObjectInputStream(fileIn);
+                    @SuppressWarnings("unchecked")
+                    Stack<ImageOperation> opsForPreset1 = (Stack<ImageOperation>) objIn.readObject();
+                    Preset1 = opsForPreset1;
+                    objIn.close();
+                    fileIn.close();
+                } catch (Exception ex) {
+                    // Could be no file or something else. Carry on for now.
+                }
+            }
+             //isolates the second preset name to allow for menu naming and loading of file
+            String mac2 = sc.nextLine();
+            int mac2Leng = mac2.length();
+            String subMac2 =  mac2.substring(8, mac2Leng-4);
+            Preset2Name = subMac2;
+            mac2 = macroFolderPath + subMac2 + ".ops" ;
+             //checks to make sure there is something in the file then procedes to load in the second preset.
+            if(subMac2.length() > 0){
+                preset2check = true;
+                try {
+                    FileInputStream fileIn = new FileInputStream(mac2);
+                    ObjectInputStream objIn = new ObjectInputStream(fileIn);
+                    @SuppressWarnings("unchecked")
+                    Stack<ImageOperation> opsForPreset2 = (Stack<ImageOperation>) objIn.readObject();
+                    Preset2 = opsForPreset2;
+                    objIn.close();
+                    fileIn.close();
+                } catch (Exception ex) {
+                    // Could be no file or something else. Carry on for now.
+                }
+            }
+            sc.close();
+         //Displays an error message if the preset fails to load, will only happen when a user edits the preset.txt file cannot happen while using the ANDIE interface.
+        }catch(FileNotFoundException e){
+            System.out.println("Grabbing macros from txt file failed");
+            e.printStackTrace();
         }
-
-        return fileMenu;
     }
-
-    public static boolean isRecording(){
-        return recording;
-    }
-    public static void addToStack(ImageOperation op){
-        CurrentMacroStack.add(op);
-    }
-
-
-
-
-
-
-
 
     
 
@@ -340,39 +293,26 @@ public class MacroActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-
-
-            File file = new File("");
-            String path = file.getAbsolutePath();
-
-
-
-            JFileChooser fileChooser = new JFileChooser(path + "/src/cosc202/andie/macros");
+             //prompts the user to chose a file to load in as a macro
+            JFileChooser fileChooser = new JFileChooser(macroFolderPath);
             int result = fileChooser.showOpenDialog(target);
             if (result == JFileChooser.APPROVE_OPTION) {
+                 //isolates the file name to pass to the changePresetMethod
                 try {
                     String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                    System.out.println(imageFilepath);
                     int pathSize = imageFilepath.length();
                     int placeholder = imageFilepath.indexOf("macros");
-                    String blah = imageFilepath.substring(placeholder + 7, pathSize);
-                    
-                    
-
+                    String isolatedFileName = imageFilepath.substring(placeholder + 7, pathSize);
+                     //attempts to load in the selected ops file
                     try {
                         FileInputStream fileIn = new FileInputStream(imageFilepath);
                         ObjectInputStream objIn = new ObjectInputStream(fileIn);
-            
                         @SuppressWarnings("unchecked")
                         Stack<ImageOperation> opsFromFile = (Stack<ImageOperation>) objIn.readObject();
-                        
-                        //boolean extensionCheck = false;
-                        String[] imageExtensions = {"apply", "preset", "cancel",}; // valid image extensions to be checked
-                        
-
-                            /// if the extension is invalid an option dialog will prompt the user to select a valid extension
-                        int applyOrPreset = JOptionPane.showOptionDialog(null, "Please choose an action to preform on loaded file", "File Action", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
-                        
+                         //asks the user to choose if they would like to apply or set as preset
+                        String[] imageExtensions = {LanguageSettings.getTranslated("apply"), LanguageSettings.getTranslated("presets"), LanguageSettings.getTranslated("cancel"),}; // valid image extensions to be checked
+                        int applyOrPreset = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectLoadAction"), LanguageSettings.getTranslated("loadFromFile"), JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
+                         //switch takes users option and apply the appropriate methods to complete this
                         switch(applyOrPreset){
                             case 0:
                                 target.getImage().MacroAddition(opsFromFile);//hereman
@@ -380,27 +320,28 @@ public class MacroActions {
                                 target.getParent().revalidate();
                                 break;
                             case 1:
-                            changePreset(blah,opsFromFile);
+                            changePreset(isolatedFileName,opsFromFile);
                             ReloadPresets();
                                 break;
                             case 2: 
                                 break;
                         } 
-
                         objIn.close();
                         fileIn.close();
-
+                     //Displays an error if the loading of the ops file fails
                     } catch (Exception ex) {
                         // Could be no file or something else. Carry on for now.
                     }
-                
+                 //should be no reason for this to try to fail unless files are missing from Andie              
                 } catch (Exception ex) {
                     System.exit(1);
                 }
             }
         }
-
     }
+
+
+
      /**
      * <p>
      * Action to start the recording of a macro .
@@ -422,36 +363,30 @@ public class MacroActions {
         }        
         /**
          * <p>
-         * Callback for when the ContrastAdjustAction is triggered.
+         * Callback for when the <MacroStart action is triggered.>
+         * Simply changes the recording boolean to allow any EditableImage.apply() calls to be recorded in the macro Stack
          * </p>
-         * 
-         * <p>
-         * This method is called whenever the ContrastAdjustAction is triggered.
-         * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
-         * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
-         * and 0 to the brightness parameter.
-         * </p>
-         * 
+         *
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
             recording = true;            
         }
-
     }
+
+
+
      /**
      * <p>
-     * Action to end the .
+     * Action to end the Macro and prompt the user to save that macro.
      * </p>
      * 
-     * @see ContrastBrightnessAdjust
      */
-
     public class MacroEnd extends ImageAction {
 
         /**
          * <p>
-         * Create a new brightness adjustment action.
+         * Create a new MacroEnd action.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -463,65 +398,51 @@ public class MacroActions {
             super(name, icon, desc, mnemonic);
         }
 
-        
         /**
          * <p>
-         * Callback for when the brightnessAdjustAction action is triggered.
+         * Callback for when the MacroEnd action is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the brightnessAdjustAction is triggered.
-         * It opens a JSlider window that allows the user to adjust the image's brightness in between -100 and 100.
-         * Once brightness has been selected the method will create an instance of ContrastBrightnessAdjust passing the value to the brightness parameter
-         * and 0 to the contrast parameter.
+         * This method stops the passing of new Image operations to the macro stack
+         * Once stoped it will prompt the user with a text input to save this new macro 
+         * and then proceeds to create a new ops file with the current macro Stack and 
+         * the user supplied name
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+             //turns off recording as the macro has been ended by user
             recording = false;
 
+             //asks user for the name of the recorded macro and creates a file path to save to
             JPanel userAskPanel = new JPanel();
-            //userAskPanel.add(new JLabel(LanguageSettings.getTranslated("langSelect")));
-            String userValue = JOptionPane.showInputDialog(userAskPanel, "Please choose a name for your macro");
+            String userValue = JOptionPane.showInputDialog(userAskPanel, LanguageSettings.getTranslated("nameMacro"));
+            String pathWithExtension = macroFolderPath + userValue + ".ops";
 
-            //ASKS USER FOR PRESET SLOT
-
-                System.out.println(userValue);//popUpSelection);
-
-                File file = new File("");
-                String path = file.getAbsolutePath();
-                System.out.println(path);
-                String pathWithExtension = path + "/src/cosc202/andie/macros/" + userValue + ".ops";
-
-                //TAKES STACK AND SAVES IT MIGHT NEED A ER
-                try{
+             //takes the created stack and attepts to save it
+            try{
                 FileOutputStream fileOut = new FileOutputStream(pathWithExtension);
                 ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-
                 objOut.writeObject(CurrentMacroStack);
                 objOut.close();
                 fileOut.close();
-
-                } catch (Exception ex) {
-                // Could be no file or something else. Carry on for now.
+            } catch (Exception ex) {
+                 // Could be no file or something else. Carry on for now.
                 System.out.println("FAILED TO SAVE STACK AS OPS FILE");
-                }
+            }
 
-                CurrentMacroStack = new Stack<ImageOperation>();
-
-            //}else{
-            //   return;
-            //}                       
+             //makes a new instance of the current marco stack so the next start of macro recording does not continue from the end of this one
+            CurrentMacroStack = new Stack<ImageOperation>();                 
         }
-
     }
 
     public class Macro1 extends ImageAction {
 
-        /**
+         /**
          * <p>
-         * Create a new contrast adjustment action.
+         * Create a new action for Preset1.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -533,34 +454,29 @@ public class MacroActions {
             super(name, icon, desc, mnemonic);
         }
 
-        
         /**
          * <p>
-         * Callback for when the ContrastAdjustAction is triggered.
+         * Callback for when the Macro1 is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the ContrastAdjustAction is triggered.
-         * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
-         * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
-         * and 0 to the brightness parameter.
+         * This method applys the macro currently loacted in the preset1 loaction to the image
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().MacroAddition(Preset1);//hereman
+            target.getImage().MacroAddition(Preset1);
             target.repaint();
             target.getParent().revalidate();          
         }
-
     }
 
     public class Macro2 extends ImageAction {
 
         /**
          * <p>
-         * Create a new contrast adjustment action.
+         * Create a new action for Preset2.
          * </p>
          * 
          * @param name The name of the action (ignored if null).
@@ -571,24 +487,20 @@ public class MacroActions {
         Macro2(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
         }
-
         
         /**
          * <p>
-         * Callback for when the ContrastAdjustAction is triggered.
+         * Callback for when Macro2 is triggered.
          * </p>
          * 
          * <p>
-         * This method is called whenever the ContrastAdjustAction is triggered.
-         * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
-         * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
-         * and 0 to the brightness parameter.
+         * This method applys the macro currently loacted in the preset2 loaction to the image
          * </p>
          * 
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().MacroAddition(Preset2);//hereman
+            target.getImage().MacroAddition(Preset2);
             target.repaint();
             target.getParent().revalidate();          
         }
