@@ -257,7 +257,7 @@ public class MacroActions {
         }
     }
 
-    
+
 
     /**
      * <p>
@@ -363,7 +363,7 @@ public class MacroActions {
         }        
         /**
          * <p>
-         * Callback for when the <MacroStart action is triggered.>
+         * Callback for when the MacroStart action is triggered.
          * Simply changes the recording boolean to allow any EditableImage.apply() calls to be recorded in the macro Stack
          * </p>
          *
