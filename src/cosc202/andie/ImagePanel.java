@@ -253,7 +253,7 @@ public class ImagePanel extends JPanel {
             }else{
                 g2.setStroke(new BasicStroke(2));
             }
-            g2.setColor(Color.YELLOW);
+            g2.setColor(Color.WHITE);
             //g2.setStroke(new BasicStroke(2));
             g2.drawRect(x, y, width, height);
         }
