@@ -86,6 +86,8 @@ public class ImagePanel extends JPanel {
                         isSelecting = true;
                         selectionStart = e.getPoint();
                         selectionEnd = e.getPoint();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a region within the image bounds");
                     }
                 }
             }
