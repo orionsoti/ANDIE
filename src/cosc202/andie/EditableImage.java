@@ -134,6 +134,12 @@ class EditableImage {
      * @throws Exception If something goes wrong.
      */
     public void open(String filePath) throws Exception {
+        // clear the current operations if there is an image already opened
+        if (hasImage()){
+            ops.clear();
+            redoOps.clear();
+
+        }
         imageFilename = filePath;
         opsFilename = imageFilename + ".ops";
         File imageFile = new File(imageFilename);
