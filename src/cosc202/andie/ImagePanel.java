@@ -90,10 +90,14 @@ public class ImagePanel extends JPanel {
              */
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && (cropMode || drawMode)) {
-                    isSelecting = true;
-                    selectionStart = e.getPoint();
-                    selectionEnd = e.getPoint();
+                if (e.getButton() == MouseEvent.BUTTON1 && cropMode || drawMode) {
+                    if (isPointInImageBounds(e.getPoint())) {
+                        isSelecting = true;
+                        selectionStart = e.getPoint();
+                        selectionEnd = e.getPoint();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Please select a region within the image bounds");
+                    }
                 }
             }
         
@@ -112,7 +116,14 @@ public class ImagePanel extends JPanel {
                         selectionEnd = null;
                     }
                     if (getSelectionRectangle() != null && cropMode) {
-                        image.apply(new Crop(getSelectionRectangle(), getZoom()/100, 0, 0));
+                        Rectangle selectionRectangle = getSelectionRectangle();
+                        Rectangle cropRectangle = new Rectangle(
+                            (int) (selectionRectangle.x / scale),
+                            (int) (selectionRectangle.y / scale),
+                            (int) (selectionRectangle.width / scale),
+                            (int) (selectionRectangle.height / scale)
+                        );
+                        image.apply(new Crop(cropRectangle, getZoom()/100, 0, 0));
                         resetSelection();
                         setCropMode(false);
                     }
@@ -132,10 +143,11 @@ public class ImagePanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (isSelecting) {
-                    selectionEnd = e.getPoint();
+                    selectionEnd = limitPointToImageBounds(e.getPoint());
                     repaint();
                 }
             }
+
         };
         addMouseListener(mouseAdapter);
         addMouseMotionListener(mouseAdapter);
@@ -278,7 +290,8 @@ public class ImagePanel extends JPanel {
             }else{
                 g2.setStroke(new BasicStroke(2));
             }
-            g2.setColor(Color.YELLOW);
+            g2.setColor(Color.WHITE);
+            //g2.setStroke(new BasicStroke(2));
             g2.drawRect(x, y, width, height);
         }
     }
@@ -401,6 +414,37 @@ public class ImagePanel extends JPanel {
     public boolean getDrawMode(){
         return drawMode;
     }
+    /**
+     * Checks if the given point is within the bounds of the image.
+     * 
+     * @param p The point to check.
+     * @return true if the point is within the image bounds, false otherwise.
+     */
+    private boolean isPointInImageBounds(Point p) {
+        if (image.hasImage()) {
+            int imageWidth = (int) Math.round(image.getCurrentImage().getWidth() * scale);
+            int imageHeight = (int) Math.round(image.getCurrentImage().getHeight() * scale);
+            return p.x >= 0 && p.x <= imageWidth && p.y >= 0 && p.y <= imageHeight;
+        }
+        return false;
+    }
+
+    /**
+     * Limits the given point to the bounds of the image.
+     * 
+     * @param p The point to limit.
+     * @return A new point that is guaranteed to be within the image bounds.
+     */
+    private Point limitPointToImageBounds(Point p) {
+        if (image.hasImage()) {
+            int imageWidth = (int) Math.round(image.getCurrentImage().getWidth() * scale);
+            int imageHeight = (int) Math.round(image.getCurrentImage().getHeight() * scale);
+            return new Point(Math.max(0, Math.min(p.x, imageWidth)), Math.max(0, Math.min(p.y, imageHeight)));
+        }
+        return p;
+    }
+    
+
     
     
     

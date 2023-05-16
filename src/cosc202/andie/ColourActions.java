@@ -2,9 +2,11 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 import java.awt.*;
-
+import javax.swing.event.*;
 
 /**
  * <p>
@@ -145,7 +147,7 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-                        int intensity = 0;
+                        BufferedImage original = target.getImage().getCurrentImage();
                         // Pop-up dialog box to ask for the intensity value of the contrast.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
@@ -154,30 +156,44 @@ public class ColourActions {
                         intensitySlider.setMinorTickSpacing(5);
                         intensitySlider.setPaintTicks(true);
                         intensitySlider.setSnapToTicks(enabled);
+                        
+                        // Create a change listener for the slider that updates the image when the slider's value changes
+                        intensitySlider.addChangeListener(new ChangeListener() {
+                            int editCounter = 0;
+                            public void stateChanged(ChangeEvent e) {
+                                if(editCounter > 0){
+                                    target.getImage().undo();
+                                }
+                                editCounter++;
+                                int intensity = intensitySlider.getValue();
+                                
+                                // Create and apply the filter.
+                                try{
+                                    target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
+                                    target.repaint();
+                                    target.getParent().revalidate();
+                                }catch(NullPointerException exception){
+                                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                                }
+                            }
+                        });
+
+
                         //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon contrastIcon = new ImageIcon("src/images/contrast-1.png", "contrast icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
-            
                         // Check the return value from the dialog box.
-                        if (option == JOptionPane.CANCEL_OPTION) {
+                        if (option == 1) {
+                            target.getImage().setCurrentImage(original);
+                            target.repaint();
                             return;
                         } else if (option == JOptionPane.OK_OPTION) {
-                            intensity = intensityModel.getValue();
+                            return;
                         }
-            
-                        // Create and apply the filter.
-                        try{
-                            target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
-                            target.repaint();
-                            target.getParent().revalidate();
-                        }catch(NullPointerException exception){
-                            Object[] options = {LanguageSettings.getTranslated("ok")};
-                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-                        }
-                    
         }
 
     }
@@ -221,9 +237,7 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-                        // Determine the radius - ask the user.
-                        int brightness = 0;
-
+                        BufferedImage original = target.getImage().getCurrentImage();
                         // Pop-up dialog box to ask for the intensity value of the brightness.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
                         JSlider intensitySlider = new JSlider(intensityModel);
@@ -232,6 +246,29 @@ public class ColourActions {
                         intensitySlider.setMinorTickSpacing(5);
                         intensitySlider.setPaintTicks(true);
                         intensitySlider.setSnapToTicks(enabled);
+                        
+                        intensitySlider.addChangeListener(new ChangeListener() {
+                            int editCounter = 0;
+                            public void stateChanged(ChangeEvent e) {
+                                if(editCounter > 0){
+                                    target.getImage().undo();
+                                }
+                                editCounter++;
+                                int brightness = intensitySlider.getValue();
+                                
+                                // Create and apply the filter.
+                                try{
+                                    target.getImage().apply(new ContrastBrightnessAdjust(0,brightness));
+                                    target.repaint();
+                                    target.getParent().revalidate();
+                                }catch(NullPointerException exception){
+                                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                                }
+                            }
+                        });
+
                         //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); // create the labels for the slider
                         //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
@@ -239,22 +276,16 @@ public class ColourActions {
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("brightnessIntensity"), 
                         JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, brightnessIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
                         // Check the return value from the dialog box.
-                        if (option == JOptionPane.CANCEL_OPTION) {
+                        if (option == 1) {
+                            target.getImage().setCurrentImage(original);
+                            target.repaint();
                             return;
                         } else if (option == JOptionPane.OK_OPTION) {
-                            brightness = intensityModel.getValue();
+                            return;
                         }
             
                         // Create and apply the filter
-                        try{
-                            target.getImage().apply(new ContrastBrightnessAdjust(0,brightness));
-                            target.repaint();
-                            target.getParent().revalidate();
-                        }catch(NullPointerException exception){
-                            Object[] options = {LanguageSettings.getTranslated("ok")};
-                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-                        }
+                        
                     
         }
 

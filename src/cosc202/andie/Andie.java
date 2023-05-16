@@ -111,6 +111,9 @@ public class Andie {
         
         TransformActions transformActions = new TransformActions();
         menuBar.add(transformActions.createMenu());
+
+        MacroActions macroActions = new MacroActions();
+        menuBar.add(macroActions.createMenu());
         
         // View actions control how the image is displayed, but do not alter its actual content
         // Rather than making the menu and adding it to menuBar it directly adds the buttons to
@@ -133,11 +136,13 @@ public class Andie {
         ViewActions viewActions = new ViewActions();
         EditActions editActions = new EditActions();
         TransformActions transformActions = new TransformActions();
+        MacroActions macroActions = new MacroActions();
 
         fileActions.createToolMenu(toolBar);
         editActions.createToolMenu(toolBar);
         viewActions.createToolMenu(toolBar);
         transformActions.createToolMenu(toolBar);
+        macroActions.createToolMenu(toolBar);
 
         menuBar1.add(toolBar, BorderLayout.NORTH);
         menuBar1.setVisible(true);
