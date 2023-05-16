@@ -1,5 +1,6 @@
 package cosc202.andie;
 import java.util.*;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -355,11 +356,23 @@ public class TransformActions {
 
     public class DrawAction extends ImageAction {
         private JCheckBox fillCheckbox;
+        private JColorChooser colorChooser;
+        private JPanel optionsPanel; // Declare optionsPanel as an instance variable
+        private Color color;
     
         DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
             fillCheckbox = new JCheckBox("Fill Shapes");
             fillCheckbox.setSelected(false);
+            // Create and initialize the color chooser
+            colorChooser = new JColorChooser();
+            colorChooser.setColor(Color.RED);
+    
+            // Create a panel to hold the fill checkbox and color chooser
+            optionsPanel = new JPanel();
+            optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+            optionsPanel.add(fillCheckbox);
+            optionsPanel.add(colorChooser);
     
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, c);
@@ -381,11 +394,7 @@ public class TransformActions {
                 ImagePanel imagePanel = target.getImagePanel();
                 Object[] drawOptions = {"Rectangle", "Oval", "Line"};
     
-                JPanel panel = new JPanel();
-                panel.setLayout(new GridLayout(0, 1));
-                panel.add(fillCheckbox);
-    
-                int selectedOption = JOptionPane.showOptionDialog(null, panel, "Draw Shape",
+                int selectedOption = JOptionPane.showOptionDialog(null, optionsPanel, "Draw Shape",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
     
                 if (selectedOption == 0) {
@@ -400,6 +409,9 @@ public class TransformActions {
                 }
                 boolean fill = fillCheckbox.isSelected();
                 imagePanel.setFillShapes(fill);
+                color = colorChooser.getColor();
+                imagePanel.setColor(color);
+
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),

@@ -36,7 +36,7 @@ public class ImagePanel extends JPanel {
         lineMode = false;
         rectangleMode = false;
         ovalMode = false;
-        color = Color.RED;
+        color = Color.WHITE;
         fillShapes = false;
     
         MouseAdapter mouseAdapter = new MouseAdapter() {
@@ -87,8 +87,9 @@ public class ImagePanel extends JPanel {
                                 int height = Math.abs(selectionStart.y - selectionEnd.y);
                                 selectionShape = new Ellipse2D.Double(x, y, width, height);
                             }
+                            Color chosenColor = color;
                             image.apply(new Draw(selectionShape, getZoom() / 100, 0, 0, rectangleMode, ovalMode,
-                                    false, 0, 0, 0, 0, fillShapes));
+                                    false, 0, 0, 0, 0, fillShapes, chosenColor));
                             setDrawMode(false, false, false, false);
                         }
                         if (lineMode && getSelectionStartPoint() != null && getSelectionEndPoint() != null) {
@@ -100,8 +101,9 @@ public class ImagePanel extends JPanel {
                                     (int) (getSelectionEndPoint().x / scale),
                                     (int) (getSelectionEndPoint().y / scale)
                             );
+                            Color chosenColor = color;
                             image.apply(new Draw(null, getZoom() / 100, 0, 0, false, false,
-                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true));
+                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true, chosenColor));
                             setDrawMode(false, false, false, false);
                         }
                         repaint();
@@ -207,7 +209,7 @@ public class ImagePanel extends JPanel {
             }
     
             g2.setStroke(new BasicStroke(2));
-            g2.setColor(Color.RED);
+            g2.setColor(color);
             if (fillShapes){
                 g2.fill(selectionShape);
             }
@@ -285,6 +287,10 @@ public class ImagePanel extends JPanel {
         this.ovalMode = ovalMode;
         this.lineMode = lineMode;
         fillShapes = false;
+
+        resetSelection();
+        setCropMode(false);
+        
         if (drawMode || lineMode) {
             setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         } else {
@@ -308,6 +314,7 @@ public class ImagePanel extends JPanel {
     
     public void setColor(Color color) {
         this.color = color;
+        repaint();
     }
 
 

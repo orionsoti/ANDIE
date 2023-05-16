@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.Stroke;
@@ -24,7 +25,9 @@ public class Draw implements ImageOperation, java.io.Serializable {
     private int lineY1;
     private int lineX2;
     private int lineY2;
-    boolean fill;
+    private boolean fill;
+    private Color color;
+
 
     /**
      * Constructs a Draw object with the specified Shape selection, scale, offsets, and line coordinates.
@@ -42,7 +45,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
      * @param lineY2    the y-coordinate of the ending point of the line
      */
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
-                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill) {
+                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color) {
         this.selection = selection;
         this.scale = scale;
         this.x = x;
@@ -55,6 +58,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
         this.lineX2 = lineX2;
         this.lineY2 = lineY2;
         this.fill = fill;
+        this.color = color;
     }
 
     /**
@@ -65,7 +69,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
      */
     public BufferedImage apply(BufferedImage input) {
         Graphics2D inputGraphics = getScaledGraphics(input);
-
+        inputGraphics.setColor(color);
         if (rectangle) {
             if (fill) {
                 inputGraphics.fill(selection);
