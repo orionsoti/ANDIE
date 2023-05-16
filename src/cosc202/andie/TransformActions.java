@@ -353,64 +353,57 @@ public class TransformActions {
         
     }
 
-    public class DrawAction extends ImageAction{
-        
+    public class DrawAction extends ImageAction {
+    
         private boolean rectangle; // true if rectangle is selected.
         private boolean oval; // true if oval is selected.
         private boolean line; // true if line is selected.
-
-        DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic){
+        
+        DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
-
+            
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, c);
             
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-    
-            target.getActionMap().put(getValue(Action.NAME), this);
-
             
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
         
         /**
          * <p>
-         * Callback for when the crop action is performed.
+         * Callback for when the draw action is performed.
          * </p>
-         * 
+         *
          * @param e The event that triggered the action.
          * @throws NullPointerException If there is no image loaded
          */
         public void actionPerformed(ActionEvent e) {
             try {
-                ImagePanel imagePanel = target.getImagePanel();   
+                ImagePanel imagePanel = target.getImagePanel();
                 Object[] drawOptions = {"Rectangle", "Oval", "Line"};
-                JOptionPane.showOptionDialog(null, "Select Shape", "HERE", JOptionPane.DEFAULT_OPTION, 
-                JOptionPane.QUESTION_MESSAGE,null, drawOptions,null);
-                int selectedOption = JOptionPane.showOptionDialog(null, "Select Shape", "HERE", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
-
-                if(selectedOption == 0){
-                    System.out.println("RECTANGLE");
-                    imagePanel.setDrawMode(true,true,false,false);
-
-                }if(selectedOption == 1){
-                    System.out.println("Oval");  
-                    imagePanel.setDrawMode(true,false,true,false);
-
-                }
-                if(selectedOption == 2){
+                int selectedOption = JOptionPane.showOptionDialog(null, "Select Shape", "Draw Shape",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
+                
+                if (selectedOption == 0) {
+                    System.out.println("Rectangle");
+                    imagePanel.setDrawMode(true, true, false, false);
+                } else if (selectedOption == 1) {
+                    System.out.println("Oval");
+                    imagePanel.setDrawMode(true, false, true, false);
+                } else if (selectedOption == 2) {
                     System.out.println("Line");
-                    imagePanel.setDrawMode(true,false,false,true);
+                    imagePanel.setDrawMode(true, false, false, true);
                 }
-
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
+                        LanguageSettings.getTranslated("alert"), JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
-        
     }
+    
 }
      

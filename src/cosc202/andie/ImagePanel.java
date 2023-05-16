@@ -4,142 +4,109 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+
 import javax.swing.*;
-import javax.swing.JColorChooser;
-import java.awt.color.*;
 
 /**
- * <p>
- * UI display element for {@link EditableImage}s.
- * </p>
- * 
- * <p>
- * This class extends {@link JPanel} to allow for rendering of an image, as well as zooming
- * in and out. 
- * </p>
- * 
- * <p> 
- * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
- * </p>
- * 
- * @author Steven Mills
- * @version 1.0
+ * UI display element for EditableImages.
+ * This class extends JPanel to allow for rendering of an image, as well as zooming in and out.
  */
 public class ImagePanel extends JPanel {
-    
-    /**
-     * The image to display in the ImagePanel.
-     */
+
     private EditableImage image;
-
-    /**
-     * <p>
-     * The zoom-level of the current view.
-     * A scale of 1.0 represents actual size; 0.5 is zoomed out to half size; 1.5 is zoomed in to one-and-a-half size; and so forth.
-     * </p>
-     * 
-     * <p>
-     * Note that the scale is internally represented as a multiplier, but externally as a percentage.
-     * </p>
-     */
     private double scale;
-
-    // start and end points of the current selection
     private Point selectionStart;
     private Point selectionEnd;
-
-    // true if the user is currently selecting a region
     private boolean isSelecting;
-
-    // true if the user is currently cropping
     private boolean cropMode;
-    
     private boolean drawMode;
-    private boolean line;
-    private boolean rectangle;
-    private boolean oval;
+    private boolean lineMode;
+    private boolean rectangleMode;
+    private boolean ovalMode;
+    private Color color;
 
-    private Color colour;
-
-
-    /**
-     * <p>
-     * Create a new ImagePanel.
-     * </p>
-     * 
-     * <p>
-     * Newly created ImagePanels have a default zoom level of 100%
-     * </p>
-     */
     public ImagePanel() {
         image = new EditableImage();
         scale = 1.0;
         isSelecting = false;
-
-        /**
-         * <p>
-         * Add a mouse listener to the panel to allow for selection of a region of the image.
-         * </p>
-         */
+        cropMode = false;
+        drawMode = false;
+        lineMode = false;
+        rectangleMode = false;
+        ovalMode = false;
+        color = Color.RED;
+    
         MouseAdapter mouseAdapter = new MouseAdapter() {
-            /**
-             * <p>
-             * When the mouse is clicked, the selection is reset.
-             * </p>
-             * 
-             */
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && cropMode || drawMode) {
-                    if (isPointInImageBounds(e.getPoint())) {
-                        isSelecting = true;
-                        selectionStart = e.getPoint();
-                        selectionEnd = e.getPoint();
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Please select a region within the image bounds");
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (cropMode || drawMode || lineMode) {
+                        if (isPointInImageBounds(e.getPoint())) {
+                            isSelecting = true;
+                            selectionStart = e.getPoint();
+                            selectionEnd = e.getPoint();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Please select a region within the image bounds");
+                        }
                     }
                 }
             }
-        
-            /**
-             * <p>
-             * When the mouse is released, the selection is complete.
-             * </p>
-             * 
-             */
+    
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && (cropMode || drawMode)) {
-                    isSelecting = false;
-                    if (selectionStart.equals(selectionEnd)){
-                        selectionStart = null;
-                        selectionEnd = null;
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (cropMode || drawMode || lineMode) {
+                        isSelecting = false;
+                        if (selectionStart.equals(selectionEnd)) {
+                            selectionStart = null;
+                            selectionEnd = null;
+                        }
+                        if (cropMode && getSelectionRectangle() != null) {
+                            Rectangle selectionRectangle = getSelectionRectangle();
+                            Rectangle cropRectangle = new Rectangle(
+                                    (int) (selectionRectangle.x / scale),
+                                    (int) (selectionRectangle.y / scale),
+                                    (int) (selectionRectangle.width / scale),
+                                    (int) (selectionRectangle.height / scale)
+                            );
+                            image.apply(new Crop(cropRectangle, getZoom() / 100, 0, 0));
+                            resetSelection();
+                            setCropMode(false);
+                        }
+                        if (drawMode && (rectangleMode || ovalMode) && getSelectionRectangle() != null) {
+                            Shape selectionShape;
+                            if (rectangleMode) {
+                                selectionShape = getSelectionRectangle();
+                            } else {
+                                int x = Math.min(selectionStart.x, selectionEnd.x);
+                                int y = Math.min(selectionStart.y, selectionEnd.y);
+                                int width = Math.abs(selectionStart.x - selectionEnd.x);
+                                int height = Math.abs(selectionStart.y - selectionEnd.y);
+                                selectionShape = new Ellipse2D.Double(x, y, width, height);
+                            }
+                            image.apply(new Draw(selectionShape, getZoom() / 100, 0, 0, rectangleMode, ovalMode,
+                                    false, 0, 0, 0, 0));
+                            setDrawMode(false, false, false, false);
+                        }
+                        if (lineMode && getSelectionStartPoint() != null && getSelectionEndPoint() != null) {
+                            Point startPoint = new Point(
+                                    (int) (getSelectionStartPoint().x / scale),
+                                    (int) (getSelectionStartPoint().y / scale)
+                            );
+                            Point endPoint = new Point(
+                                    (int) (getSelectionEndPoint().x / scale),
+                                    (int) (getSelectionEndPoint().y / scale)
+                            );
+                            image.apply(new Draw(null, getZoom() / 100, 0, 0, false, false,
+                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y));
+                            setDrawMode(false, false, false, false);
+                        }
+                        repaint();
                     }
-                    if (getSelectionRectangle() != null && cropMode) {
-                        Rectangle selectionRectangle = getSelectionRectangle();
-                        Rectangle cropRectangle = new Rectangle(
-                            (int) (selectionRectangle.x / scale),
-                            (int) (selectionRectangle.y / scale),
-                            (int) (selectionRectangle.width / scale),
-                            (int) (selectionRectangle.height / scale)
-                        );
-                        image.apply(new Crop(cropRectangle, getZoom()/100, 0, 0));
-                        resetSelection();
-                        setCropMode(false);
-                    }
-                    if(getSelectionRectangle() != null && drawMode){
-                        image.apply(new Draw(getSelectionRectangle(), getZoom()/100, 0,0, rectangle,line,oval));
-                        setDrawMode(false,false,false,false);
-                    }
-                    repaint();
                 }
             }
-
-            /**
-             * <p>
-             * Update the selection rectangle as the mouse is dragged.
-             * </p>
-             */
+    
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (isSelecting) {
@@ -147,61 +114,21 @@ public class ImagePanel extends JPanel {
                     repaint();
                 }
             }
-
         };
+    
         addMouseListener(mouseAdapter);
         addMouseMotionListener(mouseAdapter);
-
-
     }
-
-    /**
-     * <p>
-     * Get the currently displayed image
-     * </p>
-     *
-     * @return the image currently displayed.
-     */
+    
+    
     public EditableImage getImage() {
         return image;
     }
-
-    /**
-     * <p>
-     * New method added to get the image panel to be used for cropping 
-     * </p>
-     * @return
-     */
-    public ImagePanel getImagePanel(){
-        return this;
-        
-
-    }
-    /**
-     * <p>
-     * Get the current zoom level as a percentage.
-     * </p>
-     * 
-     * <p>
-     * The percentage zoom is used for the external interface, where 100% is the original size, 50% is half-size, etc. 
-     * </p>
-     * @return The current zoom level as a percentage.
-     */
+    
     public double getZoom() {
-        return 100*scale;
+        return 100 * scale;
     }
-
-    /**
-     * <p>
-     * Set the current zoom level as a percentage.
-     * </p>
-     * 
-     * <p>
-     * The percentage zoom is used for the external interface, where 100% is the original size, 50% is half-size, etc. 
-     * The zoom level is restricted to the range [50, 200].
-     * </p>
-     * @param zoomPercent The new zoom level as a percentage.
-     */
+    
     public void setZoom(double zoomPercent) {
         if (zoomPercent < 50) {
             zoomPercent = 50;
@@ -211,67 +138,38 @@ public class ImagePanel extends JPanel {
         }
         scale = zoomPercent / 100;
     }
-
-
-    /**
-     * <p>
-     * Gets the preferred size of this component for UI layout.
-     * </p>
-     * 
-     * <p>
-     * The preferred size is the size of the image (scaled by zoom level), or a default size if no image is present.
-     * </p>
-     * 
-     * @return The preferred size of this component.
-     */
+    
     @Override
     public Dimension getPreferredSize() {
         if (image.hasImage()) {
-            return new Dimension((int) Math.round(image.getCurrentImage().getWidth()*scale), 
-                                 (int) Math.round(image.getCurrentImage().getHeight()*scale));
+            return new Dimension((int) Math.round(image.getCurrentImage().getWidth() * scale),
+                    (int) Math.round(image.getCurrentImage().getHeight() * scale));
         } else {
             return new Dimension(450, 450);
         }
     }
-
-    /**
-     * <p>
-     * (Re)draw the component in the GUI.
-     * </p>
-     * 
-     * @param g The Graphics component to draw the image on.
-     */
+    
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image.hasImage()) {
-            Graphics2D g2  = (Graphics2D) g.create();
+            Graphics2D g2 = (Graphics2D) g.create();
             g2.scale(scale, scale);
             g2.drawImage(image.getCurrentImage(), null, 0, 0);
-            g2.scale(1 / scale, 1 / scale); // Reset the scale for drawing the selection rectangle
-            if(cropMode){
-            drawSelectionRectangle(g2);
+            g2.scale(1 / scale, 1 / scale);
+            if (cropMode) {
+                drawSelectionRectangle(g2);
             }
-            if(drawMode && rectangle){
-            drawRectangle(g2);
+            if (drawMode && (rectangleMode || ovalMode)) {
+                drawSelectionShape(g2);
             }
-            if(drawMode && line){
-            drawLine(g2);
+            if (lineMode) {
+                drawLine(g2);
             }
-            if(drawMode && oval){
-            drawOval(g2);
-            }
-
             g2.dispose();
         }
     }
-
-    /** 
-     * <p>
-     * Draw the selection rectangle on the image.
-     * </p>
-     * 
-     */
+    
     private void drawSelectionRectangle(Graphics2D g2) {
         if (selectionStart != null && selectionEnd != null) {
             int x = Math.min(selectionStart.x, selectionEnd.x);
@@ -284,25 +182,45 @@ public class ImagePanel extends JPanel {
             Area selectedArea = new Area(new Rectangle(x, y, width, height));
             fullArea.subtract(selectedArea);
             g2.fill(fullArea);
-            if (cropMode){
-                float[] dash = {10.0f};
-                g2.setStroke(new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
-            }else{
-                g2.setStroke(new BasicStroke(2));
-            }
+    
+            Stroke stroke = cropMode ? new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{10.0f}, 0.0f) : new BasicStroke(2);
+            g2.setStroke(stroke);
             g2.setColor(Color.WHITE);
-            //g2.setStroke(new BasicStroke(2));
             g2.drawRect(x, y, width, height);
         }
     }
+    
+    private void drawSelectionShape(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            Shape selectionShape;
+    
+            if (rectangleMode) {
+                selectionShape = getSelectionRectangle();
+            } else {
+                int x = Math.min(selectionStart.x, selectionEnd.x);
+                int y = Math.min(selectionStart.y, selectionEnd.y);
+                int width = Math.abs(selectionStart.x - selectionEnd.x);
+                int height = Math.abs(selectionStart.y - selectionEnd.y);
+                selectionShape = new Ellipse2D.Double(x, y, width, height);
+            }
+    
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(Color.RED);
+            g2.draw(selectionShape);
+        }
+    }
+    
+    
+    private void drawLine(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            Point startPoint = getSelectionStartPoint();
+            Point endPoint = getSelectionEndPoint();
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(color);
+            g2.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+        }
+    }
 
-    /**
-     * <p>
-     * Get the current selection rectangle.
-     * </p>
-     * 
-     * @return The current selection rectangle, or null if no selection is present.
-     */
     public Rectangle getSelectionRectangle() {
         if (selectionStart == null || selectionEnd == null) {
             return null;
@@ -313,114 +231,15 @@ public class ImagePanel extends JPanel {
         int height = Math.abs(selectionStart.y - selectionEnd.y);
         return new Rectangle(x, y, width, height);
     }
-
-    /**
-     * <p>
-     * Reset the selection rectangle.
-     * </p>
-     */
+    
+    
     public void resetSelection() {
         selectionStart = null;
         selectionEnd = null;
         repaint();
     }
-
-    public boolean getCropMode(){
-        return cropMode;
-    }
-
-    public void setCropMode(boolean cropMode){
-        this.cropMode = cropMode;
-        if (cropMode){
-            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        }else{
-            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        }
-    }
-
- /** 
-     * <p>
-     * Draw a rectangle on the image.
-     * </p>
-     * 
-     */
-    private void drawRectangle(Graphics2D g2) {
-        if (selectionStart != null && selectionEnd != null) {
-            int x = Math.min(selectionStart.x, selectionEnd.x);
-            int y = Math.min(selectionStart.y, selectionEnd.y);
-            int width = Math.abs(selectionStart.x - selectionEnd.x);
-            int height = Math.abs(selectionStart.y - selectionEnd.y);
-              
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(Color.RED);
-            g2.drawRect(x, y, width, height);
-        }
-    }
-
-     /** 
-     * <p>
-     * Draw a line on the image.
-     * </p>
-     * 
-     */
-    private void drawLine(Graphics2D g2) {
-        if (selectionStart != null && selectionEnd != null) {
-            int xStart = selectionStart.x;
-            int yStart = selectionStart.y;
-            int xEnd = selectionEnd.x;
-            int yEnd = selectionEnd.y;
-              
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(Color.RED);
-            g2.drawLine(xStart, yStart, xEnd, yEnd);
-        }
-    }
-
-     /** 
-     * <p>
-     * Draw an oval on the image.
-     * </p>
-     * 
-     */
-    private void drawOval(Graphics2D g2) {
-        if (selectionStart != null && selectionEnd != null) {
-            int x = Math.min(selectionStart.x, selectionEnd.x);
-            int y = Math.min(selectionStart.y, selectionEnd.y);
-            int width = Math.abs(selectionStart.x - selectionEnd.x);
-            int height = Math.abs(selectionStart.y - selectionEnd.y);
-              
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(Color.RED);
-            g2.drawOval(x, y, width, height);
-        }
-    }
-
-
-    public void setDrawMode(boolean drawMode, boolean rectangle, boolean oval, boolean line){
-        this.drawMode = drawMode;
-        this.line = line;
-        this.rectangle = rectangle;
-        this.oval = oval;
-        // Also need to add color selection here!
-        
-        if(drawMode){
-            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        }else{
-            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        }
-
-    }
-
-    public boolean getDrawMode(){
-        return drawMode;
-    }
-    /**
-     * Checks if the given point is within the bounds of the image.
-     * 
-     * @param p The point to check.
-     * @return true if the point is within the image bounds, false otherwise.
-     */
-    private boolean isPointInImageBounds(Point p) {
+    
+    public boolean isPointInImageBounds(Point p) {
         if (image.hasImage()) {
             int imageWidth = (int) Math.round(image.getCurrentImage().getWidth() * scale);
             int imageHeight = (int) Math.round(image.getCurrentImage().getHeight() * scale);
@@ -428,14 +247,8 @@ public class ImagePanel extends JPanel {
         }
         return false;
     }
-
-    /**
-     * Limits the given point to the bounds of the image.
-     * 
-     * @param p The point to limit.
-     * @return A new point that is guaranteed to be within the image bounds.
-     */
-    private Point limitPointToImageBounds(Point p) {
+    
+    public Point limitPointToImageBounds(Point p) {
         if (image.hasImage()) {
             int imageWidth = (int) Math.round(image.getCurrentImage().getWidth() * scale);
             int imageHeight = (int) Math.round(image.getCurrentImage().getHeight() * scale);
@@ -444,8 +257,59 @@ public class ImagePanel extends JPanel {
         return p;
     }
     
+    public boolean getCropMode() {
+        return cropMode;
+    }
+    
+    public void setCropMode(boolean cropMode) {
+        this.cropMode = cropMode;
+        if (cropMode) {
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        } else {
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
+    
+    public boolean getDrawMode() {
+        return drawMode;
+    }
+    
+    public void setDrawMode(boolean drawMode, boolean rectangleMode, boolean ovalMode, boolean lineMode) {
+        this.drawMode = drawMode;
+        this.rectangleMode = rectangleMode;
+        this.ovalMode = ovalMode;
+        this.lineMode = lineMode;
+        if (drawMode || lineMode) {
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        } else {
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+    }
+    
+    public Point getSelectionStartPoint() {
+        if (selectionStart != null) {
+            return new Point((int) (selectionStart.x / scale), (int) (selectionStart.y / scale));
+        }
+        return null;
+    }
+    
+    public Point getSelectionEndPoint() {
+        if (selectionEnd != null) {
+            return new Point((int) (selectionEnd.x / scale), (int) (selectionEnd.y / scale));
+        }
+        return null;
+    }
+    
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
-    
-    
-    
+
+	public ImagePanel getImagePanel() {
+        return this;
+    }
+	
 }
+    
+    
+

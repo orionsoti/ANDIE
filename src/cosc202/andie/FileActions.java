@@ -215,6 +215,7 @@ public class FileActions {
                        
                         String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                         target.getImage().open(imageFilepath);
+                        Andie.menuBar1.pack(); // resize the window to fit the new image
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;
