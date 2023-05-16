@@ -354,27 +354,24 @@ public class TransformActions {
     }
 
     public class DrawAction extends ImageAction {
+        private JCheckBox fillCheckbox;
     
-        private boolean rectangle; // true if rectangle is selected.
-        private boolean oval; // true if oval is selected.
-        private boolean line; // true if line is selected.
-        
         DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
-            
+            fillCheckbox = new JCheckBox("Fill Shapes");
+            fillCheckbox.setSelected(false);
+    
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, c);
-            
+    
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-            
+    
             target.getActionMap().put(getValue(Action.NAME), this);
         }
-        
+    
         /**
-         * <p>
          * Callback for when the draw action is performed.
-         * </p>
          *
          * @param e The event that triggered the action.
          * @throws NullPointerException If there is no image loaded
@@ -383,9 +380,14 @@ public class TransformActions {
             try {
                 ImagePanel imagePanel = target.getImagePanel();
                 Object[] drawOptions = {"Rectangle", "Oval", "Line"};
-                int selectedOption = JOptionPane.showOptionDialog(null, "Select Shape", "Draw Shape",
+    
+                JPanel panel = new JPanel();
+                panel.setLayout(new GridLayout(0, 1));
+                panel.add(fillCheckbox);
+    
+                int selectedOption = JOptionPane.showOptionDialog(null, panel, "Draw Shape",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
-                
+    
                 if (selectedOption == 0) {
                     System.out.println("Rectangle");
                     imagePanel.setDrawMode(true, true, false, false);
@@ -396,6 +398,8 @@ public class TransformActions {
                     System.out.println("Line");
                     imagePanel.setDrawMode(true, false, false, true);
                 }
+                boolean fill = fillCheckbox.isSelected();
+                imagePanel.setFillShapes(fill);
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),

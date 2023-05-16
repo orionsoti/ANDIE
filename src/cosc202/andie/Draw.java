@@ -24,6 +24,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
     private int lineY1;
     private int lineX2;
     private int lineY2;
+    boolean fill;
 
     /**
      * Constructs a Draw object with the specified Shape selection, scale, offsets, and line coordinates.
@@ -41,7 +42,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
      * @param lineY2    the y-coordinate of the ending point of the line
      */
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
-                boolean line, int lineX1, int lineY1, int lineX2, int lineY2) {
+                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill) {
         this.selection = selection;
         this.scale = scale;
         this.x = x;
@@ -53,6 +54,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
         this.lineY1 = lineY1;
         this.lineX2 = lineX2;
         this.lineY2 = lineY2;
+        this.fill = fill;
     }
 
     /**
@@ -65,10 +67,20 @@ public class Draw implements ImageOperation, java.io.Serializable {
         Graphics2D inputGraphics = getScaledGraphics(input);
 
         if (rectangle) {
-            inputGraphics.draw(selection);
+            if (fill) {
+                inputGraphics.fill(selection);
+            }
+            else {
+                inputGraphics.draw(selection);
+            }
         }
         if (oval) {
-            inputGraphics.draw(selection);
+            if (fill) {
+                inputGraphics.fill(selection);
+            }
+            else {
+                inputGraphics.draw(selection);
+            }
         }
         if (line) {
             Stroke stroke = new BasicStroke(2); // Set the line thickness
