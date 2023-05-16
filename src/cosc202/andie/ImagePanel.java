@@ -107,7 +107,14 @@ public class ImagePanel extends JPanel {
                         selectionEnd = null;
                     }
                     if (getSelectionRectangle() != null) {
-                        image.apply(new Crop(getSelectionRectangle(), getZoom()/100, 0, 0));
+                        Rectangle selectionRectangle = getSelectionRectangle();
+                        Rectangle cropRectangle = new Rectangle(
+                            (int) (selectionRectangle.x / scale),
+                            (int) (selectionRectangle.y / scale),
+                            (int) (selectionRectangle.width / scale),
+                            (int) (selectionRectangle.height / scale)
+                        );
+                        image.apply(new Crop(cropRectangle, getZoom()/100, 0, 0));
                         resetSelection();
                         setCropMode(false);
                     }
@@ -127,6 +134,7 @@ public class ImagePanel extends JPanel {
                     repaint();
                 }
             }
+
         };
         addMouseListener(mouseAdapter);
         addMouseMotionListener(mouseAdapter);
@@ -334,6 +342,7 @@ public class ImagePanel extends JPanel {
         }
         return p;
     }
+    
 
     
     
