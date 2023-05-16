@@ -5,6 +5,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Area;
 import javax.swing.*;
+import javax.swing.JColorChooser;
+import java.awt.color.*;
 
 /**
  * <p>
@@ -51,6 +53,13 @@ public class ImagePanel extends JPanel {
 
     // true if the user is currently cropping
     private boolean cropMode;
+    
+    private boolean drawMode;
+    private boolean line;
+    private boolean rectangle;
+    private boolean oval;
+
+    private Color colour;
 
 
     /**
@@ -81,7 +90,7 @@ public class ImagePanel extends JPanel {
              */
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && cropMode) {
+                if (e.getButton() == MouseEvent.BUTTON1 && (cropMode || drawMode)) {
                     isSelecting = true;
                     selectionStart = e.getPoint();
                     selectionEnd = e.getPoint();
@@ -96,16 +105,20 @@ public class ImagePanel extends JPanel {
              */
             @Override
             public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && cropMode) {
+                if (e.getButton() == MouseEvent.BUTTON1 && (cropMode || drawMode)) {
                     isSelecting = false;
                     if (selectionStart.equals(selectionEnd)){
                         selectionStart = null;
                         selectionEnd = null;
                     }
-                    if (getSelectionRectangle() != null) {
+                    if (getSelectionRectangle() != null && cropMode) {
                         image.apply(new Crop(getSelectionRectangle(), getZoom()/100, 0, 0));
                         resetSelection();
                         setCropMode(false);
+                    }
+                    if(getSelectionRectangle() != null && drawMode){
+                        image.apply(new Draw(getSelectionRectangle(), getZoom()/100, 0,0, rectangle,line,oval));
+                        setDrawMode(false,false,false,false);
                     }
                     repaint();
                 }
@@ -224,7 +237,19 @@ public class ImagePanel extends JPanel {
             g2.scale(scale, scale);
             g2.drawImage(image.getCurrentImage(), null, 0, 0);
             g2.scale(1 / scale, 1 / scale); // Reset the scale for drawing the selection rectangle
+            if(cropMode){
             drawSelectionRectangle(g2);
+            }
+            if(drawMode && rectangle){
+            drawRectangle(g2);
+            }
+            if(drawMode && line){
+            drawLine(g2);
+            }
+            if(drawMode && oval){
+            drawOval(g2);
+            }
+
             g2.dispose();
         }
     }
@@ -254,7 +279,6 @@ public class ImagePanel extends JPanel {
                 g2.setStroke(new BasicStroke(2));
             }
             g2.setColor(Color.YELLOW);
-            //g2.setStroke(new BasicStroke(2));
             g2.drawRect(x, y, width, height);
         }
     }
@@ -299,6 +323,83 @@ public class ImagePanel extends JPanel {
         }else{
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
+    }
+
+ /** 
+     * <p>
+     * Draw a rectangle on the image.
+     * </p>
+     * 
+     */
+    private void drawRectangle(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            int x = Math.min(selectionStart.x, selectionEnd.x);
+            int y = Math.min(selectionStart.y, selectionEnd.y);
+            int width = Math.abs(selectionStart.x - selectionEnd.x);
+            int height = Math.abs(selectionStart.y - selectionEnd.y);
+              
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(Color.RED);
+            g2.drawRect(x, y, width, height);
+        }
+    }
+
+     /** 
+     * <p>
+     * Draw a line on the image.
+     * </p>
+     * 
+     */
+    private void drawLine(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            int xStart = selectionStart.x;
+            int yStart = selectionStart.y;
+            int xEnd = selectionEnd.x;
+            int yEnd = selectionEnd.y;
+              
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(Color.RED);
+            g2.drawLine(xStart, yStart, xEnd, yEnd);
+        }
+    }
+
+     /** 
+     * <p>
+     * Draw an oval on the image.
+     * </p>
+     * 
+     */
+    private void drawOval(Graphics2D g2) {
+        if (selectionStart != null && selectionEnd != null) {
+            int x = Math.min(selectionStart.x, selectionEnd.x);
+            int y = Math.min(selectionStart.y, selectionEnd.y);
+            int width = Math.abs(selectionStart.x - selectionEnd.x);
+            int height = Math.abs(selectionStart.y - selectionEnd.y);
+              
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(Color.RED);
+            g2.drawOval(x, y, width, height);
+        }
+    }
+
+
+    public void setDrawMode(boolean drawMode, boolean rectangle, boolean oval, boolean line){
+        this.drawMode = drawMode;
+        this.line = line;
+        this.rectangle = rectangle;
+        this.oval = oval;
+        // Also need to add color selection here!
+        
+        if(drawMode){
+            setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        }else{
+            setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }
+
+    }
+
+    public boolean getDrawMode(){
+        return drawMode;
     }
     
     
