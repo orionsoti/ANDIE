@@ -3,6 +3,7 @@ import java.util.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * <p>
  * Actions provided by the File menu.
@@ -136,8 +137,8 @@ public class FileActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates the buttons
-        JButton save = new JButton(new ImageIcon("src/images/save.png"));
         JButton open = new JButton(new ImageIcon("src/images/open.png"));
+        JButton save = new JButton(new ImageIcon("src/images/save.png"));
 
         //Adds the action listeners
         save.addActionListener(actions.get(1));
@@ -151,8 +152,9 @@ public class FileActions {
         open.setToolTipText(LanguageSettings.getTranslated("open"));
         
         //Adds the buttons to the tool bar
-        toolBar.add(save);
         toolBar.add(open);
+        toolBar.add(save);
+        
     }
 
     /**
@@ -207,6 +209,11 @@ public class FileActions {
             
             do{
                 JFileChooser fileChooser = new JFileChooser();
+                // Sets the file chooser to only accept image files
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Supported Picture Files", "jpg", "jpeg",
+                    "png", "bmp", "gif", "tif", "tiff", "wbmp");
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                fileChooser.setFileFilter(filter);
                 int result = fileChooser.showOpenDialog(target);
                 
 
@@ -215,7 +222,7 @@ public class FileActions {
                        
                         String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                         target.getImage().open(imageFilepath);
-                        Andie.menuBar1.pack(); // resize the window to fit the new image
+                        //Andie.menuBar1.pack(); // resize the window to fit the new image
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;

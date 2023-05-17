@@ -72,7 +72,7 @@ public class ImagePanel extends JPanel {
                                     (int) (selectionRectangle.width / scale),
                                     (int) (selectionRectangle.height / scale)
                             );
-                            image.apply(new Crop(cropRectangle, getZoom() / 100, 0, 0));
+                            image.apply(new Crop(cropRectangle, 1.0, 0, 0));
                             resetSelection();
                             setCropMode(false);
                         }
