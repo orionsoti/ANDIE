@@ -38,13 +38,13 @@ public class FilterActions {
      */
     public FilterActions() {
         actions = new ArrayList<Action>();
-        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), null, LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
-        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new EmbossFilterAction("Emboss Filter", null, "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new SobelFilterAction("Sobel Filter", null, "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new MatrixFilterAction("Matrix Filter", null, "MatrixDesc", Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), new ImageIcon("src/images/sharpen.png"), LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
+        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new EmbossFilterAction("Emboss Filter", new ImageIcon("src/images/emboss-sobel.png"), "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new SobelFilterAction("Sobel Filter", new ImageIcon("src/images/emboss-sobel.png"), "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new MatrixFilterAction("Matrix Filter", new ImageIcon("src/images/neo.png"), "MatrixDesc", Integer.valueOf(KeyEvent.VK_M)));
     }
 
     /**

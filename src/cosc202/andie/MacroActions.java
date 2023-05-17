@@ -87,8 +87,8 @@ public class MacroActions {
          //calls the loadPresets method to load in any presets and flag the presets as true to allow menus to be created for them
         loadPresets();
          //creates instances of each macro menu option
-        actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), null, LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), null, LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), new ImageIcon("src/images/record_small.png"), LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), new ImageIcon("src/images/stop-record_small.png"), LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new MacroLoad(LanguageSettings.getTranslated("loadFromFile"), null, LanguageSettings.getTranslated("loadMDesc"), Integer.valueOf(KeyEvent.VK_G)));        
          //checks to make sure there is a preset in the txt file before loading it to the actions menu
         if(preset1check == true){actions.add(new Macro1(LanguageSettings.getTranslated("preset1") + " ("+Preset1Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}

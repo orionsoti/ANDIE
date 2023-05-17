@@ -33,12 +33,12 @@ public class FileActions {
      */
     public FileActions() {
         actions = new ArrayList<Action>();
-        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));
-        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), null, LanguageSettings.getTranslated("saveDesc"), Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), null, LanguageSettings.getTranslated("saveAsDesc") , Integer.valueOf(KeyEvent.VK_A)));
-        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), null, LanguageSettings.getTranslated("exportDesc"), Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), null, LanguageSettings.getTranslated("languageDesc") , Integer.valueOf(0)));
-        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), null, LanguageSettings.getTranslated("exitDesc"), Integer.valueOf(0)));
+        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), new ImageIcon("src/images/open_small.png"), LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));
+        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), new ImageIcon("src/images/save_small.png"), LanguageSettings.getTranslated("saveDesc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), new ImageIcon("src/images/save-as_small.png"), LanguageSettings.getTranslated("saveAsDesc") , Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), new ImageIcon("src/images/export_small.png"), LanguageSettings.getTranslated("exportDesc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), new ImageIcon("src/images/language_small.png"), LanguageSettings.getTranslated("languageDesc") , Integer.valueOf(0)));
+        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), new ImageIcon("src/images/exit_small.png"), LanguageSettings.getTranslated("exitDesc"), Integer.valueOf(0)));
         
     }
     /**

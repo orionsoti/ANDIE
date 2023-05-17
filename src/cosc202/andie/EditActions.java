@@ -34,8 +34,8 @@ public class EditActions {
      */
     public EditActions() {
         actions = new ArrayList<Action>();
-        actions.add(new UndoAction(LanguageSettings.getTranslated("undo"), null, LanguageSettings.getTranslated("undo"), Integer.valueOf(KeyEvent.VK_Z)));
-        actions.add(new RedoAction(LanguageSettings.getTranslated("redo"), null, LanguageSettings.getTranslated("redo"), Integer.valueOf(KeyEvent.VK_Y)));
+        actions.add(new UndoAction(LanguageSettings.getTranslated("undo"), new ImageIcon("src/images/undo_small.png"), LanguageSettings.getTranslated("undo"), Integer.valueOf(KeyEvent.VK_Z)));
+        actions.add(new RedoAction(LanguageSettings.getTranslated("redo"), new ImageIcon("src/images/redo_small.png"), LanguageSettings.getTranslated("redo"), Integer.valueOf(KeyEvent.VK_Y)));
     }
 
     /**

@@ -38,9 +38,9 @@ public class ColourActions {
      */
     public ColourActions() {
         actions = new ArrayList<Action>();
-        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), null, LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), null, LanguageSettings.getTranslated("contrastDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), null, LanguageSettings.getTranslated("brightnessDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ConvertToGreyAction(LanguageSettings.getTranslated("greyScale"), new ImageIcon("src/images/greyscale.png"), LanguageSettings.getTranslated("greyscaleDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new ContrastAdjustAction(LanguageSettings.getTranslated("contrast"), new ImageIcon("src/images/contrast_small.png"), LanguageSettings.getTranslated("contrastDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new BrightnessAdjustAction(LanguageSettings.getTranslated("brightness"), new ImageIcon("src/images/brightness_small.png"), LanguageSettings.getTranslated("brightnessDesc"), Integer.valueOf(KeyEvent.VK_G)));
     }
 
     /**

@@ -33,13 +33,13 @@ public class TransformActions {
      */
     public TransformActions(){
         actions = new ArrayList<Action>();
-        actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), null, LanguageSettings.getTranslated("resizeDesc"), null));
-        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), null, LanguageSettings.getTranslated("rotateLeftDesc"), Integer.valueOf(KeyEvent.VK_L), 2));
-        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), null, LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
-        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), null, LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
-        actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), null, LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
-        actions.add(new CropAction("Crop", null, "cropDesc", null));
-        actions.add(new DrawAction("Draw", null, "drawDesc", null));
+        actions.add(new ResizeAction(LanguageSettings.getTranslated("resize"), new ImageIcon("src/images/resize_small.png"), LanguageSettings.getTranslated("resizeDesc"), null));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateLeft"), new ImageIcon("src/images/rotate-left_small.png"), LanguageSettings.getTranslated("rotateLeftDesc"), Integer.valueOf(KeyEvent.VK_L), 2));
+        actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), new ImageIcon("src/images/rotate-right_small.png"), LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), new ImageIcon("src/images/flip-v_small.png"), LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
+        actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), new ImageIcon("src/images/flip-h_small.png"), LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
+        actions.add(new CropAction("Crop", new ImageIcon("src/images/crop_small.png"), "cropDesc", null));
+        actions.add(new DrawAction("Draw", new ImageIcon("src/images/draw_small.png"), "drawDesc", null));
 
 
         

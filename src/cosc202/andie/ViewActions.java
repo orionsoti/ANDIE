@@ -38,9 +38,9 @@ public class ViewActions {
         actions = new ArrayList<Action>();
     
         
-        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_EQUALS)));
-        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), new ImageIcon("src/images/zoom-in_small.png"), LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_EQUALS)));
+        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), new ImageIcon("src/images/zoom-out_small.png"), LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), new ImageIcon("src/images/zoom-full_small.png"), LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
 
     }
 
