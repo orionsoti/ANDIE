@@ -96,6 +96,9 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             try{
                 target.getImage().apply(new ConvertToGrey());
                 target.repaint();
@@ -147,6 +150,9 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
                         BufferedImage original = target.getImage().getCurrentImage();
                         // Pop-up dialog box to ask for the intensity value of the contrast.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
@@ -237,6 +243,9 @@ public class ColourActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
                         BufferedImage original = target.getImage().getCurrentImage();
                         // Pop-up dialog box to ask for the intensity value of the brightness.
                         DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);

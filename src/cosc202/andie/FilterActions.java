@@ -42,9 +42,9 @@ public class FilterActions {
         actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
         actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new EmbossFilterAction("Emboss Filter", new ImageIcon("src/images/emboss-sobel.png"), "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new SobelFilterAction("Sobel Filter", new ImageIcon("src/images/emboss-sobel.png"), "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new MatrixFilterAction("Matrix Filter", new ImageIcon("src/images/neo.png"), "MatrixDesc", Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new EmbossFilterAction(LanguageSettings.getTranslated("embossFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("embossDesc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new SobelFilterAction(LanguageSettings.getTranslated("sobelFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("sobelDesc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new MatrixFilterAction(LanguageSettings.getTranslated("matrixFilter"), new ImageIcon("src/images/matrix.png"), LanguageSettings.getTranslated("matrixDesc"), Integer.valueOf(KeyEvent.VK_M)));
     }
 
     /**
@@ -101,6 +101,9 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             BufferedImage original = target.getImage().getCurrentImage();
 
             // Pop-up dialog box to ask for the intensity value of the contrast.
@@ -188,6 +191,9 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             BufferedImage original = target.getImage().getCurrentImage();
 
             // Pop-up dialog box to ask for the intensity value of the contrast.
@@ -273,6 +279,9 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             // Pop-up dialog box to confirm user wishes to apply filter.
             JLabel text = new JLabel(LanguageSettings.getTranslated("sharpenAsk"));
             int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("sharpenAsk"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
@@ -328,6 +337,9 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             BufferedImage original = target.getImage().getCurrentImage();
 
             // Pop-up dialog box to ask for the radius value.
@@ -404,7 +416,11 @@ public class FilterActions {
          * 
          */
         public void actionPerformed(ActionEvent e) {
-            String[] directions = {"Northwest", "North", "Northeast", "West", "East", "Southwest", "South", "Southeast"};
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            String[] directions = {LanguageSettings.getTranslated("northwest"), LanguageSettings.getTranslated("north"), LanguageSettings.getTranslated("northeast"), LanguageSettings.getTranslated("west"), LanguageSettings.getTranslated("east"), 
+                LanguageSettings.getTranslated("southwest"), LanguageSettings.getTranslated("south"), LanguageSettings.getTranslated("southeast")};
             JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
             ButtonGroup buttonGroup = new ButtonGroup();
             int[] buttonValues = {EmbossFilter.NORTHWEST, EmbossFilter.NORTH, EmbossFilter.NORTHEAST, EmbossFilter.WEST, EmbossFilter.EAST, EmbossFilter.SOUTHWEST, EmbossFilter.SOUTH, EmbossFilter.SOUTHEAST};
@@ -418,7 +434,7 @@ public class FilterActions {
                 
             buttonPanel.add(new JLabel(), 4); // Add an empty label in the center of the grid
             
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
                 
@@ -466,7 +482,10 @@ public class FilterActions {
          * 
          */
         public void actionPerformed(ActionEvent e) {
-            String[] directions = {"Horizontal", "Vertical"};
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            String[] directions = {LanguageSettings.getTranslated("horizontal"), LanguageSettings.getTranslated("vertical")};
             JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
             ButtonGroup buttonGroup = new ButtonGroup();
             boolean[] buttonValues = {SobelFilter.HORIZONTAL, SobelFilter.VERTICAL};
@@ -478,7 +497,7 @@ public class FilterActions {
                 buttonPanel.add(button);
             }
             
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
                 
@@ -516,9 +535,12 @@ public class FilterActions {
         }
 
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             // Pop-up dialog box to confirm user wishes to apply filter.
             JLabel text = new JLabel("Apply matrix filter?");
-            int option = JOptionPane.showOptionDialog(target.getParent(), text, "Apply matrix filter?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("matrixAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             if (option != JOptionPane.OK_OPTION) {
                 return;
             }

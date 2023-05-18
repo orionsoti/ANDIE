@@ -53,9 +53,9 @@ public class ViewActions {
      */
     public void createToolMenu(JMenuBar viewTools) {
         //Creates JButton elements
-        JButton zoomIn = new JButton(new ImageIcon("src/images/zoom_in.png"));
-        JButton zoomOut = new JButton(new ImageIcon("src/images/zoom_out.png"));
-        JButton fullscreen = new JButton(new ImageIcon("src/images/fullscreen.png"));
+        JButton zoomIn = new JButton(new ImageIcon("src/images/zoom-in.png"));
+        JButton zoomOut = new JButton(new ImageIcon("src/images/zoom-out.png"));
+        JButton fullscreen = new JButton(new ImageIcon("src/images/zoomfull.png"));
 
         //Adds corresponding ActionListener
         zoomOut.addActionListener(actions.get(1));
@@ -67,10 +67,19 @@ public class ViewActions {
         zoomIn.setPreferredSize(Andie.buttonSize);
         fullscreen.setPreferredSize(Andie.buttonSize);
 
+        // Sets the tooltips for the buttons
         zoomOut.setToolTipText(LanguageSettings.getTranslated("zoomOut"));
         zoomIn.setToolTipText(LanguageSettings.getTranslated("zoomIn"));
         fullscreen.setToolTipText(LanguageSettings.getTranslated("zoomFull"));
-        
+
+        // Removes the border and focus from the buttons
+        zoomOut.setFocusPainted(false);
+        zoomIn.setFocusPainted(false);
+        fullscreen.setFocusPainted(false);
+        zoomOut.setBorderPainted(false);
+        zoomIn.setBorderPainted(false);
+        fullscreen.setBorderPainted(false);
+
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
         Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, viewTools.getPreferredSize().height);

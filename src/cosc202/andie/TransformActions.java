@@ -39,8 +39,8 @@ public class TransformActions {
         actions.add(new ImageRotationAction(LanguageSettings.getTranslated("rotateRight"), new ImageIcon("src/images/rotate-right_small.png"), LanguageSettings.getTranslated("rotateRightDesc"), Integer.valueOf(KeyEvent.VK_R), 1));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipVertical"), new ImageIcon("src/images/flip-v_small.png"), LanguageSettings.getTranslated("flipVerticalDesc"), null, Flip.FLIP_VERTICAL));
         actions.add(new FlipAction(LanguageSettings.getTranslated("flipHorizontal"), new ImageIcon("src/images/flip-h_small.png"), LanguageSettings.getTranslated("flipHorizontalDesc"), null, Flip.FLIP_HORIZONTAL));
-        actions.add(new CropAction("Crop", new ImageIcon("src/images/crop_small.png"), "cropDesc", null));
-        actions.add(new DrawAction("Draw", new ImageIcon("src/images/draw_small.png"), "drawDesc", null));
+        actions.add(new CropAction(LanguageSettings.getTranslated("crop"), new ImageIcon("src/images/crop_small.png"), LanguageSettings.getTranslated("cropDesc"), null));
+        actions.add(new DrawAction(LanguageSettings.getTranslated("draw"), new ImageIcon("src/images/draw_small.png"), LanguageSettings.getTranslated("drawDesc"), null));
 
 
         
@@ -70,11 +70,11 @@ public class TransformActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates Buttons
-        JButton rotateLeft= new JButton(new ImageIcon("src/images/rotate_left.png"));
-        JButton rotateRight = new JButton(new ImageIcon("src/images/rotate_right.png"));
+        JButton rotateLeft= new JButton(new ImageIcon("src/images/rotate-left_3.png"));
+        JButton rotateRight = new JButton(new ImageIcon("src/images/rotate-right_3.png"));
         JButton flipVert = new JButton(new ImageIcon("src/images/flip_vert.png"));
         JButton flipHor = new JButton(new ImageIcon("src/images/flip_hor.png"));
-        JButton draw = new JButton(new ImageIcon("src/images/drawing.png"));
+        JButton draw = new JButton(new ImageIcon("src/images/pen.png"));
         JButton crop = new JButton(new ImageIcon("src/images/crop.png"));
 
 
@@ -94,20 +94,27 @@ public class TransformActions {
         draw.setPreferredSize(Andie.buttonSize);
         crop.setPreferredSize(Andie.buttonSize);
 
-        
+        // Sets the tooltips
         rotateLeft.setToolTipText(LanguageSettings.getTranslated("rotateLeft"));
         rotateRight.setToolTipText(LanguageSettings.getTranslated("rotateRight"));
         flipVert.setToolTipText(LanguageSettings.getTranslated("flipHorizontal"));
         flipHor.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
-        draw.setToolTipText("Draw");
-        crop.setToolTipText("Crop");
-        
-        /*testing new format...
+        draw.setToolTipText(LanguageSettings.getTranslated("draw"));
+        crop.setToolTipText(LanguageSettings.getTranslated("crop"));
+
+        // Removes the border and focus from the buttons
+        rotateLeft.setBorderPainted(false);
+        rotateLeft.setFocusPainted(false);
+        rotateRight.setBorderPainted(false);
+        rotateRight.setFocusPainted(false);
+        flipVert.setBorderPainted(false);
+        flipVert.setFocusPainted(false);
+        flipHor.setBorderPainted(false);
+        flipHor.setFocusPainted(false);
         draw.setBorderPainted(false);
         draw.setFocusPainted(false);
         crop.setBorderPainted(false);
         crop.setFocusPainted(false);
-        crop. setBackground(Color.WHITE);*/
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
@@ -154,6 +161,9 @@ public class TransformActions {
          */
 
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             // Create and apply the filter
             try{
                 target.getImage().apply(new Flip(direction));
@@ -191,6 +201,9 @@ public class TransformActions {
          * @throws NullPointerException If there is no image loaded
          */
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             try{
                 height = target.getImage().getCurrentImage().getHeight();
                 width = target.getImage().getCurrentImage().getWidth();
@@ -316,6 +329,9 @@ public class TransformActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             try{
                 target.getImage().apply(new ImageRotation(rotation));
                 target.repaint();
@@ -370,6 +386,9 @@ public class TransformActions {
          * @throws NullPointerException If there is no image loaded
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             try {
                 ImagePanel imagePanel = target.getImagePanel();
                 // If there is no image loaded, display an error message
@@ -416,7 +435,7 @@ public class TransformActions {
          */
         DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
-            fillCheckbox = new JCheckBox("Fill Shapes");
+            fillCheckbox = new JCheckBox(LanguageSettings.getTranslated("fillShapes"));
             fillCheckbox.setSelected(false);
             // Create and initialize the color chooser
             colorChooser = new JColorChooser();
@@ -428,7 +447,7 @@ public class TransformActions {
             // Create a slider to control the thickness of the lines
             thicknessSlider = new JSlider(JSlider.HORIZONTAL, 1, 50, 1);
             thicknessSlider.setMajorTickSpacing(5);
-            thicknessLabel = new JLabel("Line Thickness:");
+            thicknessLabel = new JLabel(LanguageSettings.getTranslated("lineThickness"));
             JPanel thicknessPanel = new JPanel();
             thicknessPanel.setLayout(new BoxLayout(thicknessPanel, BoxLayout.X_AXIS));
             thicknessPanel.add(thicknessLabel);
@@ -452,6 +471,9 @@ public class TransformActions {
          * @throws NullPointerException If there is no image loaded
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             try {
                 ImagePanel imagePanel = target.getImagePanel();
                 // Check if there is an image loaded
@@ -461,8 +483,8 @@ public class TransformActions {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);     
                     return;           
                 }
-                Object[] drawOptions = {"Rectangle", "Oval", "Line"};
-                int selectedOption = JOptionPane.showOptionDialog(null, optionsPanel, "Draw Shape",
+                Object[] drawOptions = {LanguageSettings.getTranslated("rect"), LanguageSettings.getTranslated("oval"), LanguageSettings.getTranslated("line")};
+                int selectedOption = JOptionPane.showOptionDialog(null, optionsPanel, LanguageSettings.getTranslated("drawShape"),
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
                 if (selectedOption == 0) {
                     //System.out.println("Rectangle");

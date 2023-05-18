@@ -137,8 +137,8 @@ public class FileActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates the buttons
-        JButton open = new JButton(new ImageIcon("src/images/open.png"));
-        JButton save = new JButton(new ImageIcon("src/images/save.png"));
+        JButton open = new JButton(new ImageIcon("src/images/open1.png"));
+        JButton save = new JButton(new ImageIcon("src/images/save1.png"));
 
         //Adds the action listeners
         save.addActionListener(actions.get(1));
@@ -148,12 +148,22 @@ public class FileActions {
         save.setPreferredSize(Andie.buttonSize);
         open.setPreferredSize(Andie.buttonSize);
 
+        //Sets the tool tips for the buttons
         save.setToolTipText(LanguageSettings.getTranslated("save"));
         open.setToolTipText(LanguageSettings.getTranslated("open"));
+
+        //Removes the border and focus from the buttons
+        open.setFocusPainted(false);
+        save.setFocusPainted(false);
+        open.setBorderPainted(false);
+        save.setBorderPainted(false);
         
         //Adds the buttons to the tool bar
         toolBar.add(open);
         toolBar.add(save);
+
+        // Disable the border
+        toolBar.setBorder(BorderFactory.createEmptyBorder());
         
     }
 

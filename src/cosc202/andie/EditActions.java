@@ -65,8 +65,8 @@ public class EditActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates the buttons
-        JButton undo = new JButton(new ImageIcon("src/images/undo.png"));
-        JButton redo = new JButton(new ImageIcon("src/images/redo.png"));
+        JButton undo = new JButton(new ImageIcon("src/images/undo1.png"));
+        JButton redo = new JButton(new ImageIcon("src/images/redo1.png"));
 
         //Adds action listeners
         undo.addActionListener(actions.get(0));
@@ -76,8 +76,15 @@ public class EditActions {
         undo.setPreferredSize(Andie.buttonSize);
         redo.setPreferredSize(Andie.buttonSize);
 
+        // Sets the tooltips
         undo.setToolTipText(LanguageSettings.getTranslated("undo"));
         redo.setToolTipText(LanguageSettings.getTranslated("redo"));
+
+        // Removes the border and focus from the buttons
+        undo.setFocusPainted(false);
+        redo.setFocusPainted(false);
+        undo.setBorderPainted(false);
+        redo.setBorderPainted(false);
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
