@@ -1,6 +1,8 @@
 package cosc202.andie;
 import java.util.*;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -73,29 +75,42 @@ public class TransformActions {
         JButton rotateRight = new JButton(new ImageIcon("src/images/rotate_right.png"));
         JButton flipVert = new JButton(new ImageIcon("src/images/flip_vert.png"));
         JButton flipHor = new JButton(new ImageIcon("src/images/flip_hor.png"));
+        JButton draw = new JButton(new ImageIcon("src/images/drawing.png"));
+        JButton crop = new JButton(new ImageIcon("src/images/crop.png"));
+
 
         //Adds action Listeners
         rotateLeft.addActionListener(actions.get(1));
         rotateRight.addActionListener(actions.get(2));
         flipVert.addActionListener(actions.get(4));
         flipHor.addActionListener(actions.get(3));
+        draw.addActionListener(actions.get(6));
+        crop.addActionListener(actions.get(5));
 
         //Sets the buttons sizes
         rotateLeft.setPreferredSize(Andie.buttonSize);
         rotateRight.setPreferredSize(Andie.buttonSize);
         flipVert.setPreferredSize(Andie.buttonSize);
         flipHor.setPreferredSize(Andie.buttonSize);
+        draw.setPreferredSize(Andie.buttonSize);
+        crop.setPreferredSize(Andie.buttonSize);
+
         
         rotateLeft.setToolTipText(LanguageSettings.getTranslated("rotateLeft"));
         rotateRight.setToolTipText(LanguageSettings.getTranslated("rotateRight"));
         flipVert.setToolTipText(LanguageSettings.getTranslated("flipHorizontal"));
         flipHor.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
+        draw.setToolTipText("Draw");
+        crop.setToolTipText("Crop");
+
 
         //Adds the buttons to the toolBar
         toolBar.add(rotateLeft);
         toolBar.add(rotateRight);
         toolBar.add(flipVert);
         toolBar.add(flipHor);
+        toolBar.add(crop);
+        toolBar.add(draw);
     }
 
     /**
@@ -344,7 +359,9 @@ public class TransformActions {
         public void actionPerformed(ActionEvent e) {
             try {
                 ImagePanel imagePanel = target.getImagePanel();
+                imagePanel.setDrawMode(false, false, false, false);
                 imagePanel.setCropMode(true);
+
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
@@ -354,12 +371,31 @@ public class TransformActions {
         
     }
 
+    /**
+     * <p>
+     * Action to draw on an image.
+     * </p>
+     * 
+     */
     public class DrawAction extends ImageAction {
         private JCheckBox fillCheckbox;
         private JColorChooser colorChooser;
         private JPanel optionsPanel; // Declare optionsPanel as an instance variable
         private Color color;
-    
+        private JSlider thicknessSlider;
+        private JLabel thicknessLabel;
+        
+        /**
+         * <p>
+         * Create a new Draw action
+         * Sets 'ctrl + d' as the hotkey for draw.
+         * </p>
+         * 
+         * @param name
+         * @param icon
+         * @param desc
+         * @param mnemonic
+         */
         DrawAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
             fillCheckbox = new JCheckBox("Fill Shapes");
@@ -367,12 +403,28 @@ public class TransformActions {
             // Create and initialize the color chooser
             colorChooser = new JColorChooser();
             colorChooser.setColor(Color.RED);
-    
+            
             // Create a panel to hold the fill checkbox and color chooser
             optionsPanel = new JPanel();
             optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-            optionsPanel.add(fillCheckbox);
             optionsPanel.add(colorChooser);
+
+            // Create a slider to control the thickness of the lines
+            thicknessSlider = new JSlider(JSlider.HORIZONTAL, 1, 50, 1);
+            thicknessSlider.setMajorTickSpacing(5);
+            thicknessLabel = new JLabel("Line Thickness:");
+            JPanel thicknessPanel = new JPanel();
+            thicknessPanel.setLayout(new BoxLayout(thicknessPanel, BoxLayout.X_AXIS));
+            thicknessPanel.add(thicknessLabel);
+            thicknessPanel.add(thicknessSlider);
+            thicknessPanel.add(fillCheckbox);
+
+            // Add an empty border with desired spacing between the colorChooser and thicknessPanel
+            int spacing = 30; // Adjust the value to increase or decrease spacing
+            optionsPanel.add(Box.createVerticalStrut(spacing));
+            optionsPanel.add(thicknessPanel);
+            
+
     
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, c);
@@ -393,24 +445,27 @@ public class TransformActions {
             try {
                 ImagePanel imagePanel = target.getImagePanel();
                 Object[] drawOptions = {"Rectangle", "Oval", "Line"};
-    
+
                 int selectedOption = JOptionPane.showOptionDialog(null, optionsPanel, "Draw Shape",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
-    
+
                 if (selectedOption == 0) {
-                    System.out.println("Rectangle");
+                    //System.out.println("Rectangle");
                     imagePanel.setDrawMode(true, true, false, false);
                 } else if (selectedOption == 1) {
-                    System.out.println("Oval");
+                    //System.out.println("Oval");
                     imagePanel.setDrawMode(true, false, true, false);
                 } else if (selectedOption == 2) {
-                    System.out.println("Line");
+                    //System.out.println("Line");
                     imagePanel.setDrawMode(true, false, false, true);
                 }
                 boolean fill = fillCheckbox.isSelected();
                 imagePanel.setFillShapes(fill);
                 color = colorChooser.getColor();
                 imagePanel.setColor(color);
+
+                float lineThickness = thicknessSlider.getValue();
+                imagePanel.setLineThickness(lineThickness);
 
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
@@ -419,6 +474,7 @@ public class TransformActions {
                         JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
+
     }
     
 }

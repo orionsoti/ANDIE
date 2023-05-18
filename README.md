@@ -4,7 +4,7 @@ Contributors: *Liam Hayward, Jacob Myron, Josiah Astwood, Orion Soti, Tyler Birk
 
 https://cosc202-team-vista.cspages.otago.ac.nz/andie/docs/
 
-Icons by <a target="_blank" href="https://icons8.com">Icons8</a>
+Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="_blank" href="https://www.flaticon.com">FlatIcon</a>
 ----
 ## Getting Started:
 

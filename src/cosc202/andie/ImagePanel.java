@@ -25,6 +25,7 @@ public class ImagePanel extends JPanel {
     private boolean ovalMode;
     private Color color;
     private boolean fillShapes;
+    private float lineThickness;
 
     /**
      * Constructs an ImagePanel with a default EditableImage and scale of 1.0.
@@ -47,6 +48,8 @@ public class ImagePanel extends JPanel {
         ovalMode = false;
         color = Color.WHITE;
         fillShapes = false;
+        lineThickness = 1.0f;
+
         // Mouse listeners for selection and drawing
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
@@ -102,16 +105,18 @@ public class ImagePanel extends JPanel {
                                 selectionShape = new Ellipse2D.Double(x, y, width, height);
                             }
                             Color chosenColor = color;
+                            float chosenLineThickness = lineThickness;
                             image.apply(new Draw(selectionShape, getZoom() / 100, 0, 0, rectangleMode, ovalMode,
-                                    false, 0, 0, 0, 0, fillShapes, chosenColor));
+                                    false, 0, 0, 0, 0, fillShapes, chosenColor, chosenLineThickness));
                             setDrawMode(false, false, false, false);
                         }
                         if (lineMode && getSelectionStartPoint() != null && getSelectionEndPoint() != null) {
                             Point startPoint = getSelectionStartPoint();
                             Point endPoint = getSelectionEndPoint();
                             Color chosenColor = color;
+                            float chosenLineThickness = lineThickness;
                             image.apply(new Draw(null, getZoom() / 100, 0, 0, false, false,
-                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true, chosenColor));
+                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true, chosenColor, chosenLineThickness));
                             setDrawMode(false, false, false, false);
                         }
                         repaint();
@@ -236,12 +241,18 @@ public class ImagePanel extends JPanel {
                 int height = Math.abs(selectionStart.y - selectionEnd.y);
                 selectionShape = new Ellipse2D.Double(x, y, width, height);
             }
-            g2.setStroke(new BasicStroke(2));
-            g2.setColor(color);
-            if (fillShapes){
+            // Calculate the scaled line width based on zoom factor and line thickness
+            float scaledLineWidth = (float) (lineThickness/scale);
+            if (fillShapes) {
+                // Disable line thickness if the shape is filled
+                g2.setStroke(new BasicStroke(1)); // Set line thickness to 1
+                g2.setColor(color);
                 g2.fill(selectionShape);
+            } else {
+                g2.setStroke(new BasicStroke(scaledLineWidth));
+                g2.setColor(color);
+                g2.draw(selectionShape);
             }
-            g2.draw(selectionShape);
         }
     }
     
@@ -259,7 +270,7 @@ public class ImagePanel extends JPanel {
             int scaledEndX = (int) (endPoint.x * scale);
             int scaledEndY = (int) (endPoint.y * scale);
             // Calculate the scaled line width based on zoom factor
-            float scaledLineWidth = (float) (2 / scale);
+            float scaledLineWidth = (float) (lineThickness / scale);
             g2.setStroke(new BasicStroke(scaledLineWidth));
             g2.setColor(color);
             g2.drawLine(scaledStartX, scaledStartY, scaledEndX, scaledEndY);
@@ -422,6 +433,16 @@ public class ImagePanel extends JPanel {
     public boolean getFillShapes() {
         return fillShapes;
     }
+
+    public float getLineThickness() {
+        return lineThickness;
+    }
+    
+    public void setLineThickness(float lineThickness) {
+        this.lineThickness = lineThickness;
+        repaint();
+    }
+    
 	
 }
     

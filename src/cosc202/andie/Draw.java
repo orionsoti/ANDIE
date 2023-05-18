@@ -27,6 +27,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
     private int lineY2;
     private boolean fill;
     private Color color;
+    private float lineThickness;
 
 
     /**
@@ -45,7 +46,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
      * @param lineY2    the y-coordinate of the ending point of the line
      */
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
-                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color) {
+                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color, float lineThickness) {
         this.selection = selection;
         //this.scale = scale;
         //this.x = x;
@@ -59,6 +60,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
         this.lineY2 = lineY2;
         this.fill = fill;
         this.color = color;
+        this.lineThickness = lineThickness;
     }
 
     /**
@@ -71,6 +73,8 @@ public class Draw implements ImageOperation, java.io.Serializable {
         Graphics2D inputGraphics = getScaledGraphics(input);
         inputGraphics.setColor(color);
         if (rectangle) {
+            Stroke stroke = new BasicStroke(lineThickness); // Set the line thickness
+            inputGraphics.setStroke(stroke);
             if (fill) {
                 inputGraphics.fill(selection);
             }
@@ -79,6 +83,8 @@ public class Draw implements ImageOperation, java.io.Serializable {
             }
         }
         if (oval) {
+            Stroke stroke = new BasicStroke(lineThickness); // Set the line thickness
+            inputGraphics.setStroke(stroke);
             if (fill) {
                 inputGraphics.fill(selection);
             }
@@ -87,7 +93,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
             }
         }
         if (line) {
-            Stroke stroke = new BasicStroke(2); // Set the line thickness
+            Stroke stroke = new BasicStroke(lineThickness); // Set the line thickness
             inputGraphics.setStroke(stroke);
             inputGraphics.drawLine(lineX1, lineY1, lineX2, lineY2);
         }
