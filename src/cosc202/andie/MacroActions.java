@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
@@ -116,6 +117,15 @@ public class MacroActions {
         m2.setPreferredSize(Andie.buttonSize);
         //m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         //m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
+
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, toolBar.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        toolBar.add(separator);
+
          //Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);

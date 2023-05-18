@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
  /**
@@ -77,6 +78,14 @@ public class EditActions {
 
         undo.setToolTipText(LanguageSettings.getTranslated("undo"));
         redo.setToolTipText(LanguageSettings.getTranslated("redo"));
+
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, toolBar.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        toolBar.add(separator);
 
         //Adds to toolBar
         toolBar.add(undo);

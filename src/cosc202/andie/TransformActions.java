@@ -2,7 +2,6 @@ package cosc202.andie;
 import java.util.*;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
@@ -102,7 +101,21 @@ public class TransformActions {
         flipHor.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
         draw.setToolTipText("Draw");
         crop.setToolTipText("Crop");
+        
+        /*testing new format...
+        draw.setBorderPainted(false);
+        draw.setFocusPainted(false);
+        crop.setBorderPainted(false);
+        crop.setFocusPainted(false);
+        crop. setBackground(Color.WHITE);*/
 
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, toolBar.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        toolBar.add(separator);
 
         //Adds the buttons to the toolBar
         toolBar.add(rotateLeft);
@@ -342,7 +355,7 @@ public class TransformActions {
             
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-    
+
             target.getActionMap().put(getValue(Action.NAME), this);
 
             
@@ -359,16 +372,21 @@ public class TransformActions {
         public void actionPerformed(ActionEvent e) {
             try {
                 ImagePanel imagePanel = target.getImagePanel();
+                // If there is no image loaded, display an error message
+                if (!imagePanel.getImage().hasImage()){
+                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);                
+                    return;
+                }
                 imagePanel.setDrawMode(false, false, false, false);
                 imagePanel.setCropMode(true);
-
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
-        
     }
 
     /**
@@ -403,12 +421,10 @@ public class TransformActions {
             // Create and initialize the color chooser
             colorChooser = new JColorChooser();
             colorChooser.setColor(Color.RED);
-            
             // Create a panel to hold the fill checkbox and color chooser
             optionsPanel = new JPanel();
             optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
             optionsPanel.add(colorChooser);
-
             // Create a slider to control the thickness of the lines
             thicknessSlider = new JSlider(JSlider.HORIZONTAL, 1, 50, 1);
             thicknessSlider.setMajorTickSpacing(5);
@@ -418,20 +434,14 @@ public class TransformActions {
             thicknessPanel.add(thicknessLabel);
             thicknessPanel.add(thicknessSlider);
             thicknessPanel.add(fillCheckbox);
-
             // Add an empty border with desired spacing between the colorChooser and thicknessPanel
             int spacing = 30; // Adjust the value to increase or decrease spacing
             optionsPanel.add(Box.createVerticalStrut(spacing));
             optionsPanel.add(thicknessPanel);
-            
-
-    
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, c);
-    
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-    
             target.getActionMap().put(getValue(Action.NAME), this);
         }
     
@@ -444,11 +454,16 @@ public class TransformActions {
         public void actionPerformed(ActionEvent e) {
             try {
                 ImagePanel imagePanel = target.getImagePanel();
+                // Check if there is an image loaded
+                if (!imagePanel.getImage().hasImage()){
+                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);     
+                    return;           
+                }
                 Object[] drawOptions = {"Rectangle", "Oval", "Line"};
-
                 int selectedOption = JOptionPane.showOptionDialog(null, optionsPanel, "Draw Shape",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, drawOptions, null);
-
                 if (selectedOption == 0) {
                     //System.out.println("Rectangle");
                     imagePanel.setDrawMode(true, true, false, false);
@@ -463,10 +478,8 @@ public class TransformActions {
                 imagePanel.setFillShapes(fill);
                 color = colorChooser.getColor();
                 imagePanel.setColor(color);
-
                 float lineThickness = thicknessSlider.getValue();
                 imagePanel.setLineThickness(lineThickness);
-
             } catch (NullPointerException exception) {
                 Object[] options = {LanguageSettings.getTranslated("ok")};
                 JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
@@ -474,8 +487,6 @@ public class TransformActions {
                         JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             }
         }
-
     }
-    
 }
      

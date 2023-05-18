@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
 
@@ -70,6 +71,14 @@ public class ViewActions {
         zoomIn.setToolTipText(LanguageSettings.getTranslated("zoomIn"));
         fullscreen.setToolTipText(LanguageSettings.getTranslated("zoomFull"));
         
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, viewTools.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        viewTools.add(separator);
+
         //Adds the buttons to the menu
         viewTools.add(zoomIn);
         viewTools.add(zoomOut);
