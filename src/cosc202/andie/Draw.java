@@ -15,9 +15,9 @@ import java.awt.image.BufferedImage;
 public class Draw implements ImageOperation, java.io.Serializable {
 
     private Shape selection;
-    private double scale;
-    private int x;
-    private int y;
+    //private double scale;
+    //private int x;
+    //private int y;
     private boolean rectangle;
     private boolean oval;
     private boolean line;
@@ -47,9 +47,9 @@ public class Draw implements ImageOperation, java.io.Serializable {
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
                 boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color) {
         this.selection = selection;
-        this.scale = scale;
-        this.x = x;
-        this.y = y;
+        //this.scale = scale;
+        //this.x = x;
+        //this.y = y;
         this.rectangle = rectangle;
         this.oval = oval;
         this.line = line;
@@ -105,12 +105,9 @@ public class Draw implements ImageOperation, java.io.Serializable {
     */
     private Graphics2D getScaledGraphics(BufferedImage input) {
         Graphics2D g2d = input.createGraphics();
-        int halfWidth = input.getWidth() / 2;
-        int halfHeight = input.getHeight() / 2;
-        g2d.translate(halfWidth, halfHeight);
-        g2d.scale(1 / scale, 1 / scale);
-        g2d.translate(-halfWidth, -halfHeight);
-        g2d.translate(-x, -y);
+        //g2d.scale(scale, scale);
+        //g2d.translate(x/scale, y/scale);
         return g2d;
     }
+
 }
