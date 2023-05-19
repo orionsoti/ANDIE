@@ -3,6 +3,7 @@ import java.util.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * <p>
  * Actions provided by the File menu.
@@ -32,12 +33,12 @@ public class FileActions {
      */
     public FileActions() {
         actions = new ArrayList<Action>();
-        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), null, LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));
-        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), null, LanguageSettings.getTranslated("saveDesc"), Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), null, LanguageSettings.getTranslated("saveAsDesc") , Integer.valueOf(KeyEvent.VK_A)));
-        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), null, LanguageSettings.getTranslated("exportDesc"), Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), null, LanguageSettings.getTranslated("languageDesc") , Integer.valueOf(0)));
-        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), null, LanguageSettings.getTranslated("exitDesc"), Integer.valueOf(0)));
+        actions.add(new FileOpenAction(LanguageSettings.getTranslated("open"), new ImageIcon("src/images/open_small.png"), LanguageSettings.getTranslated("openDesc"), Integer.valueOf(KeyEvent.VK_O)));
+        actions.add(new FileSaveAction(LanguageSettings.getTranslated("save"), new ImageIcon("src/images/save_small.png"), LanguageSettings.getTranslated("saveDesc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new FileSaveAsAction(LanguageSettings.getTranslated("saveAs"), new ImageIcon("src/images/save-as_small.png"), LanguageSettings.getTranslated("saveAsDesc") , Integer.valueOf(KeyEvent.VK_A)));
+        actions.add(new FileExportAction(LanguageSettings.getTranslated("export"), new ImageIcon("src/images/export_small.png"), LanguageSettings.getTranslated("exportDesc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new FileLanguage(LanguageSettings.getTranslated("language"), new ImageIcon("src/images/language_small.png"), LanguageSettings.getTranslated("languageDesc") , Integer.valueOf(0)));
+        actions.add(new FileExitAction(LanguageSettings.getTranslated("exit"), new ImageIcon("src/images/exit_small.png"), LanguageSettings.getTranslated("exitDesc"), Integer.valueOf(0)));
         
     }
     /**
@@ -136,8 +137,8 @@ public class FileActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates the buttons
-        JButton save = new JButton(new ImageIcon("src/images/save.png"));
-        JButton open = new JButton(new ImageIcon("src/images/open.png"));
+        JButton open = new JButton(new ImageIcon("src/images/open1.png"));
+        JButton save = new JButton(new ImageIcon("src/images/save1.png"));
 
         //Adds the action listeners
         save.addActionListener(actions.get(1));
@@ -147,12 +148,20 @@ public class FileActions {
         save.setPreferredSize(Andie.buttonSize);
         open.setPreferredSize(Andie.buttonSize);
 
+        //Sets the tool tips for the buttons
         save.setToolTipText(LanguageSettings.getTranslated("save"));
         open.setToolTipText(LanguageSettings.getTranslated("open"));
         
+        open.setFocusPainted(false);
+        save.setFocusPainted(false);
+        
         //Adds the buttons to the tool bar
-        toolBar.add(save);
         toolBar.add(open);
+        toolBar.add(save);
+
+        // Disable the border
+        toolBar.setBorder(BorderFactory.createEmptyBorder());
+        
     }
 
     /**
@@ -207,6 +216,11 @@ public class FileActions {
             
             do{
                 JFileChooser fileChooser = new JFileChooser();
+                // Sets the file chooser to only accept image files
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Supported Picture Files", "jpg", "jpeg",
+                    "png", "bmp", "gif", "tif", "tiff", "wbmp");
+                fileChooser.setAcceptAllFileFilterUsed(false);
+                fileChooser.setFileFilter(filter);
                 int result = fileChooser.showOpenDialog(target);
                 
 
@@ -215,6 +229,7 @@ public class FileActions {
                        
                         String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
                         target.getImage().open(imageFilepath);
+                        //Andie.menuBar1.pack(); // resize the window to fit the new image
                         //Checks the size of the image to make sure it is not larger than 4k.
                         if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
                             flag = true;
@@ -327,7 +342,7 @@ public class FileActions {
             super(name, icon, desc, mnemonic);
 
              // Sets the hotkey to 'ctrl + shift + s' to trigger a Save-as action.
-             KeyStroke sA = KeyStroke.getKeyStroke(KeyEvent.VK_S,  InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
+             KeyStroke sA = KeyStroke.getKeyStroke(KeyEvent.VK_S,  InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
              putValue(Action.ACCELERATOR_KEY, sA);
              
              InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -387,7 +402,7 @@ public class FileActions {
             super(name, icon, desc, mnemonic);
 
             // Sets the hotkey to 'ctrl + shift + e' to trigger a File-Export action.
-            KeyStroke eX = KeyStroke.getKeyStroke(KeyEvent.VK_E,  InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, enabled);
+            KeyStroke eX = KeyStroke.getKeyStroke(KeyEvent.VK_E,  InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
             putValue(Action.ACCELERATOR_KEY, eX);
             
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

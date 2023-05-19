@@ -4,6 +4,9 @@ import java.util.*;
 import java.awt.GridLayout;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.image.*;
+import javax.swing.event.*;
 
 /**
  * <p>
@@ -35,13 +38,13 @@ public class FilterActions {
      */
     public FilterActions() {
         actions = new ArrayList<Action>();
-        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), null, LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
-        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), null, LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), null, LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
-        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), null, LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
-        actions.add(new EmbossFilterAction("Emboss Filter", null, "EmbossDesc", Integer.valueOf(KeyEvent.VK_E)));
-        actions.add(new SobelFilterAction("Sobel Filter", null, "SobelDesc", Integer.valueOf(KeyEvent.VK_S)));
-        actions.add(new MatrixFilterAction("Matrix Filter", null, "MatrixDesc", Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new SharpenFilterAction(LanguageSettings.getTranslated("sharpenFilter"), new ImageIcon("src/images/sharpen.png"), LanguageSettings.getTranslated("sharpenDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new MeanFilterAction(LanguageSettings.getTranslated("meanFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("meanDesc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new GaussianBlurFilterAction(LanguageSettings.getTranslated("gaussianBlurFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("gaussianDesc"), Integer.valueOf(KeyEvent.VK_U)));
+        actions.add(new MedianFilterAction(LanguageSettings.getTranslated("medianFilter"), new ImageIcon("src/images/blur.png"), LanguageSettings.getTranslated("medianDesc"), Integer.valueOf(KeyEvent.VK_N)));
+        actions.add(new EmbossFilterAction(LanguageSettings.getTranslated("embossFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("embossDesc"), Integer.valueOf(KeyEvent.VK_E)));
+        actions.add(new SobelFilterAction(LanguageSettings.getTranslated("sobelFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("sobelDesc"), Integer.valueOf(KeyEvent.VK_S)));
+        actions.add(new MatrixFilterAction(LanguageSettings.getTranslated("matrixFilter"), new ImageIcon("src/images/matrix.png"), LanguageSettings.getTranslated("matrixDesc"), Integer.valueOf(KeyEvent.VK_M)));
     }
 
     /**
@@ -98,33 +101,55 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            BufferedImage original = target.getImage().getCurrentImage();
 
-            // Determine the radius - ask the user.
-            int radius = 0;
+            // Pop-up dialog box to ask for the intensity value of the contrast.
+            DefaultBoundedRangeModel radiusModel = new DefaultBoundedRangeModel(0, 0, 0, 10);
+            JSlider radiusSlider = new JSlider(radiusModel);
+            radiusSlider.setPreferredSize(new Dimension(300, 50));
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setSnapToTicks(enabled);
+
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    target.getImage().setCurrentImage(original);
+                    int radius = radiusSlider.getValue();
+                    
+                    // Create and apply the filter.
+                    try{
+                        target.getImage().preview(new MeanFilter(radius));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }catch(NullPointerException exception){
+                        Object[] options = {LanguageSettings.getTranslated("ok")};
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                    }
+                }
+            });
 
             // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"),
+            radiusSlider.setPaintLabels(true);
+            int option = JOptionPane.showOptionDialog(null, radiusSlider, LanguageSettings.getTranslated("radiusAsk"),
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            }
-
-            // Create and apply the filter
-            try{
-                target.getImage().apply(new MeanFilter(radius));
+            if (option == 1) {
+                target.getImage().setCurrentImage(original);
                 target.repaint();
-                target.getParent().revalidate();
-            }catch(NullPointerException exception){
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                return;
+            } 
+            else if (option == JOptionPane.OK_OPTION) {
+                int radius = radiusSlider.getValue();
+                target.getImage().setCurrentImage(original);
+                target.getImage().apply(new MedianFilter(radius));
+                return;
             }
+            
         }
 
     }
@@ -166,32 +191,53 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            BufferedImage original = target.getImage().getCurrentImage();
 
-            // Determine the radius - ask the user.
-            int radius = 0;
+            // Pop-up dialog box to ask for the intensity value of the contrast.
+            DefaultBoundedRangeModel radiusModel = new DefaultBoundedRangeModel(0, 0, 0, 5);
+            JSlider radiusSlider = new JSlider(radiusModel);
+            radiusSlider.setPreferredSize(new Dimension(300, 50));
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setSnapToTicks(enabled);
 
-            // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 5, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"), 
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    target.getImage().setCurrentImage(original);
+                    int radius = radiusSlider.getValue();
+                    
+                    // Create and apply the filter.
+                    try{
+                        target.getImage().preview(new MedianFilter(radius));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }catch(NullPointerException exception){
+                        Object[] options = {LanguageSettings.getTranslated("ok")};
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                    }
+                }
+            });
+
+            // Pop-up dialog box to ask for the radius value
+            radiusSlider.setPaintLabels(true);
+            int option = JOptionPane.showOptionDialog(null, radiusSlider, LanguageSettings.getTranslated("radiusAsk"),
             JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
 
             // Check the return value from the dialog box.
-            if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            } else if (option == JOptionPane.OK_OPTION) {
-                radius = radiusModel.getNumber().intValue();
-            }
-
-            // Create and apply the filter
-            try{
-                target.getImage().apply(new MedianFilter(radius));
+            if (option == 1) {
+                target.getImage().setCurrentImage(original);
                 target.repaint();
-                target.getParent().revalidate();
-            }catch(NullPointerException exception){
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                return;
+            } 
+            else if (option == JOptionPane.OK_OPTION) {
+                int radius = radiusSlider.getValue();
+                target.getImage().setCurrentImage(original);
+                target.getImage().apply(new MedianFilter(radius));
+                return;
             }
         }
 
@@ -233,6 +279,9 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             // Pop-up dialog box to confirm user wishes to apply filter.
             JLabel text = new JLabel(LanguageSettings.getTranslated("sharpenAsk"));
             int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("sharpenAsk"),JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
@@ -288,29 +337,52 @@ public class FilterActions {
          * @throws NullPointerException If there is no image loaded.
          */
         public void actionPerformed(ActionEvent e) {
-            // Determine the radius - ask the user.
-            int radius = 1;
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            BufferedImage original = target.getImage().getCurrentImage();
+
             // Pop-up dialog box to ask for the radius value.
-            SpinnerNumberModel radiusModel = new SpinnerNumberModel(1, 1, 10, 1);
-            JSpinner radiusSpinner = new JSpinner(radiusModel);
-            int option = JOptionPane.showOptionDialog(null, radiusSpinner, LanguageSettings.getTranslated("radiusAsk"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            DefaultBoundedRangeModel radiusModel = new DefaultBoundedRangeModel(1, 0, 1, 10);
+            JSlider radiusSlider = new JSlider(radiusModel);
+            radiusSlider.setPreferredSize(new Dimension(300, 50));
+            radiusSlider.setMajorTickSpacing(1);
+            radiusSlider.setPaintTicks(true);
+            radiusSlider.setSnapToTicks(enabled);
+
+            radiusSlider.addChangeListener(new ChangeListener() {
+                public void stateChanged(ChangeEvent e) {
+                    target.getImage().setCurrentImage(original);
+                    int radius = radiusSlider.getValue();
+                    
+                    // Create and apply the filter.
+                    try{
+                        target.getImage().preview(new GaussianBlurFilter(radius));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }catch(NullPointerException exception){
+                        Object[] options = {LanguageSettings.getTranslated("ok")};
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                    }
+                }
+            });
+
+            radiusSlider.setPaintLabels(true);
+            int option = JOptionPane.showOptionDialog(null, radiusSlider, LanguageSettings.getTranslated("radiusAsk"),
+            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+            new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            
             // Returns early if the user cancels the operation.
-            if (option == JOptionPane.CANCEL_OPTION) {
+            if (option == 1) {
+                target.getImage().setCurrentImage(original);
+                target.repaint();
                 return;
             }else if(option ==JOptionPane.OK_OPTION){
-                radius = radiusModel.getNumber().intValue();
-            }
-            // Create and apply the filter
-            try{
+                int radius = radiusSlider.getValue();
+                target.getImage().setCurrentImage(original);
                 target.getImage().apply(new GaussianBlurFilter(radius));
-                target.repaint();
-                target.getParent().revalidate();
-            }catch(NullPointerException exception){
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                return;
             }
         }
 
@@ -344,7 +416,11 @@ public class FilterActions {
          * 
          */
         public void actionPerformed(ActionEvent e) {
-            String[] directions = {"Northwest", "North", "Northeast", "West", "East", "Southwest", "South", "Southeast"};
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            String[] directions = {LanguageSettings.getTranslated("northwest"), LanguageSettings.getTranslated("north"), LanguageSettings.getTranslated("northeast"), LanguageSettings.getTranslated("west"), LanguageSettings.getTranslated("east"), 
+                LanguageSettings.getTranslated("southwest"), LanguageSettings.getTranslated("south"), LanguageSettings.getTranslated("southeast")};
             JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
             ButtonGroup buttonGroup = new ButtonGroup();
             int[] buttonValues = {EmbossFilter.NORTHWEST, EmbossFilter.NORTH, EmbossFilter.NORTHEAST, EmbossFilter.WEST, EmbossFilter.EAST, EmbossFilter.SOUTHWEST, EmbossFilter.SOUTH, EmbossFilter.SOUTHEAST};
@@ -358,11 +434,11 @@ public class FilterActions {
                 
             buttonPanel.add(new JLabel(), 4); // Add an empty label in the center of the grid
             
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
                 
-            if (option == JOptionPane.CANCEL_OPTION || buttonGroup.getSelection() == null) {
+            if (option == 1 || buttonGroup.getSelection() == null) { // 1 is cancel option
                 return;
             }
             
@@ -406,7 +482,10 @@ public class FilterActions {
          * 
          */
         public void actionPerformed(ActionEvent e) {
-            String[] directions = {"Horizontal", "Vertical"};
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            String[] directions = {LanguageSettings.getTranslated("horizontal"), LanguageSettings.getTranslated("vertical")};
             JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
             ButtonGroup buttonGroup = new ButtonGroup();
             boolean[] buttonValues = {SobelFilter.HORIZONTAL, SobelFilter.VERTICAL};
@@ -418,11 +497,11 @@ public class FilterActions {
                 buttonPanel.add(button);
             }
             
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, "Select a direction",
+            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                     new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
                 
-            if (option == JOptionPane.CANCEL_OPTION || buttonGroup.getSelection() == null) {
+            if (option == 1 || buttonGroup.getSelection() == null) {
                 return;
             }
             
@@ -456,9 +535,12 @@ public class FilterActions {
         }
 
         public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
             // Pop-up dialog box to confirm user wishes to apply filter.
             JLabel text = new JLabel("Apply matrix filter?");
-            int option = JOptionPane.showOptionDialog(target.getParent(), text, "Apply matrix filter?", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("matrixAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
             if (option != JOptionPane.OK_OPTION) {
                 return;
             }

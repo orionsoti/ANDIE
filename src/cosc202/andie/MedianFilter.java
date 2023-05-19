@@ -58,48 +58,39 @@ public class MedianFilter implements ImageOperation, java.io.Serializable {
     public BufferedImage apply(BufferedImage input){
         BufferedImage output = new BufferedImage(input.getWidth(), input.getHeight(), input.getType());
         
-        int kSize = (2*radius+1);
+        int kSize = (2 * radius + 1);
         int size = kSize * kSize;
-        
-        //int arrays for storing the RGBA values of the surrounding pixels
-        int[] aArray  = new int[size];
-        int[] rArray  = new int[size];
-        int[] gArray  = new int[size];
-        int[] bArray  = new int[size];
 
-        int counter = 0;
+        int[] argbArray = new int[size];
 
         //iterates through each pixel of the image
         for (int y = 0; y < input.getHeight(); y++){
             for(int x = 0; x < input.getWidth(); x++){
-                counter = 0;
+                int counter = 0;
 
                 //Then iterates through all the pixels in a neighbourhood surrounding the pixel
                 for(int row = -radius; row <= radius; row++){
                     int yOffset = y + row;
+
                     if(yOffset < 0 || yOffset >= input.getHeight()) {
                         continue;
                     }
+
                     for(int col = -radius; col <= radius; col++){
                         int xOffset = x + col;
+
                         if(xOffset < 0 || xOffset >= input.getWidth()){
                             continue;
                         }
-                        int argb = input.getRGB(xOffset, yOffset);
-                        aArray[counter] = (argb & 0xFF000000) >> 24;
-                        rArray[counter] = (argb & 0x00FF0000) >> 16;
-                        gArray[counter] = (argb & 0x0000FF00) >> 8;
-                        bArray[counter] = (argb & 0x000000FF);
 
+                        int argb = input.getRGB(xOffset, yOffset);
+                        argbArray[counter] = argb;
                         counter++;
                     }
                 } 
-                Arrays.sort(aArray, 0, counter);
-                Arrays.sort(rArray, 0, counter);
-                Arrays.sort(gArray, 0, counter);
-                Arrays.sort(bArray, 0, counter);
+                Arrays.sort(argbArray, 0, counter);
 
-                int newArgb = (aArray[counter/2] << 24 | rArray[counter/2] << 16 | gArray[counter/2] << 8| bArray[counter/2]);    
+                int newArgb = argbArray[counter/2];    
                 output.setRGB(x, y, newArgb);         
             }
         }

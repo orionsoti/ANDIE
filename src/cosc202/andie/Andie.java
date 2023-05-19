@@ -56,6 +56,11 @@ public class Andie {
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
         menuBar1 = frame;
+        // customise the frame a bit
+        frame.setPreferredSize(new Dimension(800,800));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
         // Add in menus for various types of action the user may perform.
         createMenuBar();
         createToolMenu();

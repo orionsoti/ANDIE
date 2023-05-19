@@ -1,6 +1,7 @@
 package cosc202.andie;
 
 import java.util.*;
+import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
@@ -87,8 +88,8 @@ public class MacroActions {
          //calls the loadPresets method to load in any presets and flag the presets as true to allow menus to be created for them
         loadPresets();
          //creates instances of each macro menu option
-        actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), null, LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), null, LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), new ImageIcon("src/images/record_small.png"), LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
+        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), new ImageIcon("src/images/stop-record_small.png"), LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new MacroLoad(LanguageSettings.getTranslated("loadFromFile"), null, LanguageSettings.getTranslated("loadMDesc"), Integer.valueOf(KeyEvent.VK_G)));        
          //checks to make sure there is a preset in the txt file before loading it to the actions menu
         if(preset1check == true){actions.add(new Macro1(LanguageSettings.getTranslated("preset1") + " ("+Preset1Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
@@ -116,6 +117,19 @@ public class MacroActions {
         m2.setPreferredSize(Andie.buttonSize);
         //m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         //m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
+
+        m1.setFocusPainted(false);
+        m2.setFocusPainted(false);
+        
+
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, toolBar.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        toolBar.add(separator);
+
          //Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);

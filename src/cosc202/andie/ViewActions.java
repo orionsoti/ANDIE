@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
 
@@ -38,9 +39,9 @@ public class ViewActions {
         actions = new ArrayList<Action>();
     
         
-        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), null, LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_EQUALS)));
-        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), null, LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
-        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), null, LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
+        actions.add(new ZoomInAction(LanguageSettings.getTranslated("zoomIn"), new ImageIcon("src/images/zoom-in_small.png"), LanguageSettings.getTranslated("zoomInDesc"), Integer.valueOf(KeyEvent.VK_EQUALS)));
+        actions.add(new ZoomOutAction(LanguageSettings.getTranslated("zoomOut"), new ImageIcon("src/images/zoom-out_small.png"), LanguageSettings.getTranslated("zoomOutDesc"), Integer.valueOf(KeyEvent.VK_MINUS)));
+        actions.add(new ZoomFullAction(LanguageSettings.getTranslated("zoomFull"), new ImageIcon("src/images/zoom-full_small.png"), LanguageSettings.getTranslated("zoomFullDesc"), Integer.valueOf(KeyEvent.VK_1)));
 
     }
 
@@ -52,9 +53,9 @@ public class ViewActions {
      */
     public void createToolMenu(JMenuBar viewTools) {
         //Creates JButton elements
-        JButton zoomIn = new JButton(new ImageIcon("src/images/zoom_in.png"));
-        JButton zoomOut = new JButton(new ImageIcon("src/images/zoom_out.png"));
-        JButton fullscreen = new JButton(new ImageIcon("src/images/fullscreen.png"));
+        JButton zoomIn = new JButton(new ImageIcon("src/images/zoom-in.png"));
+        JButton zoomOut = new JButton(new ImageIcon("src/images/zoom-out.png"));
+        JButton fullscreen = new JButton(new ImageIcon("src/images/zoomfull.png"));
 
         //Adds corresponding ActionListener
         zoomOut.addActionListener(actions.get(1));
@@ -66,10 +67,23 @@ public class ViewActions {
         zoomIn.setPreferredSize(Andie.buttonSize);
         fullscreen.setPreferredSize(Andie.buttonSize);
 
+        // Sets the tooltips for the buttons
         zoomOut.setToolTipText(LanguageSettings.getTranslated("zoomOut"));
         zoomIn.setToolTipText(LanguageSettings.getTranslated("zoomIn"));
         fullscreen.setToolTipText(LanguageSettings.getTranslated("zoomFull"));
+
+        zoomOut.setFocusPainted(false);
+        zoomIn.setFocusPainted(false);
+        fullscreen.setFocusPainted(false);
         
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, viewTools.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        viewTools.add(separator);
+
         //Adds the buttons to the menu
         viewTools.add(zoomIn);
         viewTools.add(zoomOut);

@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
  /**
@@ -34,8 +35,8 @@ public class EditActions {
      */
     public EditActions() {
         actions = new ArrayList<Action>();
-        actions.add(new UndoAction(LanguageSettings.getTranslated("undo"), null, LanguageSettings.getTranslated("undo"), Integer.valueOf(KeyEvent.VK_Z)));
-        actions.add(new RedoAction(LanguageSettings.getTranslated("redo"), null, LanguageSettings.getTranslated("redo"), Integer.valueOf(KeyEvent.VK_Y)));
+        actions.add(new UndoAction(LanguageSettings.getTranslated("undo"), new ImageIcon("src/images/undo_small.png"), LanguageSettings.getTranslated("undo"), Integer.valueOf(KeyEvent.VK_Z)));
+        actions.add(new RedoAction(LanguageSettings.getTranslated("redo"), new ImageIcon("src/images/redo_small.png"), LanguageSettings.getTranslated("redo"), Integer.valueOf(KeyEvent.VK_Y)));
     }
 
     /**
@@ -64,8 +65,8 @@ public class EditActions {
      */
     public void createToolMenu(JMenuBar toolBar){
         //Creates the buttons
-        JButton undo = new JButton(new ImageIcon("src/images/undo.png"));
-        JButton redo = new JButton(new ImageIcon("src/images/redo.png"));
+        JButton undo = new JButton(new ImageIcon("src/images/undo1.png"));
+        JButton redo = new JButton(new ImageIcon("src/images/redo1.png"));
 
         //Adds action listeners
         undo.addActionListener(actions.get(0));
@@ -75,8 +76,20 @@ public class EditActions {
         undo.setPreferredSize(Andie.buttonSize);
         redo.setPreferredSize(Andie.buttonSize);
 
+        // Sets the tooltips
         undo.setToolTipText(LanguageSettings.getTranslated("undo"));
         redo.setToolTipText(LanguageSettings.getTranslated("redo"));
+
+        undo.setFocusPainted(false);
+        redo.setFocusPainted(false);
+
+        // Create a separator
+        JSeparator separator = new JSeparator(JSeparator.VERTICAL);
+        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width, toolBar.getPreferredSize().height);
+        separator.setMaximumSize(separatorDimension);
+
+        // Add the separator to the toolBar
+        toolBar.add(separator);
 
         //Adds to toolBar
         toolBar.add(undo);
