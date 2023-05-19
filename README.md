@@ -239,7 +239,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >>
 >> *Testing:* Tested on images of various sizes. Tested with zoomed images. Draw returns an alert message when you try to start a selection outside image bounds.
 >>
->> *Errors:* Small error when you are drawing on a zoomed image, the line thickness will appear bigger or smaller than what it actually is due to the zoom. When you release the mouse, the line thickness of the drawing will return to normal. This is only a visual error, and does not affect the image or drawing.
+>> *Errors:* No known errors
 >
 ---
 **Show Us Something**
