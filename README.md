@@ -172,6 +172,10 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >
 > *Code Refactoring/additions: Any changes to the original methods/classes/skeleton of the program are documented in the Testing doumentation PDF.
 
+---
+
+<br/>
+
 ## Part 2 Features
 **Covolution-based Filters Update**
 > **Mean Filter**
@@ -195,7 +199,11 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Testing:* Tested applying multiple instances of the Gaussian Blur filter as well as testing it alongside other filters and actions. Tested on images of various sizes and with various radius values in range.
 >>
 >> *Errors:* No known errors.
+
 ---
+
+<br/>
+
 **Edge Detection Filters**
 > **Emboss Filter**
 >> *Description:* Creates the effect of an image being pressed into, with the edges being highlighted. There are eight options for this filter to detect the edges at various angles. This is made possible using the newly implemented convolution operator.
@@ -218,6 +226,8 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Errors:* No known errors.
 >
 ---
+<br/>
+
 **Mouse-based Selection Tools**
 > **Crop**
 >> *Description:* Allows the user to select a rectangular area of the image to crop. The user can click and drag to select the area, and release the mouse to crop the image. The user can also cancel the crop by pressing the escape key. 
@@ -242,6 +252,9 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Errors:* No known errors
 >
 ---
+
+<br/>
+
 **Show Us Something**
 > **Matrix Filter**
 >> *Description:* Enter the matrix with this filter. Creates an effect similar to the one seen in the Matrix movies. This is made possible using the edge detection filters to grab the edges of the image, and then mapping the edges to a grid of characters.
