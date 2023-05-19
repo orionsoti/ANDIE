@@ -151,12 +151,9 @@ public class FileActions {
         //Sets the tool tips for the buttons
         save.setToolTipText(LanguageSettings.getTranslated("save"));
         open.setToolTipText(LanguageSettings.getTranslated("open"));
-
-        //Removes the border and focus from the buttons
+        
         open.setFocusPainted(false);
         save.setFocusPainted(false);
-        open.setBorderPainted(false);
-        save.setBorderPainted(false);
         
         //Adds the buttons to the tool bar
         toolBar.add(open);

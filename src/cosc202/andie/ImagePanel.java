@@ -242,7 +242,7 @@ public class ImagePanel extends JPanel {
                 selectionShape = new Ellipse2D.Double(x, y, width, height);
             }
             // Calculate the scaled line width based on zoom factor and line thickness
-            float scaledLineWidth = (float) (lineThickness/scale);
+            float scaledLineWidth = (float) (lineThickness*scale);
             if (fillShapes) {
                 // Disable line thickness if the shape is filled
                 g2.setStroke(new BasicStroke(1)); // Set line thickness to 1
@@ -270,7 +270,7 @@ public class ImagePanel extends JPanel {
             int scaledEndX = (int) (endPoint.x * scale);
             int scaledEndY = (int) (endPoint.y * scale);
             // Calculate the scaled line width based on zoom factor
-            float scaledLineWidth = (float) (lineThickness / scale);
+            float scaledLineWidth = (float) (lineThickness*scale);
             g2.setStroke(new BasicStroke(scaledLineWidth));
             g2.setColor(color);
             g2.drawLine(scaledStartX, scaledStartY, scaledEndX, scaledEndY);

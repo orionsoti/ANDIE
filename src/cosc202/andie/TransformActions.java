@@ -103,18 +103,11 @@ public class TransformActions {
         draw.setToolTipText(LanguageSettings.getTranslated("draw"));
         crop.setToolTipText(LanguageSettings.getTranslated("crop"));
 
-        // Removes the border and focus from the buttons
-        rotateLeft.setBorderPainted(false);
         rotateLeft.setFocusPainted(false);
-        rotateRight.setBorderPainted(false);
         rotateRight.setFocusPainted(false);
-        flipVert.setBorderPainted(false);
         flipVert.setFocusPainted(false);
-        flipHor.setBorderPainted(false);
         flipHor.setFocusPainted(false);
-        draw.setBorderPainted(false);
         draw.setFocusPainted(false);
-        crop.setBorderPainted(false);
         crop.setFocusPainted(false);
 
         // Create a separator
@@ -355,10 +348,8 @@ public class TransformActions {
     public class CropAction extends ImageAction{
         
         /**
-         * <p>
          * Create a new Crop action.
          * Sets 'ctrl + shift + c' as the hotkey for crop.
-         * </p>
          * @param name
          * @param icon
          * @param desc
@@ -369,20 +360,29 @@ public class TransformActions {
 
             KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK , enabled);
             putValue(Action.ACCELERATOR_KEY, c);
-            
+    
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-
-            target.getActionMap().put(getValue(Action.NAME), this);
-
             
+            // Add a key binding for the Escape key
+            KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+            inputMap.put(esc, "cancelCrop");
+    
+            Action cancelCropAction = new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Cancel the crop action here
+                    ImagePanel imagePanel = target.getImagePanel();
+                    imagePanel.setCropMode(false);
+                }
+            };
+    
+            target.getActionMap().put("cancelCrop", cancelCropAction);
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
-        
+            
         /**
-         * <p>
          * Callback for when the crop action is performed.
-         * </p>
-         * 
          * @param e The event that triggered the action.
          * @throws NullPointerException If there is no image loaded
          */
@@ -408,6 +408,7 @@ public class TransformActions {
             }
         }
     }
+    
 
     /**
      * <p>
@@ -417,7 +418,7 @@ public class TransformActions {
      */
     public class DrawAction extends ImageAction {
         private JCheckBox fillCheckbox;
-        private JColorChooser colorChooser;
+        private ColourChooser colorChooser;
         private JPanel optionsPanel; // Declare optionsPanel as an instance variable
         private Color color;
         private JSlider thicknessSlider;
@@ -439,8 +440,8 @@ public class TransformActions {
             fillCheckbox = new JCheckBox(LanguageSettings.getTranslated("fillShapes"));
             fillCheckbox.setSelected(false);
             // Create and initialize the color chooser
-            colorChooser = new JColorChooser();
-            colorChooser.setColor(Color.RED);
+            colorChooser = new ColourChooser();
+
             // Create a panel to hold the fill checkbox and color chooser
             optionsPanel = new JPanel();
             optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -463,6 +464,16 @@ public class TransformActions {
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
             target.getActionMap().put(getValue(Action.NAME), this);
+
+            // Assign the escape key to cancel the draw action
+            KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+            target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "CancelDraw");
+            target.getActionMap().put("CancelDraw", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    ImagePanel imagePanel = target.getImagePanel();
+                    imagePanel.setDrawMode(false, false, false, false);
+                }
+            });
         }
     
         /**
@@ -499,7 +510,7 @@ public class TransformActions {
                 }
                 boolean fill = fillCheckbox.isSelected();
                 imagePanel.setFillShapes(fill);
-                color = colorChooser.getColor();
+                color = ColourChooser.colour;
                 imagePanel.setColor(color);
                 float lineThickness = thicknessSlider.getValue();
                 imagePanel.setLineThickness(lineThickness);
