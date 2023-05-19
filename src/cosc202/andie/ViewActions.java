@@ -73,12 +73,14 @@ public class ViewActions {
         fullscreen.setToolTipText(LanguageSettings.getTranslated("zoomFull"));
 
         // Removes the border and focus from the buttons
-        zoomOut.setFocusPainted(false);
+       /*zoomOut.setFocusPainted(false);
         zoomIn.setFocusPainted(false);
         fullscreen.setFocusPainted(false);
         zoomOut.setBorderPainted(false);
         zoomIn.setBorderPainted(false);
-        fullscreen.setBorderPainted(false);
+        fullscreen.setBorderPainted(false);*/
+
+        
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);

@@ -118,10 +118,10 @@ public class MacroActions {
         //m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         //m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
 
-        m1.setFocusPainted(false);
+        /*m1.setFocusPainted(false);
         m2.setFocusPainted(false);
         m1.setBorderPainted(false);
-        m2.setBorderPainted(false);
+        m2.setBorderPainted(false);*/
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);

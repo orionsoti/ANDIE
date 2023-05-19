@@ -151,12 +151,18 @@ public class FileActions {
         //Sets the tool tips for the buttons
         save.setToolTipText(LanguageSettings.getTranslated("save"));
         open.setToolTipText(LanguageSettings.getTranslated("open"));
+        
 
         //Removes the border and focus from the buttons
-        open.setFocusPainted(false);
+        /*open.setFocusPainted(false);
         save.setFocusPainted(false);
         open.setBorderPainted(false);
-        save.setBorderPainted(false);
+        save.setBorderPainted(false);*/
+        //open.setBackground(UIManager.getColor("Button.background"));
+        //save.setBackground(UIManager.getColor("Button.background"));
+        
+        //open.setForeground(UIManager.getColor("Button.foreground"));
+        //save.setForeground(UIManager.getColor("Button.foreground"));
         
         //Adds the buttons to the tool bar
         toolBar.add(open);
