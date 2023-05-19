@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-//import java.awt.*;
+import java.awt.Toolkit;
 
 
 /**
@@ -375,6 +375,8 @@ public class MacroActions {
          */
         MacroStart(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+
+
         }        
         /**
          * <p>
@@ -467,6 +469,15 @@ public class MacroActions {
          */
         Macro1(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+                        // Sets 'ctrl + f1' as the hotkey triggering  macro1 
+                        KeyStroke f1 = KeyStroke.getKeyStroke(KeyEvent.VK_F1, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+                        putValue(Action.ACCELERATOR_KEY, f1);
+                        
+                        InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+                        inputMap.put(f1, getValue(Action.NAME));
+                
+                        target.getActionMap().put(getValue(Action.NAME), this);
+            
         }
 
         /**
@@ -501,6 +512,15 @@ public class MacroActions {
          */
         Macro2(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+             // Sets 'ctrl + f2' as the hotkey triggering  macro2
+             KeyStroke f2 = KeyStroke.getKeyStroke(KeyEvent.VK_F2, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+             putValue(Action.ACCELERATOR_KEY, f2);
+             
+             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+             inputMap.put(f2, getValue(Action.NAME));
+     
+             target.getActionMap().put(getValue(Action.NAME), this);
+ 
         }
         
         /**
