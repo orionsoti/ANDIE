@@ -418,7 +418,7 @@ public class TransformActions {
      */
     public class DrawAction extends ImageAction {
         private JCheckBox fillCheckbox;
-        private JColorChooser colorChooser;
+        private ColourChooser colorChooser;
         private JPanel optionsPanel; // Declare optionsPanel as an instance variable
         private Color color;
         private JSlider thicknessSlider;
@@ -440,8 +440,8 @@ public class TransformActions {
             fillCheckbox = new JCheckBox(LanguageSettings.getTranslated("fillShapes"));
             fillCheckbox.setSelected(false);
             // Create and initialize the color chooser
-            colorChooser = new JColorChooser();
-            colorChooser.setColor(Color.RED);
+            colorChooser = new ColourChooser();
+
             // Create a panel to hold the fill checkbox and color chooser
             optionsPanel = new JPanel();
             optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -510,7 +510,7 @@ public class TransformActions {
                 }
                 boolean fill = fillCheckbox.isSelected();
                 imagePanel.setFillShapes(fill);
-                color = colorChooser.getColor();
+                color = ColourChooser.colour;
                 imagePanel.setColor(color);
                 float lineThickness = thicknessSlider.getValue();
                 imagePanel.setLineThickness(lineThickness);
