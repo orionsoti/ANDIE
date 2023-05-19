@@ -355,10 +355,8 @@ public class TransformActions {
     public class CropAction extends ImageAction{
         
         /**
-         * <p>
          * Create a new Crop action.
          * Sets 'ctrl + shift + c' as the hotkey for crop.
-         * </p>
          * @param name
          * @param icon
          * @param desc
@@ -366,23 +364,32 @@ public class TransformActions {
          */
         CropAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
-
-            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+    
+            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), false);
             putValue(Action.ACCELERATOR_KEY, c);
-            
+    
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
-
-            target.getActionMap().put(getValue(Action.NAME), this);
-
             
+            // Add a key binding for the Escape key
+            KeyStroke esc = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
+            inputMap.put(esc, "cancelCrop");
+    
+            Action cancelCropAction = new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Cancel the crop action here
+                    ImagePanel imagePanel = target.getImagePanel();
+                    imagePanel.setCropMode(false);
+                }
+            };
+    
+            target.getActionMap().put("cancelCrop", cancelCropAction);
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
-        
+            
         /**
-         * <p>
          * Callback for when the crop action is performed.
-         * </p>
-         * 
          * @param e The event that triggered the action.
          * @throws NullPointerException If there is no image loaded
          */
@@ -408,6 +415,7 @@ public class TransformActions {
             }
         }
     }
+    
 
     /**
      * <p>
@@ -463,6 +471,16 @@ public class TransformActions {
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));
             target.getActionMap().put(getValue(Action.NAME), this);
+
+            // Assign the escape key to cancel the draw action
+            KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
+            target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "CancelDraw");
+            target.getActionMap().put("CancelDraw", new AbstractAction() {
+                public void actionPerformed(ActionEvent e) {
+                    ImagePanel imagePanel = target.getImagePanel();
+                    imagePanel.setDrawMode(false, false, false, false);
+                }
+            });
         }
     
         /**
