@@ -103,19 +103,12 @@ public class TransformActions {
         draw.setToolTipText(LanguageSettings.getTranslated("draw"));
         crop.setToolTipText(LanguageSettings.getTranslated("crop"));
 
-        // Removes the border and focus from the buttons
-        /*rotateLeft.setBorderPainted(false);
         rotateLeft.setFocusPainted(false);
-        rotateRight.setBorderPainted(false);
         rotateRight.setFocusPainted(false);
-        flipVert.setBorderPainted(false);
         flipVert.setFocusPainted(false);
-        flipHor.setBorderPainted(false);
         flipHor.setFocusPainted(false);
-        draw.setBorderPainted(false);
         draw.setFocusPainted(false);
-        crop.setBorderPainted(false);
-        crop.setFocusPainted(false);*/
+        crop.setFocusPainted(false);
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
