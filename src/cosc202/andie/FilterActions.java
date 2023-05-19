@@ -419,41 +419,46 @@ public class FilterActions {
             if (!target.getImage().hasImage()) {
                 return;
             }
+            
             String[] directions = {LanguageSettings.getTranslated("northwest"), LanguageSettings.getTranslated("north"), LanguageSettings.getTranslated("northeast"), LanguageSettings.getTranslated("west"), LanguageSettings.getTranslated("east"), 
                 LanguageSettings.getTranslated("southwest"), LanguageSettings.getTranslated("south"), LanguageSettings.getTranslated("southeast")};
+            
             JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
             ButtonGroup buttonGroup = new ButtonGroup();
             int[] buttonValues = {EmbossFilter.NORTHWEST, EmbossFilter.NORTH, EmbossFilter.NORTHEAST, EmbossFilter.WEST, EmbossFilter.EAST, EmbossFilter.SOUTHWEST, EmbossFilter.SOUTH, EmbossFilter.SOUTHEAST};
-                
+            
             for (int i = 0; i < directions.length; i++) {
                 JToggleButton button = new JToggleButton(directions[i]);
                 button.setActionCommand(String.valueOf(buttonValues[i]));
                 buttonGroup.add(button);
+                button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        int direction = Integer.parseInt(((AbstractButton) e.getSource()).getActionCommand());
+                        try {
+                            target.getImage().apply(new EmbossFilter(direction));
+                            target.repaint();
+                            target.getParent().revalidate();
+                            Window window = SwingUtilities.getWindowAncestor(buttonPanel);
+                            window.dispose(); // Close the dialog
+                        } catch (NullPointerException exception) {
+                            Object[] options = {LanguageSettings.getTranslated("ok")};
+                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                        }
+                    }
+                });
                 buttonPanel.add(button);
+                button.setFocusPainted(false);
             }
-                
+            
             buttonPanel.add(new JLabel(), 4); // Add an empty label in the center of the grid
             
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
-                
-            if (option == 1 || buttonGroup.getSelection() == null) { // 1 is cancel option
-                return;
-            }
-            
-            int direction = Integer.parseInt(buttonGroup.getSelection().getActionCommand());
-            
-            try {
-                target.getImage().apply(new EmbossFilter(direction));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException exception) {
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-            }
+            JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{}, null);
         }
+        
+        
     }
 
     /**
@@ -485,38 +490,42 @@ public class FilterActions {
             if (!target.getImage().hasImage()) {
                 return;
             }
+        
             String[] directions = {LanguageSettings.getTranslated("horizontal"), LanguageSettings.getTranslated("vertical")};
             JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
             ButtonGroup buttonGroup = new ButtonGroup();
             boolean[] buttonValues = {SobelFilter.HORIZONTAL, SobelFilter.VERTICAL};
-                
+        
             for (int i = 0; i < directions.length; i++) {
                 JToggleButton button = new JToggleButton(directions[i]);
                 button.setActionCommand(String.valueOf(buttonValues[i]));
                 buttonGroup.add(button);
+                button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        boolean direction = Boolean.parseBoolean(((AbstractButton) e.getSource()).getActionCommand());
+                        try {
+                            target.getImage().apply(new SobelFilter(direction));
+                            target.repaint();
+                            target.getParent().revalidate();
+                            Window window = SwingUtilities.getWindowAncestor(buttonPanel);
+                            window.dispose(); // Close the dialog
+                        } catch (NullPointerException exception) {
+                            Object[] options = {LanguageSettings.getTranslated("ok")};
+                            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                        }
+                    }
+                });
+                button.setFocusPainted(false);
                 buttonPanel.add(button);
             }
-            
-            int option = JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                    new String[]{LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel")}, null);
-                
-            if (option == 1 || buttonGroup.getSelection() == null) {
-                return;
-            }
-            
-            boolean direction = Boolean.parseBoolean(buttonGroup.getSelection().getActionCommand());
-            
-            try {
-                target.getImage().apply(new SobelFilter(direction));
-                target.repaint();
-                target.getParent().revalidate();
-            } catch (NullPointerException exception) {
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-            }
+        
+            JOptionPane.showOptionDialog(null, buttonPanel, LanguageSettings.getTranslated("selectDirection"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{}, null);
         }
+        
+        
     }
 
     public class MatrixFilterAction extends ImageAction{
