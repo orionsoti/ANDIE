@@ -45,6 +45,9 @@ public class FilterActions {
         actions.add(new EmbossFilterAction(LanguageSettings.getTranslated("embossFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("embossDesc"), Integer.valueOf(KeyEvent.VK_E)));
         actions.add(new SobelFilterAction(LanguageSettings.getTranslated("sobelFilter"), new ImageIcon("src/images/emboss-sobel.png"), LanguageSettings.getTranslated("sobelDesc"), Integer.valueOf(KeyEvent.VK_S)));
         actions.add(new MatrixFilterAction(LanguageSettings.getTranslated("matrixFilter"), new ImageIcon("src/images/matrix.png"), LanguageSettings.getTranslated("matrixDesc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new PixelateFilterAction(LanguageSettings.getTranslated("pixelateFilter"), new ImageIcon("src/images/pixel.png"), LanguageSettings.getTranslated("pixelateDesc"), Integer.valueOf(KeyEvent.VK_P), 80, 80)); 
+
+        
     }
 
     /**
@@ -565,6 +568,64 @@ public class FilterActions {
             }
         }
     }
+
+    /**
+     * <p>
+     * Pixel art filter action.
+     * </p>
+     * 
+     */
+    public class PixelateFilterAction extends ImageAction{
+        private int newWidth;
+        private int newHeight;
+        
+        /**
+         * <p>
+         * Create a new PixelArtFilter action.
+         * </p>
+         * 
+         * @param name
+         * @param iconName
+         * @param desc
+         * @param mnemonic
+         * @param newWidth
+         * @param newHeight
+         */
+        PixelateFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic, int newWidth, int newHeight) {
+            super(name, iconName, desc, mnemonic);
+            this.newWidth = newWidth;
+            this.newHeight = newHeight;
+        }
+        
+        /**
+         * <p>
+         * Callback for when the PixelArtFilter action is triggered.
+         * </p>
+         * 
+         */
+        public void actionPerformed(ActionEvent e){
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            // Pop-up dialog box to confirm user wishes to apply filter.
+            JLabel text = new JLabel(LanguageSettings.getTranslated("pixelateAsk"));
+            int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("pixelateAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+            if (option != JOptionPane.OK_OPTION) {
+                return;
+            }
+            try{
+                target.getImage().apply(new PixelateFilter(newWidth, newHeight));
+                target.repaint();
+                target.getParent().revalidate();
+            }catch(NullPointerException exception){
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+            }
+        }
+    }
+    
 }
 
 

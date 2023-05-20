@@ -181,7 +181,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Mean Filter**
 >> *Description:* Replaces each pixel with the mean value of pixels in a surrounding area. Updated to use a newly implemented convolution method to handle the dark edges of the image when using a high radius.
 >>
->> *Contributors:* Orion Soti
+>> *Contributors:* Jacob Myron, Liam Hayward, Tyler Birkett, Orion Soti
 >>
 >> *Accessed via:* Filter Menu
 >>
@@ -192,7 +192,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Gaussian Blur Filter**
 >> *Description:* Blurs high frequency areas of the image. Updated to use a newly implemented convolution method to handle the dark edges of the image when using a high radius.
 >>
->> *Contributors:* Orion Soti
+>> *Contributors:* Orion Soti, Tyler Birkett, Jacob Myron, Liam Hayward
 >>
 >> *Accessed via:* Filter Menu
 >>
@@ -208,7 +208,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Emboss Filter**
 >> *Description:* Creates the effect of an image being pressed into, with the edges being highlighted. There are eight options for this filter to detect the edges at various angles. This is made possible using the newly implemented convolution operator.
 >>
->> *Contributors:* Orion Soti
+>> *Contributors:* Jacob Myron, Tyler Birkett, Liam Hayward, Orion Soti
 >>
 >> *Accessed via:* Filter Menu
 >>
@@ -217,7 +217,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Sobel Filter**
 >> *Description:* Creates the effect of an image being pressed into, with the edges being highlighted. There are two options for this filter, one is to detect the edges horizontally, and the other is to detect the edges vertically. This is made possible using the newly implemented convolution operator.
 >>
->> *Contributors:* Orion Soti
+>> *Contributors:* Orion Soti, Tyler Birkett, Jacob Myron, Liam Hayward
 >>
 >> *Accessed via:* Filter Menu
 >>
@@ -232,7 +232,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Crop**
 >> *Description:* Allows the user to select a rectangular area of the image to crop. The user can click and drag to select the area, and release the mouse to crop the image. The user can also cancel the crop by pressing the escape key. 
 >>
->> *Contributors:* Orion Soti
+>> *Contributors:* Orion Soti, Liam Hayward
 >>
 >> *Accessed via:* Transform Menu & Toolbar
 >>
@@ -243,7 +243,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 > **Draw**
 >> *Description:* Allows the user to draw on the image. The user can select a colour from the colour picker, the line thickness of the shape outline, and an option for the shape to be filled. You click and drag to draw on the image. The user can also cancel the drawing by pressing the escape key.
 >>
->> *Contributors:* Liam Hayward
+>> *Contributors:* Liam Hayward, Orion Soti
 >>
 >> *Accessed via:* Transform Menu & Toolbar
 >>
@@ -267,6 +267,19 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >>
 >> *Errors:* Not much of an error, but depending on the resolution of the image, the characters may appear smaller than expected. 
 >
+> **Pixelate Filter**
+>> *Description:* Creates a pixelated effect on the image.
+>>
+>> *Contributors:* Tyler Birkett, Jacob Myron, Liam Hayward, Orion Soti
+>>
+>> *Accessed via:* Filter Menu
+>>
+>> *Testing:* Tested on images of various sizes. Tested alongside other filters and actions.
+>>
+>> *Errors:* No known errors.
+
+
+
 ---
 
 
