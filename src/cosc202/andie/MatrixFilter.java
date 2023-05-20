@@ -73,15 +73,15 @@ public class MatrixFilter implements ImageOperation, java.io.Serializable {
         
         Random random = new Random();
         
-        Font plainFont = new Font(Font.MONOSPACED, Font.PLAIN, 5);// ADJUST THIS NUMBER TO CHANGE FONT SIZE
-        Font boldFont = new Font(Font.MONOSPACED, Font.BOLD, 10);
+        Font plainFont = new Font(Font.MONOSPACED, Font.PLAIN, 2);// ADJUST THIS NUMBER TO CHANGE FONT SIZE
+        Font boldFont = new Font(Font.MONOSPACED, Font.BOLD, 5);
         FontMetrics fm = g.getFontMetrics(plainFont);
     
         int charWidth = fm.charWidth('A')*2;
         int charHeight = fm.getAscent() - fm.getDescent();
-        for (int y = 0; y < height; y += Math.round(charHeight)) { //ADJUST THIS NUMBER TO CHANGE DENSITY OF CHARACTERS PER PIXEL
+        for (int y = 0; y < height; y += Math.round(charHeight*2)) { //ADJUST THIS NUMBER TO CHANGE DENSITY OF CHARACTERS PER PIXEL
             //boolean skipNext = false;// 
-            for (int x = 0; x < width; x += Math.round(charWidth)) {
+            for (int x = 0; x < width; x += Math.round(charWidth*2)) {
                 //if (skipNext) {
                 //    skipNext = false;
                 //    continue;
