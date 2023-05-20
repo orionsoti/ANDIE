@@ -378,7 +378,7 @@ public class FilterActions {
                 target.getImage().setCurrentImage(original);
                 target.repaint();
                 return;
-            }else if(option ==JOptionPane.OK_OPTION){
+            }else if(option == JOptionPane.OK_OPTION){
                 int radius = radiusSlider.getValue();
                 target.getImage().setCurrentImage(original);
                 target.getImage().apply(new GaussianBlurFilter(radius));

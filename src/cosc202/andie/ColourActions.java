@@ -172,7 +172,6 @@ public class ColourActions {
                                 }
                                 editCounter++;
                                 int intensity = intensitySlider.getValue();
-                                
                                 // Create and apply the filter.
                                 try{
                                     target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
@@ -186,18 +185,25 @@ public class ColourActions {
                             }
                         });
 
-
-                        //Hashtable<Integer, JComponent> sliderLabels = intensitySlider.createStandardLabels(25, -100); //Create the labels for the slider
-                        //intensitySlider.setLabelTable(sliderLabels);
                         intensitySlider.setPaintLabels(true);
                         ImageIcon contrastIcon = new ImageIcon("src/images/contrast-1.png", "contrast icon");
                         int option = JOptionPane.showOptionDialog(null, intensitySlider, LanguageSettings.getTranslated("contrastIntensity"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, contrastIcon, new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
                         // Check the return value from the dialog box.
-                        if (option == 1) {
+                        if (option == 1 || option == -1) {
                             target.getImage().setCurrentImage(original);
                             target.repaint();
                             return;
                         } else if (option == JOptionPane.OK_OPTION) {
+                            int intensity = intensitySlider.getValue();
+                            try{
+                                    target.getImage().apply(new ContrastBrightnessAdjust(intensity,0));
+                                    target.repaint();
+                                    target.getParent().revalidate();
+                                }catch(NullPointerException exception){
+                                    Object[] options = {LanguageSettings.getTranslated("ok")};
+                                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                                }
                             return;
                         }
         }
