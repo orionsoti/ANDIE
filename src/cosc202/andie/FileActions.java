@@ -151,12 +151,9 @@ public class FileActions {
         //Sets the tool tips for the buttons
         save.setToolTipText(LanguageSettings.getTranslated("save"));
         open.setToolTipText(LanguageSettings.getTranslated("open"));
-
-        //Removes the border and focus from the buttons
+        
         open.setFocusPainted(false);
         save.setFocusPainted(false);
-        open.setBorderPainted(false);
-        save.setBorderPainted(false);
         
         //Adds the buttons to the tool bar
         toolBar.add(open);
@@ -345,7 +342,7 @@ public class FileActions {
             super(name, icon, desc, mnemonic);
 
              // Sets the hotkey to 'ctrl + shift + s' to trigger a Save-as action.
-             KeyStroke sA = KeyStroke.getKeyStroke(KeyEvent.VK_S,  InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+             KeyStroke sA = KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
              putValue(Action.ACCELERATOR_KEY, sA);
              
              InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -405,7 +402,7 @@ public class FileActions {
             super(name, icon, desc, mnemonic);
 
             // Sets the hotkey to 'ctrl + shift + e' to trigger a File-Export action.
-            KeyStroke eX = KeyStroke.getKeyStroke(KeyEvent.VK_E,  InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            KeyStroke eX = KeyStroke.getKeyStroke(KeyEvent.VK_E,  Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, eX);
             
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

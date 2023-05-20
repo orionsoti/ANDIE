@@ -80,11 +80,8 @@ public class EditActions {
         undo.setToolTipText(LanguageSettings.getTranslated("undo"));
         redo.setToolTipText(LanguageSettings.getTranslated("redo"));
 
-        // Removes the border and focus from the buttons
         undo.setFocusPainted(false);
         redo.setFocusPainted(false);
-        undo.setBorderPainted(false);
-        redo.setBorderPainted(false);
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
