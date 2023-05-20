@@ -63,7 +63,7 @@ public class FilterActions {
                 Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new PixelateFilterAction(LanguageSettings.getTranslated("pixelateFilter"),
                 new ImageIcon("src/images/pixel.png"), LanguageSettings.getTranslated("pixelateDesc"),
-                Integer.valueOf(KeyEvent.VK_P), 80, 80));
+                Integer.valueOf(KeyEvent.VK_P), 100, 100));
 
     }
 
