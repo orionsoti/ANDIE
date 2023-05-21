@@ -97,7 +97,7 @@ public class Andie {
      * 
      */
     public static void createMenuBar(){
-        menuBar1.setVisible(false);
+        //menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
         // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
@@ -134,7 +134,9 @@ public class Andie {
         // menuBar.add(viewActions2.createToolMenu());
 
         menuBar1.setJMenuBar(menuBar);
-        menuBar1.pack();
+        //menuBar1.pack();
+        menuBar1.revalidate();
+        menuBar1.repaint();
         menuBar1.setVisible(true);
     }
 
@@ -162,7 +164,7 @@ public class Andie {
      * </p>
      */
     public static void createToolMenu(){
-        menuBar1.setVisible(false);
+        //menuBar1.setVisible(false);
         JMenuBar toolBar = new JMenuBar();
 
         FileActions fileActions = new FileActions();
@@ -178,8 +180,10 @@ public class Andie {
         macroActions.createToolMenu(toolBar);
 
         menuBar1.add(toolBar, BorderLayout.NORTH);
+        menuBar1.revalidate();
+        menuBar1.repaint();
         menuBar1.setVisible(true);
-        menuBar1.pack();
+        //menuBar1.pack();
     }
 
     /**

@@ -82,8 +82,8 @@ public class TransformActions {
         //Adds action Listeners
         rotateLeft.addActionListener(actions.get(1));
         rotateRight.addActionListener(actions.get(2));
-        flipVert.addActionListener(actions.get(4));
-        flipHor.addActionListener(actions.get(3));
+        flipVert.addActionListener(actions.get(3));
+        flipHor.addActionListener(actions.get(4));
         draw.addActionListener(actions.get(6));
         crop.addActionListener(actions.get(5));
 
@@ -98,8 +98,8 @@ public class TransformActions {
         // Sets the tooltips
         rotateLeft.setToolTipText(LanguageSettings.getTranslated("rotateLeft"));
         rotateRight.setToolTipText(LanguageSettings.getTranslated("rotateRight"));
-        flipVert.setToolTipText(LanguageSettings.getTranslated("flipHorizontal"));
-        flipHor.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
+        flipHor.setToolTipText(LanguageSettings.getTranslated("flipHorizontal"));
+        flipVert.setToolTipText(LanguageSettings.getTranslated("flipVertical"));
         draw.setToolTipText(LanguageSettings.getTranslated("draw"));
         crop.setToolTipText(LanguageSettings.getTranslated("crop"));
 
