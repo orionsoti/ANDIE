@@ -1,5 +1,8 @@
 package cosc202.andie;
 import java.util.prefs.Preferences;
+
+import javax.swing.JOptionPane;
+
 import java.util.*;
 
 
@@ -32,7 +35,22 @@ public class LanguageSettings{
     public LanguageSettings(){  
         prefs = Preferences.userNodeForPackage(Andie.class);
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-        langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");              
+        
+        try{
+        langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
+
+        }catch(Exception e){
+            
+            Object[] options = {LanguageSettings.getTranslated("ok")};
+            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("langErrorMsg"), LanguageSettings.getTranslated("langError"),
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+            prefs.put("language", "en");
+            prefs.put("country", "NZ");
+            Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
+        
+        }
+        
     }
     
     /**
@@ -52,7 +70,7 @@ public class LanguageSettings{
             langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
         }else if(s == "Spanish"){
 
-            prefs.put("language", "sp");
+            prefs.put("language", "es");
             prefs.put("country", "SP");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
             langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
