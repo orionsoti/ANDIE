@@ -212,6 +212,11 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
+            
             boolean flag = false;
             
             do{
@@ -306,6 +311,11 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
+            
             try {
                 target.getImage().save();           
             } catch (Exception ex) {
@@ -364,6 +374,11 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
+
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showSaveDialog(target);
 
@@ -425,6 +440,11 @@ public class FileActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
+
             JFileChooser fileChooser = new JFileChooser();
             int result = fileChooser.showSaveDialog(target);
 

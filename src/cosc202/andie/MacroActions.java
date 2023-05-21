@@ -41,7 +41,7 @@ public class MacroActions {
      //Used for many methods to not preform actions when recording
     static Boolean recording = false;
 
-
+    
 
      /**
      * <p>
@@ -94,6 +94,23 @@ public class MacroActions {
         if(preset1check == true){actions.add(new Macro1(LanguageSettings.getTranslated("preset1") + " ("+Preset1Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
         if(preset2check == true){actions.add(new Macro2(LanguageSettings.getTranslated("preset2") + " ("+Preset2Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
     }
+
+     /**
+     * <p>
+     * Called by any action in Andie that shouldnt be running when recording is in progress
+     * Moved to here to clean up and compact code in other places
+     * </p>
+     * 
+     * @param toolBar Target JMenuBar that the buttons are added to.
+     */
+    
+    public static void macroRunningMsg(){
+        Object[] options = {LanguageSettings.getTranslated("ok")};
+        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("recordingInProgressMsg"), LanguageSettings.getTranslated("recordingInProgress"),
+        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+    }
+    
+
 
 
 
@@ -166,13 +183,14 @@ public class MacroActions {
     }
 
 
-
      /**
      * <p>
      * Create a menu contianing the list of Colour actions.
      * </p>
      */
     public void changePreset(String presetName, Stack<ImageOperation> loadedOps){
+        
+        
         System.out.println(presetName);
         String[] imageExtensions = {LanguageSettings.getTranslated("preset1"), LanguageSettings.getTranslated("preset2"), LanguageSettings.getTranslated("cancel"),}; // valid image extensions to be checked
         int presetChosen = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectPreset"), LanguageSettings.getTranslated("presets"), 
@@ -182,7 +200,9 @@ public class MacroActions {
             //creates a new scanner to make variables for what is already in the Presets txt file
         Scanner sc = new Scanner(new File(macroFolderPath + "Presets.txt"));
         String preset1 = sc.nextLine();
+        System.out.println(preset1);
         String preset2 = sc.nextLine();
+        System.out.println(preset2);
         String presetText = preset1 + "\n" + preset2;
         String newPresetText = "";
         StringBuffer sb = new StringBuffer();
@@ -396,10 +416,17 @@ public class MacroActions {
             Andie.createToolMenu();
             
             if(target.getImage().hasImage()){
+
+
                 if(isRecording() == false){
                     CurrentMacroStack = new Stack<ImageOperation>();
+                    //macroStartMsg
+                    
+                    int option = JOptionPane.showOptionDialog(target.getParent(), LanguageSettings.getTranslated("macroStartMsg"), LanguageSettings.getTranslated("marcoStartTitle"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+                    if (option != JOptionPane.OK_OPTION) {
+                        return;
+                    }
                     recording = true;
-                    System.out.println("recording changed to true");
                 }else{
                  //turns off recording as the macro has been ended by user
                 recording = false;
@@ -425,12 +452,11 @@ public class MacroActions {
     
                 }
             }else{
-                Object[] options = {LanguageSettings.getTranslated("ok")};
-                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+                Andie.noImageErrorMsg();
             }
         }
     }
+
 
 
 

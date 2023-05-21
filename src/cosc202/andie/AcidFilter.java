@@ -5,11 +5,10 @@ import java.awt.image.*;
 
 /**
  * <p>
- * ImageOperation to adjust the brightness and contrast on an image.
+ * Filter operation that applies a random acid like effect to the image.
  * </p>
  * 
- * @author Josiah Astwood 
- * @author Liam Hayward
+ * @author Tyler Birkett
  * @version 1.0
  */
 public class AcidFilter implements ImageOperation, java.io.Serializable {
@@ -20,7 +19,7 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
 
     /**
      * <p>
-     * Create a new ContrastBrightnessAdjust operation.  
+     * Create a new Acid operation.  
      * </p>
      */
 
@@ -30,14 +29,10 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
         blueSlider=0;
         redSlider=0;
     }
-    /**  Constructor takes brightness or contrast entered by a user and applies an adjustment to the image.
-     * If contrast is given a value, brightness will be set to 0 so as not to adjust both in one operation. 
-     * If brightness is given a value, contrast will be set to 0 so as not to adjust both in one operation. 
-     * @param contrast a value between -100 and 100 that the current image will have its contrast adjusted by.
-     * @param brightness a value between -100 and 100 that the current image wil have its brightness adjusted by.
+    /**Constructor to take in random values and add them to the appropriate channels
+     * @param startLoc chooses a number between 0 and 2 and will start randomizing at that location (e.g red = 0, green = 1, blue = 2).
+     * @param rand passes a value up to 255 to change color channel choosen by startLoc.
      */
-
-
     AcidFilter(int startLoc, int rand){
         if(startLoc == 0){
             redSlider = rand;
@@ -49,6 +44,11 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
             greenSlider = rand;
         }
     }
+        /**Constructor to take in random values and add them to the appropriate channels
+     * @param startLoc chooses a number between 0 and 2 and will start randomizing at that location (e.g red = 0, green = 1, blue = 2).
+     * @param rand passes a value up to 255 to change color channel choosen by startLoc.
+     * @param rand2 passes second value up to 255 will be on whatever color chanel that is below the first.
+     */
     AcidFilter(int startLoc, int rand, int rand2){
         if(startLoc == 0){
             redSlider = rand;
@@ -63,6 +63,13 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
             redSlider = rand2;
         }
     }
+
+     /**Constructor to take in random values and add them to the appropriate channels
+     * @param startLoc chooses a number between 0 and 2 and will start randomizing at that location (e.g red = 0, green = 1, blue = 2).
+     * @param rand passes a value up to 255 to change color channel choosen by startLoc.
+     * @param rand2 passes second value up to 255 will be on whatever color chanel that is below the first.
+     * @param rand3 passes third value up to 255 will be on whatever color chanel that is below the second.
+     */
     AcidFilter(int startLoc, int rand, int rand2, int rand3){
         if(startLoc == 0){
             redSlider = rand;
@@ -86,14 +93,11 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
                    
     /**
      * <p>
-     * Apply contrast or brightness adjustment to an image.
+     * Apply a randomized acid effect to the image
      * </p>
      * 
      * <p>
-     * The conversion from red, green, and blue values to greyscale uses a 
-     * weighted average that reflects the human visual system's sensitivity 
-     * to different wavelengths -- we are most sensitive to green light and 
-     * least to blue.
+     * Splits the colours into RGB and then applys a radomized color change on each depending which has been choosen
      * </p>
      * 
      * @param input The image to have it's constrast adjusted.
@@ -101,11 +105,7 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
      */
 
     public BufferedImage apply(BufferedImage input) {
-        
-        System.out.println("called");
-        // double contrast2 = (double)contrast;
-        // double brightness2 = (double)brightness;
-           
+
         //For loop to go through and adjust the RGB value of each pixel
         for (int y = 0; y < input.getHeight(); ++y) {
             for (int x = 0; x < input.getWidth(); ++x) {
@@ -126,8 +126,7 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
                 input.setRGB(x, y, argb);
                 }
             }
-        
-        
+              
         return input;
     }
     

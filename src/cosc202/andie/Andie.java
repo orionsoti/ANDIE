@@ -132,6 +132,13 @@ public class Andie {
         menuBar1.pack();
         menuBar1.setVisible(true);
     }
+
+    public static void noImageErrorMsg(){
+        Object[] options = { LanguageSettings.getTranslated("ok") };
+        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
+                LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+    }
     
     public static void createToolMenu(){
         menuBar1.setVisible(false);
