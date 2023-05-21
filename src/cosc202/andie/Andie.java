@@ -23,7 +23,7 @@ import java.awt.Dimension;
  * @version 1.0
  */
 public class Andie {
-
+    
     public static Dimension buttonSize = new Dimension(35,35);
 
     public static JFrame menuBar1;

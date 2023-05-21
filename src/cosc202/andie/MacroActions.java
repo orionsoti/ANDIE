@@ -50,7 +50,7 @@ public class MacroActions {
      */
     public MacroActions() {
          //initilizes the stack used for recording
-        CurrentMacroStack = new Stack<ImageOperation>();
+        //ADSSDSDASDDDDDDDDDDDDDDDDDDDDDDDDDCurrentMacroStack = new Stack<ImageOperation>();
          //creats the file path for the Macros folder
         File file = new File("");
         String path = file.getAbsolutePath();
@@ -89,7 +89,6 @@ public class MacroActions {
         loadPresets();
          //creates instances of each macro menu option
         actions.add(new MacroStart(LanguageSettings.getTranslated("startMacro"), new ImageIcon("src/images/record_small.png"), LanguageSettings.getTranslated("startMDesc"), Integer.valueOf(KeyEvent.VK_G)));
-        actions.add(new MacroEnd(LanguageSettings.getTranslated("endMacro"), new ImageIcon("src/images/stop-record_small.png"), LanguageSettings.getTranslated("endMDesc"), Integer.valueOf(KeyEvent.VK_G)));
         actions.add(new MacroLoad(LanguageSettings.getTranslated("loadFromFile"), null, LanguageSettings.getTranslated("loadMDesc"), Integer.valueOf(KeyEvent.VK_G)));        
          //checks to make sure there is a preset in the txt file before loading it to the actions menu
         if(preset1check == true){actions.add(new Macro1(LanguageSettings.getTranslated("preset1") + " ("+Preset1Name + ")", null, LanguageSettings.getTranslated("presetDesc"), Integer.valueOf(KeyEvent.VK_G)));}
@@ -109,12 +108,18 @@ public class MacroActions {
          //Creates the buttons
         JButton m1 = new JButton(new ImageIcon("src/images/macroOne.png"));
         JButton m2 = new JButton(new ImageIcon("src/images/macroTwo.png"));
+        JButton m3 = new JButton(new ImageIcon("src/images/macroTwo.png"));
+
+        m3.setIcon(new ImageIcon("src/images/record.png"));
+        m3.addActionListener(actions.get(0));
+
          //Adds action listeners
-        m1.addActionListener(actions.get(3));
-        m2.addActionListener(actions.get(4));
+        m1.addActionListener(actions.get(2));
+        m2.addActionListener(actions.get(3));
          //Sets the button size and tooltips
         m1.setPreferredSize(Andie.buttonSize);
         m2.setPreferredSize(Andie.buttonSize);
+        m3.setPreferredSize(Andie.buttonSize);
         //m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         //m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
 
@@ -133,6 +138,7 @@ public class MacroActions {
          //Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);
+        toolBar.add(m3);
     }
 
 
@@ -384,7 +390,43 @@ public class MacroActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            recording = true;            
+            
+            Andie.createToolMenu();
+            
+            if(target.getImage().hasImage()){
+                if(isRecording() == false){
+                    CurrentMacroStack = new Stack<ImageOperation>();
+                    recording = true;
+                    System.out.println("recording changed to true");
+                }else{
+                 //turns off recording as the macro has been ended by user
+                recording = false;
+    
+                //asks user for the name of the recorded macro and creates a file path to save to
+               JPanel userAskPanel = new JPanel();
+               String userValue = JOptionPane.showInputDialog(userAskPanel, LanguageSettings.getTranslated("nameMacro"));
+               String pathWithExtension = macroFolderPath + userValue + ".ops";
+    
+                //takes the created stack and attepts to save it
+               try{
+                   FileOutputStream fileOut = new FileOutputStream(pathWithExtension);
+                   ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
+                   objOut.writeObject(CurrentMacroStack);
+                   objOut.close();
+                   fileOut.close();
+                } catch (Exception ex) {
+                     //Could be no file or something else. Carry on for now.
+                    System.out.println("FAILED TO SAVE STACK AS OPS FILE");
+                }
+                 //makes a new instance of the current marco stack so the next start of macro recording does not continue from the end of this one
+                CurrentMacroStack = new Stack<ImageOperation>();   
+    
+                }
+            }else{
+                Object[] options = {LanguageSettings.getTranslated("ok")};
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+            }
         }
     }
 
@@ -396,61 +438,6 @@ public class MacroActions {
      * </p>
      * 
      */
-    public class MacroEnd extends ImageAction {
-
-        /**
-         * <p>
-         * Create a new MacroEnd action.
-         * </p>
-         * 
-         * @param name The name of the action (ignored if null).
-         * @param icon An icon to use to represent the action (ignored if null).
-         * @param desc A brief description of the action  (ignored if null).
-         * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
-         */
-        MacroEnd(String name, ImageIcon icon, String desc, Integer mnemonic) {
-            super(name, icon, desc, mnemonic);
-        }
-
-        /**
-         * <p>
-         * Callback for when the MacroEnd action is triggered.
-         * </p>
-         * 
-         * <p>
-         * This method stops the passing of new Image operations to the macro stack
-         * Once stoped it will prompt the user with a text input to save this new macro 
-         * and then proceeds to create a new ops file with the current macro Stack and 
-         * the user supplied name
-         * </p>
-         * 
-         * @param e The event triggering this callback.
-         */
-        public void actionPerformed(ActionEvent e) {
-             //turns off recording as the macro has been ended by user
-            recording = false;
-
-             //asks user for the name of the recorded macro and creates a file path to save to
-            JPanel userAskPanel = new JPanel();
-            String userValue = JOptionPane.showInputDialog(userAskPanel, LanguageSettings.getTranslated("nameMacro"));
-            String pathWithExtension = macroFolderPath + userValue + ".ops";
-
-             //takes the created stack and attepts to save it
-            try{
-                FileOutputStream fileOut = new FileOutputStream(pathWithExtension);
-                ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
-                objOut.writeObject(CurrentMacroStack);
-                objOut.close();
-                fileOut.close();
-            } catch (Exception ex) {
-                 // Could be no file or something else. Carry on for now.
-                System.out.println("FAILED TO SAVE STACK AS OPS FILE");
-            }
-
-             //makes a new instance of the current marco stack so the next start of macro recording does not continue from the end of this one
-            CurrentMacroStack = new Stack<ImageOperation>();                 
-        }
-    }
 
     public class Macro1 extends ImageAction {
 
@@ -514,9 +501,13 @@ public class MacroActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().MacroAddition(Preset2);
-            target.repaint();
-            target.getParent().revalidate();          
+            try{ 
+                target.getImage().MacroAddition(Preset2);
+                target.repaint();
+                target.getParent().revalidate();          
+                }catch (Exception ex){
+                    System.out.println("YOZZA");
+                }      
         }
 
     }

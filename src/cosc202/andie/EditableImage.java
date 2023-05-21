@@ -297,6 +297,7 @@ class EditableImage {
         
         if(MacroActions.isRecording() == true){
             MacroActions.addToStack(op);
+            System.out.println("hmmmm");
         }
     }
     
