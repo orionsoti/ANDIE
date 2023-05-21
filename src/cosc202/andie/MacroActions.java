@@ -502,9 +502,21 @@ public class MacroActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            target.getImage().MacroAddition(Preset1);
-            target.repaint();
-            target.getParent().revalidate();          
+            
+            if(!target.getImage().hasImage()){
+                Andie.noImageErrorMsg();
+            }else{
+                try{ 
+                    target.getImage().MacroAddition(Preset1);
+                    target.repaint();
+                    target.getParent().revalidate();          
+                    }catch (Exception ex){
+                        Object[] options = {LanguageSettings.getTranslated("ok") };
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("presetErrorMsg"),
+                                LanguageSettings.getTranslated("missingPreset"),
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    }     
+            }         
         }
     }
 
@@ -545,13 +557,21 @@ public class MacroActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
-            try{ 
-                target.getImage().MacroAddition(Preset2);
-                target.repaint();
-                target.getParent().revalidate();          
-                }catch (Exception ex){
-                    System.out.println("YOZZA");
-                }      
+            
+            if(!target.getImage().hasImage()){
+                Andie.noImageErrorMsg();
+            }else{
+                try{ 
+                    target.getImage().MacroAddition(Preset2);
+                    target.repaint();
+                    target.getParent().revalidate();          
+                    }catch (Exception ex){
+                        Object[] options = {LanguageSettings.getTranslated("ok") };
+                        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("presetErrorMsg"),
+                                LanguageSettings.getTranslated("missingPreset"),
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                    }     
+            } 
         }
 
     }
