@@ -190,7 +190,6 @@ public class MacroActions {
     public void changePreset(String presetName, Stack<ImageOperation> loadedOps){
         
         
-        System.out.println(presetName);
         String[] imageExtensions = {LanguageSettings.getTranslated("preset1"), LanguageSettings.getTranslated("preset2"), LanguageSettings.getTranslated("cancel"),}; // valid image extensions to be checked
         int presetChosen = JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("selectPreset"), LanguageSettings.getTranslated("presets"), 
             JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, imageExtensions, imageExtensions[0]); 
@@ -199,9 +198,7 @@ public class MacroActions {
             //creates a new scanner to make variables for what is already in the Presets txt file
         Scanner sc = new Scanner(new File(macroFolderPath + "Presets.txt"));
         String preset1 = sc.nextLine();
-        System.out.println(preset1);
         String preset2 = sc.nextLine();
-        System.out.println(preset2);
         String presetText = preset1 + "\n" + preset2;
         String newPresetText = "";
         StringBuffer sb = new StringBuffer();
@@ -215,8 +212,7 @@ public class MacroActions {
             case 1:
                 newPresetText = presetText.replace(preset2,"Preset2="+ presetName);
                 break;
-            case 2:
-                System.out.println("See yaaaaaaaa"); 
+            case 2: 
                 break;
         }
             //takes the newly created string and re writes the txt file 

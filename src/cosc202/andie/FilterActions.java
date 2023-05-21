@@ -65,7 +65,7 @@ public class FilterActions {
         actions.add(new PixelateFilterAction(LanguageSettings.getTranslated("pixelateFilter"),
                 new ImageIcon("src/images/pixel.png"), LanguageSettings.getTranslated("pixelateDesc"),
                 Integer.valueOf(KeyEvent.VK_P), 100, 100));
-        actions.add(new AcidFilterAction(LanguageSettings.getTranslated("acidFilter"), new ImageIcon("src/images/smile.png"), LanguageSettings.getTranslated("acidDesc"), Integer.valueOf(KeyEvent.VK_M)));
+        actions.add(new AcidFilterAction(LanguageSettings.getTranslated("acidFilter"), new ImageIcon("src/images/smile.png"),LanguageSettings.getTranslated("acidDesc") , Integer.valueOf(KeyEvent.VK_M)));//LanguageSettings.getTranslated("acidDesc")
 
     }
 

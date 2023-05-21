@@ -22,8 +22,6 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
      * Create a new Acid operation.  
      * </p>
      */
-
-     // Default constructor, sets datafield values to 0 (no adjustment)
     AcidFilter(){
         greenSlider=0;
         blueSlider=0;
@@ -88,8 +86,6 @@ public class AcidFilter implements ImageOperation, java.io.Serializable {
         }       
 
     }
-    
-    
                    
     /**
      * <p>
