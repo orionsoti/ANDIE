@@ -21,7 +21,7 @@ public class ImageRotation implements ImageOperation, java.io.Serializable{
      * </p>
      * @param rotation determines whether the image rotates left or right
      */
-    ImageRotation(int rotation){
+  public ImageRotation(int rotation){
         this.rotation = rotation;
     }
 

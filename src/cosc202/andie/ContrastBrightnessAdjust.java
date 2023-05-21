@@ -23,7 +23,7 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
      */
 
      // Default constructor, sets datafield values to 0 (no adjustment)
-    ContrastBrightnessAdjust(){
+    public ContrastBrightnessAdjust(){
         contrast = 0;
         brightness = 0;
     }
@@ -33,7 +33,7 @@ public class ContrastBrightnessAdjust implements ImageOperation, java.io.Seriali
      * @param contrast a value between -100 and 100 that the current image will have its contrast adjusted by.
      * @param brightness a value between -100 and 100 that the current image wil have its brightness adjusted by.
      */
-    ContrastBrightnessAdjust(int contrast, int brightness) {
+    public ContrastBrightnessAdjust(int contrast, int brightness) {
         this.contrast = contrast;
         this.brightness = brightness;
     }
