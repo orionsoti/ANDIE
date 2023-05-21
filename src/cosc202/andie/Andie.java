@@ -24,8 +24,9 @@ import java.awt.Dimension;
  */
 public class Andie {
     
+    //creates a default button size for all task bar buttons
     public static Dimension buttonSize = new Dimension(35,35);
-
+    //creates a new jFrame varriable that holds the menu bar
     public static JFrame menuBar1;
     /**
      * <p>
@@ -133,13 +134,29 @@ public class Andie {
         menuBar1.setVisible(true);
     }
 
+    /**
+     * <p>
+     * Displays a popup to inform user that there is no image currently loaed in.
+     * </p>
+     * <p>
+     * Used to stop actions being applied on nothing. Put in the main andie file as it is
+     * used multiple times thorughout the application and this streamlines other files.
+     * </p>
+     */   
     public static void noImageErrorMsg(){
         Object[] options = { LanguageSettings.getTranslated("ok") };
         JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
                 LanguageSettings.getTranslated("alert"),
                 JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
     }
-    
+    /**
+     * <p>
+     * Creates the toolbar menu.
+     * </p>
+     * <p>
+     * Calls toolMenu methods from each catagory to add all required shortcuts to the toolbar.
+     * </p>
+     */
     public static void createToolMenu(){
         menuBar1.setVisible(false);
         JMenuBar toolBar = new JMenuBar();

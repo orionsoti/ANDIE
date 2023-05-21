@@ -100,8 +100,6 @@ public class MacroActions {
      * Called by any action in Andie that shouldnt be running when recording is in progress
      * Moved to here to clean up and compact code in other places
      * </p>
-     * 
-     * @param toolBar Target JMenuBar that the buttons are added to.
      */
     
     public static void macroRunningMsg(){

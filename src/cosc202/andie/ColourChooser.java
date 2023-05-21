@@ -15,6 +15,7 @@ import javax.swing.event.ChangeListener;
  * @version 1.0
  */
 public class ColourChooser extends JPanel implements ChangeListener{
+    //declears variables to store colour choosen
     public static Color colour;
     private JColorChooser colourChooser;
 
