@@ -357,8 +357,8 @@ public class TransformActions {
          */
         CropAction(String name, ImageIcon icon, String desc, Integer mnemonic){
             super(name, icon, desc, mnemonic);
-    
-            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), false);
+
+            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK , enabled);
             putValue(Action.ACCELERATOR_KEY, c);
     
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
@@ -459,7 +459,7 @@ public class TransformActions {
             int spacing = 30; // Adjust the value to increase or decrease spacing
             optionsPanel.add(Box.createVerticalStrut(spacing));
             optionsPanel.add(thicknessPanel);
-            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.SHIFT_DOWN_MASK | Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            KeyStroke c = KeyStroke.getKeyStroke(KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()|InputEvent.SHIFT_DOWN_MASK , enabled);
             putValue(Action.ACCELERATOR_KEY, c);
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
             inputMap.put(c, getValue(Action.NAME));

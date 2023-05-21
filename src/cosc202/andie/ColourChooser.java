@@ -23,7 +23,6 @@ public class ColourChooser extends JPanel implements ChangeListener{
      */
     @Override
     public void stateChanged(ChangeEvent e) {
-        // TODO Auto-generated method stub
         colour = colourChooser.getColor();
     }
 

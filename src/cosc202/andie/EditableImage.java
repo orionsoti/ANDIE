@@ -301,6 +301,13 @@ class EditableImage {
         }
     }
     
+    /**
+     * <p>
+     * Same as apply but doesn't add the op to the stack, for previewing purpouses
+     * </p>
+     * 
+     * @param op
+     */
     public void preview(ImageOperation op){
         current = op.apply(current);
     }
@@ -322,6 +329,16 @@ class EditableImage {
      */
     public void redo()  {
         apply(redoOps.pop());
+    }
+
+    /**
+     * <p>
+     * for the real-time previewing on the colour actions, prevents any
+     * issues with macros and redoing after a cancelled action.
+     * </p>
+     */
+    public void popRedo(){
+        redoOps.pop();
     }
 
     /**
