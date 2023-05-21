@@ -31,6 +31,8 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >Crop(Ctr + Shift + C)
 ---
 
+
+
 ## Part 1 Features
 
 **Sharpen Filter**
@@ -252,7 +254,21 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Errors:* No known errors
 >
 ---
+<br/>
 
+**Other**
+> **Macros**
+>> *Description:* Allows the user to record macros, save them, load them from a file and the user can choose to assign two preset filters for easy access from the menu or toolbar. 
+>>
+>> *Contributors:* Tyler Birkett
+>>
+>> *Accessed via:* Macro Menu
+>>
+>> *Testing:* Tested on all fuctions in the colour, transform and filter menus, tested lockout feature to make sure unintended opperations cannot be preformed
+>>
+>> *Errors:* No known errors.
+>
+---
 <br/>
 
 **Show Us Something**
@@ -288,10 +304,17 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Testing:* Tested on images of various sizes. Tested alongside other filters and actions.
 >>
 >> *Errors:* No known errors.
-
-
-
 ---
+
+## Testing:
+>Please navigate to the Andie Project Testing Doccumentation in contained in the andie folder for extensive testing 
+>of GUI any code refactoring and Testing with outside sources (Flatmates) for feedback and suggestions.
+>Testing Doccumnet Completed by: Tyler Birkett
+>JUnit Testing for Part 1 Completed by: Tyler Birkett
+>JUnit Testing for Part 2 Completed by: Liam Hayward
+---
+
+
 
 
 
