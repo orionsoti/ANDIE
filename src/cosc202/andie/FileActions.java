@@ -1,7 +1,11 @@
 package cosc202.andie;
 import java.util.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.awt.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 /**
@@ -231,17 +235,21 @@ public class FileActions {
 
                 if (result == JFileChooser.APPROVE_OPTION) {
                     try {
-                       
+                        
                         String imageFilepath = fileChooser.getSelectedFile().getCanonicalPath();
-                        target.getImage().open(imageFilepath);
+                        //EditableImage sizeTest = open(imageFilepath);
+                        BufferedImage sizeChecker = ImageIO.read(new File(imageFilepath));
+                        
+                    
                         //Andie.menuBar1.pack(); // resize the window to fit the new image
                         //Checks the size of the image to make sure it is not larger than 4k.
-                        if(target.getImage().getCurrentImage().getHeight() > 2160 || target.getImage().getCurrentImage().getWidth() > 3840){
+                        if(sizeChecker.getHeight() > 2160 || sizeChecker.getWidth() > 3840){
                             flag = true;
                             Object[] options = {LanguageSettings.getTranslated("ok")};
                             JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("tooLarge"), LanguageSettings.getTranslated("alert"),
                             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
                         }else{
+                            target.getImage().open(imageFilepath);
                             target.repaint();
                             target.getParent().revalidate();
                             flag = false;

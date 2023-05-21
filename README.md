@@ -277,6 +277,17 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >> *Testing:* Tested on images of various sizes. Tested alongside other filters and actions.
 >>
 >> *Errors:* No known errors.
+>
+> **Acid Filter**
+>> *Description:* Creates a acid effect on the image.
+>>
+>> *Contributors:* Tyler Birkett
+>>
+>> *Accessed via:* Filter Menu
+>>
+>> *Testing:* Tested on images of various sizes. Tested alongside other filters and actions.
+>>
+>> *Errors:* No known errors.
 
 
 

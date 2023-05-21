@@ -657,8 +657,8 @@ public class FilterActions {
             return;
         }
         // Pop-up dialog box to confirm user wishes to apply filter.
-        JLabel text = new JLabel("Apply matrix filter?");
-        int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("matrixAsk"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+        JLabel text = new JLabel(LanguageSettings.getTranslated("applyAcid"));
+        int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("acidFilter"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
         if (option != JOptionPane.OK_OPTION) {
             return;
         }
