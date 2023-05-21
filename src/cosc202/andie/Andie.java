@@ -24,9 +24,13 @@ import java.awt.Dimension;
  */
 public class Andie {
     
-    //creates a default button size for all task bar buttons
+     /**
+     * Sets default size of buttons (used to tidy up look of application making icons fit nicely within buttons).
+     */
     public static Dimension buttonSize = new Dimension(35,35);
-    //creates a new jFrame varriable that holds the menu bar
+     /**
+     * Initializes the menu bar so it can be called from locations outside the createMenuBar method. 
+     */
     public static JFrame menuBar1;
     /**
      * <p>
