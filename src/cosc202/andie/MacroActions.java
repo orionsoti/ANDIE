@@ -123,7 +123,7 @@ public class MacroActions {
          //Creates the buttons
         JButton m1 = new JButton(new ImageIcon("src/images/macroOne.png"));
         JButton m2 = new JButton(new ImageIcon("src/images/macroTwo.png"));
-        JButton m3 = new JButton(new ImageIcon("src/images/macroTwo.png"));
+        JButton m3 = new JButton();
 
         m3.setIcon(new ImageIcon("src/images/record.png"));
         m3.addActionListener(actions.get(0));
@@ -140,6 +140,7 @@ public class MacroActions {
 
         m1.setFocusPainted(false);
         m2.setFocusPainted(false);
+        m3.setFocusPainted(false);
         
 
         // Create a separator
@@ -425,9 +426,14 @@ public class MacroActions {
                         return;
                     }
                     recording = true;
+                    putValue(Action.SMALL_ICON, new ImageIcon("src/images/stop-record_small.png"));
+                    putValue(Action.NAME, LanguageSettings.getTranslated("endMacro"));
+                    
                 }else{
                  //turns off recording as the macro has been ended by user
                 recording = false;
+                putValue(Action.SMALL_ICON, new ImageIcon("src/images/record_small.png"));
+                putValue(Action.NAME, LanguageSettings.getTranslated("startMacro"));
     
                 //asks user for the name of the recorded macro and creates a file path to save to
                JPanel userAskPanel = new JPanel();
