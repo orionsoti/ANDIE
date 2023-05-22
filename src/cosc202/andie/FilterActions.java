@@ -625,14 +625,6 @@ public class FilterActions {
 
     }
 
-    /**
-     * <p>
-     * Matrix Filter Action
-     * </p>
-     * 
-     * @see ImageAction
-     * @see MatrixFilter
-     */
     public class MatrixFilterAction extends ImageAction {
         /**
          * <p>
@@ -657,9 +649,6 @@ public class FilterActions {
 
         }
 
-        /**
-         * Call back for when the MatrixFilterAction is triggered
-         */
         public void actionPerformed(ActionEvent e) {
             if (!target.getImage().hasImage()) {
                 return;
@@ -687,29 +676,16 @@ public class FilterActions {
             }
         }
     }
-    /** 
-    * <p>
-    * Action to give the image a trip.
-    * </p>
-    * 
-    * @see ImageAction
-    * @see ContrastBrightnessAdjust
-    */
-   public class AcidFilterAction extends ImageAction {
 
-       /**
-        * <p>
-        * Create a new AcidFilterAction.
-        * </p>
-        * 
-        * @param name The name of the action (ignored if null).
-        * @param icon An icon to use to represent the action (ignored if null).
-        * @param desc A brief description of the action  (ignored if null).
-        * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
-        */
-       AcidFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
-           super(name, icon, desc, mnemonic);
-       }
+    /**
+     * <p>
+     * Action to adjust the contrast of an image.
+     * </p>
+     * 
+     * @see ContrastBrightnessAdjust
+     */
+    public class AcidFilterAction extends ImageAction {
+
         /**
          * <p>
          * Create a new contrast adjustment action.
@@ -726,54 +702,68 @@ public class FilterActions {
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
             putValue(Action.ACCELERATOR_KEY, stroke);
 
-       
-       /**
-        * <p>
-        * Callback for when the ContrastAdjustAction is triggered.
-        * </p>
-        * 
-        * <p>
-        * This method is called whenever the ContrastAdjustAction is triggered.
-        * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
-        * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
-        * and 0 to the brightness parameter.
-        * </p>
-        * 
-        * @param e The event triggering this callback.
-        */
-       public void actionPerformed(ActionEvent e) {
-        if (!target.getImage().hasImage()) {
-            return;
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
-        // Pop-up dialog box to confirm user wishes to apply filter.
-        JLabel text = new JLabel(LanguageSettings.getTranslated("applyAcid"));
-        int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("acidFilter"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
-        if (option != JOptionPane.OK_OPTION) {
-            return;
+
+        /**
+         * <p>
+         * Callback for when the ContrastAdjustAction is triggered.
+         * </p>
+         * 
+         * <p>
+         * This method is called whenever the ContrastAdjustAction is triggered.
+         * It opens a JSlider window that allows the user to adjust the image's contrast
+         * in between -100 and 100.
+         * Once contrast has been selected will create an instance of
+         * ContrastBrightnessAdjust passing the value to the contrast parameter
+         * and 0 to the brightness parameter.
+         * </p>
+         * 
+         * @param e The event triggering this callback.
+         */
+        public void actionPerformed(ActionEvent e) {
+            if (!target.getImage().hasImage()) {
+                return;
+            }
+            // Pop-up dialog box to confirm user wishes to apply filter.
+            JLabel text = new JLabel(LanguageSettings.getTranslated("applyAcid"));
+            int option = JOptionPane.showOptionDialog(target.getParent(), text,
+                    LanguageSettings.getTranslated("acidFilter"), JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),
+                    new String[] { LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel") },
+                    null);
+            if (option != JOptionPane.OK_OPTION) {
+                return;
+            }
+            // Create and apply the filter
+            try {
+                Random random = new Random();
+                int bandAmount = random.nextInt(3);
+                int startLoc = random.nextInt(3);
+                if (bandAmount == 0) {
+                    target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255)));
+                }
+                if (bandAmount == 1) {
+                    target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255), random.nextInt(255)));
+                }
+                if (bandAmount == 2) {
+                    target.getImage().apply(
+                            new AcidFilter(startLoc, random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                }
+                target.repaint();
+                target.getParent().revalidate();
+            } catch (NullPointerException exception) {
+                Object[] options = { LanguageSettings.getTranslated("ok") };
+                JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
+                        LanguageSettings.getTranslated("alert"),
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+            }
+
         }
-        // Create and apply the filter
-        try{
-            Random random = new Random();
-            int bandAmount = random.nextInt(3);
-            int startLoc = random.nextInt(3);
-            if(bandAmount == 0){
-                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255)));
-            }
-            if(bandAmount == 1){
-                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255),random.nextInt(255)));
-            }
-            if(bandAmount == 2){
-                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255),random.nextInt(255),random.nextInt(255)));
-            }
-            target.repaint();
-            target.getParent().revalidate();
-        }catch(NullPointerException exception){
-            Object[] options = {LanguageSettings.getTranslated("ok")};
-            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
-        }
-                       
-       }
 
     }
 
@@ -784,8 +774,8 @@ public class FilterActions {
      * 
      */
     public class PixelateFilterAction extends ImageAction {
-        private int newWidth; /** int for the new width of the image */
-        private int newHeight; /** int for the new height of the image */
+        private int newWidth;
+        private int newHeight;
 
         /**
          * <p>
@@ -819,7 +809,6 @@ public class FilterActions {
          * Callback for when the PixelArtFilter action is triggered.
          * </p>
          * 
-         * @param 2 the event triggering this action
          */
         public void actionPerformed(ActionEvent e) {
             if (!target.getImage().hasImage()) {
