@@ -150,8 +150,8 @@ public class ColourActions {
          */
         ContrastAdjustAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
-            // Set the hotkey 'ctrl + v' to trigger a contrastAdjustAction action.
-            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            // Set the hotkey 'ctrl + shift + b' to trigger a contrastAdjustAction action.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_B, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
             putValue(Action.ACCELERATOR_KEY, o);
 
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

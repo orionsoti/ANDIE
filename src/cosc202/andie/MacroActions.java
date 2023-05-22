@@ -329,6 +329,14 @@ public class MacroActions {
          */
         MacroLoad(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            //Sets ctrl + shift + m as the hotkey for macro load. 
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -419,6 +427,15 @@ public class MacroActions {
          */
         MacroStart(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+           
+            //Sets ctrl + m as the hotkey for macro start.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
 
         }
 

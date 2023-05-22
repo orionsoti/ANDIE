@@ -257,7 +257,7 @@ public class ViewActions {
 
             // Sets the hotkey as 'ctrl + 1' for the zoom-full action.
             KeyStroke one = KeyStroke.getKeyStroke(KeyEvent.VK_1,
-                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()| KeyEvent.SHIFT_DOWN_MASK , enabled);
             putValue(Action.ACCELERATOR_KEY, one);
 
             InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

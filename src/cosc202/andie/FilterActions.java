@@ -698,7 +698,7 @@ public class FilterActions {
          */
         AcidFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
-            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_9,
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_8,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
             putValue(Action.ACCELERATOR_KEY, stroke);
 
@@ -794,7 +794,7 @@ public class FilterActions {
             super(name, iconName, desc, mnemonic);
             this.newWidth = newWidth;
             this.newHeight = newHeight;
-            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_8,
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_7,
                     Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
             putValue(Action.ACCELERATOR_KEY, stroke);
 
