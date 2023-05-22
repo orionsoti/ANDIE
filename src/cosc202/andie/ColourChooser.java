@@ -15,6 +15,9 @@ import javax.swing.event.ChangeListener;
  * @version 1.0
  */
 public class ColourChooser extends JPanel implements ChangeListener{
+     /**
+     * Initilizes a colour variable so it can be called from multiple methods. 
+     */
     public static Color colour;
     private JColorChooser colourChooser;
 

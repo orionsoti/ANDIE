@@ -18,7 +18,7 @@ public class Flip implements ImageOperation, java.io.Serializable{
      * Constructor that takes an int argument that determines the direction of the flip
      * @param direction
      */
-    Flip(int direction){
+   public Flip(int direction){
         this.direction = direction;
     }
 

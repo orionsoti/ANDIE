@@ -143,6 +143,10 @@ public class EditActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
             try{
                 target.getImage().undo();
                 target.repaint();
@@ -202,6 +206,10 @@ public class EditActions {
          * @param e The event triggering this callback.
          */
         public void actionPerformed(ActionEvent e) {
+            if(MacroActions.isRecording() == true){
+                MacroActions.macroRunningMsg();
+                return;
+            }
             try{
                 target.getImage().redo();
                 target.repaint();

@@ -25,9 +25,14 @@ import java.awt.Dimension;
  * @version 1.0
  */
 public class Andie {
-
-    public static Dimension buttonSize = new Dimension(35, 35);
-
+    
+     /**
+     * Sets default size of buttons (used to tidy up look of application making icons fit nicely within buttons).
+     */
+    public static Dimension buttonSize = new Dimension(35,35);
+     /**
+     * Initializes the menu bar so it can be called from locations outside the createMenuBar method. 
+     */
     public static JFrame menuBar1;
 
     /**
@@ -98,8 +103,8 @@ public class Andie {
      * @see ColourActions
      * 
      */
-    public static void createMenuBar() {
-        menuBar1.setVisible(false);
+    public static void createMenuBar(){
+        //menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
 
         // File menus are pretty standard, so things that usually go in File menus go here.
@@ -131,28 +136,37 @@ public class Andie {
         menuBar.add(macroActions.createMenu());
 
         menuBar1.setJMenuBar(menuBar);
-        menuBar1.pack();
+        //menuBar1.pack();
+        menuBar1.revalidate();
+        menuBar1.repaint();
         menuBar1.setVisible(true);
     }
 
     /**
      * <p>
-     * Creates a tool bar with shortcuts to the most commonly used actions
+     * Displays a popup to inform user that there is no image currently loaed in.
      * </p>
-     * 
      * <p>
-     * The createToolMenu methods in each of the actions loops through the actions being added
-     * and adds them straight to the menu bar.
+     * Used to stop actions being applied on nothing. Put in the main andie file as it is
+     * used multiple times thorughout the application and this streamlines other files.
      * </p>
-     * 
-     * @see FileActions
-     * @see ViewActions
-     * @see EditActions
-     * @see TransformActions
-     * @see MacroActions
+     */   
+    public static void noImageErrorMsg(){
+        Object[] options = { LanguageSettings.getTranslated("ok") };
+        JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
+                LanguageSettings.getTranslated("alert"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+    }
+    /**
+     * <p>
+     * Creates the toolbar menu.
+     * </p>
+     * <p>
+     * Calls toolMenu methods from each catagory to add all required shortcuts to the toolbar.
+     * </p>
      */
-    public static void createToolMenu() {
-        menuBar1.setVisible(false);
+    public static void createToolMenu(){
+        //menuBar1.setVisible(false);
         JMenuBar toolBar = new JMenuBar();
 
         FileActions fileActions = new FileActions();
@@ -168,8 +182,10 @@ public class Andie {
         macroActions.createToolMenu(toolBar);
 
         menuBar1.add(toolBar, BorderLayout.NORTH);
+        menuBar1.revalidate();
+        menuBar1.repaint();
         menuBar1.setVisible(true);
-        menuBar1.pack();
+        //menuBar1.pack();
     }
 
     /**

@@ -185,6 +185,7 @@ class EditableImage {
      * @throws Exception If something goes wrong.
      */
     public void save() throws Exception {
+
         if (this.opsFilename == null) {
             this.opsFilename = this.imageFilename + ".ops";
         }

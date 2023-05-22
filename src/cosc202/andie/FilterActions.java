@@ -6,6 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
+import java.util.Random;
 import javax.swing.event.*;
 
 /**
@@ -63,7 +64,8 @@ public class FilterActions {
                 Integer.valueOf(KeyEvent.VK_M)));
         actions.add(new PixelateFilterAction(LanguageSettings.getTranslated("pixelateFilter"),
                 new ImageIcon("src/images/pixel.png"), LanguageSettings.getTranslated("pixelateDesc"),
-                Integer.valueOf(KeyEvent.VK_P), 80, 80));
+                Integer.valueOf(KeyEvent.VK_P), 100, 100));
+        actions.add(new AcidFilterAction(LanguageSettings.getTranslated("acidFilter"), new ImageIcon("src/images/smile.png"),LanguageSettings.getTranslated("acidDesc") , Integer.valueOf(KeyEvent.VK_M)));//LanguageSettings.getTranslated("acidDesc")
 
     }
 
@@ -610,6 +612,79 @@ public class FilterActions {
             }
         }
     }
+    /** 
+    * <p>
+    * Action to adjust the contrast of an image.
+    * </p>
+    * 
+    * @see ContrastBrightnessAdjust
+    */
+   public class AcidFilterAction extends ImageAction {
+
+       /**
+        * <p>
+        * Create a new contrast adjustment action.
+        * </p>
+        * 
+        * @param name The name of the action (ignored if null).
+        * @param icon An icon to use to represent the action (ignored if null).
+        * @param desc A brief description of the action  (ignored if null).
+        * @param mnemonic A mnemonic key to use as a shortcut  (ignored if null).
+        */
+       AcidFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+           super(name, icon, desc, mnemonic);
+       }
+
+       
+       /**
+        * <p>
+        * Callback for when the ContrastAdjustAction is triggered.
+        * </p>
+        * 
+        * <p>
+        * This method is called whenever the ContrastAdjustAction is triggered.
+        * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
+        * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
+        * and 0 to the brightness parameter.
+        * </p>
+        * 
+        * @param e The event triggering this callback.
+        */
+       public void actionPerformed(ActionEvent e) {
+        if (!target.getImage().hasImage()) {
+            return;
+        }
+        // Pop-up dialog box to confirm user wishes to apply filter.
+        JLabel text = new JLabel(LanguageSettings.getTranslated("applyAcid"));
+        int option = JOptionPane.showOptionDialog(target.getParent(), text, LanguageSettings.getTranslated("acidFilter"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, (Icon) getValue(Action.LARGE_ICON_KEY),new String[]{LanguageSettings.getTranslated("ok"),LanguageSettings.getTranslated("cancel")}, null);
+        if (option != JOptionPane.OK_OPTION) {
+            return;
+        }
+        // Create and apply the filter
+        try{
+            Random random = new Random();
+            int bandAmount = random.nextInt(3);
+            int startLoc = random.nextInt(3);
+            if(bandAmount == 0){
+                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255)));
+            }
+            if(bandAmount == 1){
+                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255),random.nextInt(255)));
+            }
+            if(bandAmount == 2){
+                target.getImage().apply(new AcidFilter(startLoc, random.nextInt(255),random.nextInt(255),random.nextInt(255)));
+            }
+            target.repaint();
+            target.getParent().revalidate();
+        }catch(NullPointerException exception){
+            Object[] options = {LanguageSettings.getTranslated("ok")};
+            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"), LanguageSettings.getTranslated("alert"),
+            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+        }
+                       
+       }
+
+   }
 
     /**
      * <p>
