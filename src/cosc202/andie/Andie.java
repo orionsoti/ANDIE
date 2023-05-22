@@ -12,11 +12,13 @@ import java.awt.Dimension;
  * 
  * <p>
  * This class is the entry point for the program.
- * It creates a Graphical User Interface (GUI) that provides access to various image editing and processing operations.
+ * It creates a Graphical User Interface (GUI) that provides access to various
+ * image editing and processing operations.
  * </p>
  * 
  * <p>
- * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+ * <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA
+ * 4.0</a>
  * </p>
  * 
  * @author Steven Mills
@@ -24,23 +26,23 @@ import java.awt.Dimension;
  */
 public class Andie {
 
-    public static Dimension buttonSize = new Dimension(35,35);
+    public static Dimension buttonSize = new Dimension(35, 35);
 
     public static JFrame menuBar1;
+
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
      * </p>
      * 
      * <p>
-     * This method sets up an interface consisting of an active image (an {@code ImagePanel})
+     * This method sets up an interface consisting of an active image (an
+     * {@code ImagePanel})
      * Calls upon createMenuBar to complete the set up of the program
      * </p>
      * 
      * @throws Exception if something goes wrong.
      */
-
-    
 
     private static void createAndShowGUI() throws Exception {
         // Set up the main GUI frame
@@ -56,28 +58,33 @@ public class Andie {
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
         menuBar1 = frame;
+
         // customise the frame a bit
-        frame.setPreferredSize(new Dimension(800,800));
+        frame.setPreferredSize(new Dimension(800, 800));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
         // Add in menus for various types of action the user may perform.
         createMenuBar();
         createToolMenu();
     }
+
     /**
      * <p>
      * Launches the main GUI for the ANDIE program.
      * </p>
      * 
      * <p>
-     * This method sets various menus which can be used to trigger operations to load, save, edit, etc. 
-     * These operations are implemented {@link ImageOperation}s and triggerd via 
+     * This method sets various menus which can be used to trigger operations to
+     * load, save, edit, etc.
+     * These operations are implemented {@link ImageOperation}s and triggerd via
      * {@code ImageAction}s grouped by their general purpose into menus.
      * </p>
      * 
      * <P>
-     * This has been seperated from the createAndShowGUI() method for the purpose of recalling when the language changes.
+     * This has been seperated from the createAndShowGUI() method for the purpose of
+     * recalling when the language changes.
      * See LanguageSettings class for more details.
      * </P>
      * 
@@ -91,49 +98,60 @@ public class Andie {
      * @see ColourActions
      * 
      */
-    public static void createMenuBar(){
+    public static void createMenuBar() {
         menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
+
         // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
         menuBar.add(fileActions.createMenu());
-        
+
         // Likewise Edit menus are very common, so should be clear what might go here.
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
-        
-        // View actions control how the image is displayed, but do not alter its actual content
+
+        // View actions control how the image is displayed, but do not alter its actual countent.
         ViewActions viewActions = new ViewActions();
         menuBar.add(viewActions.createMenu());
-        
-        // Filters apply a per-pixel operation to the image, generally based on a local window
+
+        // Filters apply a per-pixel operation to the image, generally based on a local window.
         FilterActions filterActions = new FilterActions();
         menuBar.add(filterActions.createMenu());
-        
-        // Actions that affect the representation of colour in the image
+
+        // Actions that affect the representation of colour in the image.
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
-        
+
+        // Actions that transform the properties of the image.
         TransformActions transformActions = new TransformActions();
         menuBar.add(transformActions.createMenu());
 
+        // Macro controls in here
         MacroActions macroActions = new MacroActions();
         menuBar.add(macroActions.createMenu());
-        
-        // View actions control how the image is displayed, but do not alter its actual content
-        // Rather than making the menu and adding it to menuBar it directly adds the buttons to
-        // menuBar
-        //create menu to the right of the menu bar
-
-        // ViewActions viewActions2 = new ViewActions();
-        // menuBar.add(viewActions2.createToolMenu());
 
         menuBar1.setJMenuBar(menuBar);
         menuBar1.pack();
         menuBar1.setVisible(true);
     }
-    
-    public static void createToolMenu(){
+
+    /**
+     * <p>
+     * Creates a tool bar with shortcuts to the most commonly used actions
+     * </p>
+     * 
+     * <p>
+     * The createToolMenu methods in each of the actions loops through the actions being added
+     * and adds them straight to the menu bar.
+     * </p>
+     * 
+     * @see FileActions
+     * @see ViewActions
+     * @see EditActions
+     * @see TransformActions
+     * @see MacroActions
+     */
+    public static void createToolMenu() {
         menuBar1.setVisible(false);
         JMenuBar toolBar = new JMenuBar();
 
