@@ -87,7 +87,7 @@ public class ViewActions {
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
-        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width,
+        Dimension separatorDimension = new Dimension(10,
                 viewTools.getPreferredSize().height);
         separator.setMaximumSize(separatorDimension);
 

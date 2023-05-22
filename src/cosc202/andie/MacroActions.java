@@ -50,7 +50,7 @@ public class MacroActions {
      */
     public MacroActions() {
         // initilizes the stack used for recording
-        // ADSSDSDASDDDDDDDDDDDDDDDDDDDDDDDDDCurrentMacroStack = new
+        // CurrentMacroStack = new
         // Stack<ImageOperation>();
         // creats the file path for the Macros folder
         File file = new File("");
@@ -131,10 +131,6 @@ public class MacroActions {
         // Creates the buttons
         JButton m1 = new JButton(new ImageIcon("src/images/macroOne.png"));
         JButton m2 = new JButton(new ImageIcon("src/images/macroTwo.png"));
-        JButton m3 = new JButton();
-
-        m3.setIcon(new ImageIcon("src/images/record.png"));
-        m3.addActionListener(actions.get(0));
 
         // Adds action listeners
         m1.addActionListener(actions.get(2));
@@ -142,17 +138,15 @@ public class MacroActions {
         // Sets the button size and tooltips
         m1.setPreferredSize(Andie.buttonSize);
         m2.setPreferredSize(Andie.buttonSize);
-        m3.setPreferredSize(Andie.buttonSize);
         // m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         // m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
 
         m1.setFocusPainted(false);
         m2.setFocusPainted(false);
-        m3.setFocusPainted(false);
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
-        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width,
+        Dimension separatorDimension = new Dimension(10,
                 toolBar.getPreferredSize().height);
         separator.setMaximumSize(separatorDimension);
 
@@ -162,7 +156,6 @@ public class MacroActions {
         // Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);
-        toolBar.add(m3);
     }
 
     /**
@@ -172,6 +165,8 @@ public class MacroActions {
      * Used in EditableImage.apply() to check if an operation should be added to a
      * the macro stack
      * </p>
+     * 
+     * @return recording A boolean to say if the macro is recording or not.
      */
     public static boolean isRecording() {
         return recording;
@@ -183,11 +178,19 @@ public class MacroActions {
      * the image operation being applied to be passed over
      * to Macroactions and saved to the macro stack
      * </p>
+     * 
+     * @param op the imageOperation being added to the macroStack
      */
     public static void addToStack(ImageOperation op) {
         CurrentMacroStack.add(op);
     }
 
+    /**
+     * <p> 
+     * Used for the colourFilterActions real time updating to 
+     * avoid the changes being made in the real time updating
+     * to be added to the macro stack when it shouldn't.
+     */
     public static void popFromStack(){
         CurrentMacroStack.pop();
     }
@@ -196,6 +199,9 @@ public class MacroActions {
      * <p>
      * Create a menu contianing the list of Colour actions.
      * </p>
+     * 
+     * @param presetName The name of the new Macro
+     * @param loadedOps The imageOperations inside of the macro
      */
     public void changePreset(String presetName, Stack<ImageOperation> loadedOps) {
 
@@ -570,6 +576,13 @@ public class MacroActions {
         }
     }
 
+    /**
+     * <p>
+     * Create and store a macro to the second macro preset
+     * </p>
+     * 
+     * @see ImageAction
+     */
     public class Macro2 extends ImageAction {
 
         /**

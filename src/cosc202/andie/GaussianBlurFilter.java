@@ -30,8 +30,8 @@ public class GaussianBlurFilter implements ImageOperation, java.io.Serializable 
      * Constructor for Gaussian Blur filter
      * <p>
      * 
-     * @param radius The radius of the Gaussian Blur filter
      * 
+     * @param radius The radius of the Gaussian Blur filter
      */
     public GaussianBlurFilter(int radius) {
         this.radius = radius;
