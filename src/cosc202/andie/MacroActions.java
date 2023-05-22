@@ -133,10 +133,6 @@ public class MacroActions {
         // Creates the buttons
         JButton m1 = new JButton(new ImageIcon("src/images/macroOne.png"));
         JButton m2 = new JButton(new ImageIcon("src/images/macroTwo.png"));
-        JButton m3 = new JButton();
-
-        m3.setIcon(new ImageIcon("src/images/record.png"));
-        m3.addActionListener(actions.get(0));
 
         // Adds action listeners
         m1.addActionListener(actions.get(2));
@@ -144,17 +140,15 @@ public class MacroActions {
         // Sets the button size and tooltips
         m1.setPreferredSize(Andie.buttonSize);
         m2.setPreferredSize(Andie.buttonSize);
-        m3.setPreferredSize(Andie.buttonSize);
         // m1.setToolTipText(LanguageSettings.getTranslated("Apply Macro One"));
         // m2.setToolTipText(LanguageSettings.getTranslated("Apply Macro Two"));
 
         m1.setFocusPainted(false);
         m2.setFocusPainted(false);
-        m3.setFocusPainted(false);
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
-        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width,
+        Dimension separatorDimension = new Dimension(10,
                 toolBar.getPreferredSize().height);
         separator.setMaximumSize(separatorDimension);
 
@@ -164,7 +158,6 @@ public class MacroActions {
         // Adds to toolBar
         toolBar.add(m1);
         toolBar.add(m2);
-        toolBar.add(m3);
     }
 
     /**
@@ -344,6 +337,14 @@ public class MacroActions {
          */
         MacroLoad(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            //Sets ctrl + shift + m as the hotkey for macro load. 
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -434,6 +435,15 @@ public class MacroActions {
          */
         MacroStart(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+           
+            //Sets ctrl + m as the hotkey for macro start.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_M, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
 
         }
 
