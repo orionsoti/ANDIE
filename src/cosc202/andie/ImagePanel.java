@@ -8,9 +8,11 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.*;
 
 /**
+ * <p>
  * UI display element for EditableImages.
  * This class extends JPanel to allow for rendering of an image, as well as
  * zooming in and out.
+ * </p>
  */
 public class ImagePanel extends JPanel {
 
@@ -29,8 +31,10 @@ public class ImagePanel extends JPanel {
     private float lineThickness;
 
     /**
+     * <p>
      * Constructs an ImagePanel with a default EditableImage and scale of 1.0.
      * Also sets up mouse listeners for selection and drawing.
+     * </p>
      * 
      * @see EditableImage
      * @see MouseAdapter
@@ -138,25 +142,33 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Gets the image to be displayed.
+     * </p>
      * 
-     * @return
+     * @return the image being used.
      */
     public EditableImage getImage() {
         return image;
     }
 
     /**
+     * <p>
      * Get the current scale of the image.
+     * </p>
      * 
-     * @return
+     * @return The current scale
      */
     public double getZoom() {
         return 100 * scale;
     }
 
     /**
+     * <p>
      * Set the current scale of the image.
+     * </p>
+     * 
+     * @param zoomPercent The amount to be zoomed in by. 
      */
     public void setZoom(double zoomPercent) {
         if (zoomPercent < 50) {
@@ -169,7 +181,9 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Get preferred size of the image panel.
+     * </p>
      */
     @Override
     public Dimension getPreferredSize() {
@@ -182,7 +196,10 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Paint the image panel
+     * </p>
+     * @param g The panel being drawn to.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -206,9 +223,11 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Draw the selection rectangle for crop mode
+     * </p>
      * 
-     * @param g2
+     * @param g2 The graphic being drawn to.
      */
     private void drawSelectionRectangle(Graphics2D g2) {
         if (selectionStart != null && selectionEnd != null) {
@@ -264,7 +283,9 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Draw the line for line mode
+     * </p>
      * 
      * @param g2
      */
@@ -286,9 +307,11 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Get the selection rectangle for draw mode
+     * </p>
      * 
-     * @return
+     * @return The selection area
      */
     public Rectangle getSelectionRectangle() {
         if (selectionStart == null || selectionEnd == null) {
@@ -302,7 +325,9 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Reset the selection for crop mode
+     * <p>
+     * Reset the selection for crop mode.
+     * </p>
      */
     public void resetSelection() {
         selectionStart = null;
@@ -311,7 +336,9 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Checks if the given point is within the bounds of the image
+     * </p>
      * 
      * @param p The point to check
      * @return True if the point is within the bounds of the image, false otherwise
@@ -326,7 +353,9 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Limits the given point to the bounds of the image
+     * </p>
      * 
      * @param p The point to limit
      * @return The limited point
@@ -341,18 +370,22 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Returns true if the crop mode is enabled, false otherwise
+     * </p>
      * 
-     * @return
+     * @return If cropMode is enabled or not
      */
     public boolean getCropMode() {
         return cropMode;
     }
 
     /**
+     * <p>
      * Sets the crop mode
+     * </p>
      * 
-     * @param cropMode
+     * @param cropMode Whether cropMode will be enabled or not
      */
     public void setCropMode(boolean cropMode) {
         this.cropMode = cropMode;
@@ -364,16 +397,20 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Returns true if the draw mode is enabled, false otherwise
+     * <p>
+     * Returns true if the draw mode is enabled, false otherwise.
+     * </p>
      * 
-     * @return
+     * @return Whether drawMode is enabled or not
      */
     public boolean getDrawMode() {
         return drawMode;
     }
 
     /**
+     * <p>
      * Sets the draw mode
+     * </p>
      * 
      * @param drawMode
      * @param rectangleMode
@@ -396,9 +433,11 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Returns the selection start point
+     * </p>
      * 
-     * @return
+     * @return The point the selection starts, otherwise null.
      */
     public Point getSelectionStartPoint() {
         if (selectionStart != null) {
@@ -408,9 +447,11 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Returns the selection end point
+     * <p>
+     * Returns the selection end point.
+     * </p>
      * 
-     * @return
+     * @return The point the selection ends, otherwise null.
      */
     public Point getSelectionEndPoint() {
         if (selectionEnd != null) {
@@ -420,9 +461,11 @@ public class ImagePanel extends JPanel {
     }
 
     /**
+     * <p>
      * Set the color for drawing
+     * </p>
      * 
-     * @param color
+     * @param color Chosen color.
      */
     public void setColor(Color color) {
         this.color = color;
@@ -430,34 +473,55 @@ public class ImagePanel extends JPanel {
     }
 
     /**
-     * Returns the image panel
+     * <p>
+     * Returns the image panel.
+     * </p>
      */
     public ImagePanel getImagePanel() {
         return this;
     }
 
     /**
-     * Set the option to fill shapes
+     * <p>
+     * Set the option to fill shapes.
+     * </p>
      * 
-     * @param fillShapes
+     * @param fillShapes Sets if fill is true or false.
      */
     public void setFillShapes(boolean fillShapes) {
         this.fillShapes = fillShapes;
     }
 
     /**
-     * Returns true if the shapes should be filled, false otherwise
+     * <p>
+     * Returns true if the shapes should be filled, false otherwise.
+     * </p>
      * 
-     * @return
+     * @return The current value of fillShapes.
      */
     public boolean getFillShapes() {
         return fillShapes;
     }
 
+    /**
+     * <p>
+     * Returns the current line thickness.
+     * </p>
+     * 
+     * @return The current value of lineThickness.
+     */
     public float getLineThickness() {
         return lineThickness;
     }
 
+
+    /**
+     * <p>
+     * Sets the line thickness.
+     * </p>
+     * 
+     * @param lineThickness The new line thickness.
+     */
     public void setLineThickness(float lineThickness) {
         this.lineThickness = lineThickness;
         repaint();

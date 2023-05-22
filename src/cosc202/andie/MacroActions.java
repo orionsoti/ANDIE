@@ -66,13 +66,15 @@ public class MacroActions {
      * from MacroActions
      * to allow for reloading when a macro preset has been changed.
      * </p>
+     * 
+     * @return The menu containing all the macro actions
      */
     public JMenu createMenu() {
-        JMenu fileMenu = new JMenu(LanguageSettings.getTranslated("macros"));
+        JMenu macroMenu = new JMenu(LanguageSettings.getTranslated("macros"));
         for (Action action : actions) {
-            fileMenu.add(new JMenuItem(action));
+            macroMenu.add(new JMenuItem(action));
         }
-        return fileMenu;
+        return macroMenu;
     }
 
     /**
