@@ -120,29 +120,6 @@ public class FileActions {
                 return;
             }
 
-            /**
-             * <p>
-             * Action when the ok button is pressed it calls a method todo multiple things:
-             * Calls the changelang method which updates prefrences and reloads appropriate
-             * bundle
-             * recalls the createMenuBar method with the now updated language
-             * brings the language box back to the front of the screen for user to change
-             * back or exit
-             * </p>
-             */
-            /*
-             * b12.addActionListener(new ActionListener(){
-             * public void actionPerformed(ActionEvent e){
-             * String selc = c1.getSelectedItem().toString();
-             * LanguageSettings.changeLang(selc);
-             * Andie.createMenuBar();
-             * f.toFront();
-             * }
-             * });
-             * f.add(p);
-             * f.setSize(400,300);
-             * f.setVisible(true);
-             */
 
         }
     }
