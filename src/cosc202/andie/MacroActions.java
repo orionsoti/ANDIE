@@ -50,7 +50,7 @@ public class MacroActions {
      */
     public MacroActions() {
         // initilizes the stack used for recording
-        // ADSSDSDASDDDDDDDDDDDDDDDDDDDDDDDDDCurrentMacroStack = new
+        // CurrentMacroStack = new
         // Stack<ImageOperation>();
         // creats the file path for the Macros folder
         File file = new File("");
@@ -172,6 +172,8 @@ public class MacroActions {
      * Used in EditableImage.apply() to check if an operation should be added to a
      * the macro stack
      * </p>
+     * 
+     * @return recording A boolean to say if the macro is recording or not.
      */
     public static boolean isRecording() {
         return recording;
@@ -183,11 +185,19 @@ public class MacroActions {
      * the image operation being applied to be passed over
      * to Macroactions and saved to the macro stack
      * </p>
+     * 
+     * @param op the imageOperation being added to the macroStack
      */
     public static void addToStack(ImageOperation op) {
         CurrentMacroStack.add(op);
     }
 
+    /**
+     * <p> 
+     * Used for the colourFilterActions real time updating to 
+     * avoid the changes being made in the real time updating
+     * to be added to the macro stack when it shouldn't.
+     */
     public static void popFromStack(){
         CurrentMacroStack.pop();
     }
@@ -196,6 +206,9 @@ public class MacroActions {
      * <p>
      * Create a menu contianing the list of Colour actions.
      * </p>
+     * 
+     * @param presetName The name of the new Macro
+     * @param loadedOps The imageOperations inside of the macro
      */
     public void changePreset(String presetName, Stack<ImageOperation> loadedOps) {
 
@@ -553,6 +566,13 @@ public class MacroActions {
         }
     }
 
+    /**
+     * <p>
+     * Create and store a macro to the second macro preset
+     * </p>
+     * 
+     * @see ImageAction
+     */
     public class Macro2 extends ImageAction {
 
         /**
