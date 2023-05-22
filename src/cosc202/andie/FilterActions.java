@@ -551,6 +551,7 @@ public class FilterActions {
     /**
      * <p>
      * Sobel filter action.
+     * </p>
      */
     public class SobelFilterAction extends ImageAction {
         /**
@@ -625,6 +626,13 @@ public class FilterActions {
 
     }
 
+    /**
+     * <p>
+     * Matrix Filter Action.
+     * </p>
+     * 
+     * @see ImageAction
+     */
     public class MatrixFilterAction extends ImageAction {
         /**
          * <p>

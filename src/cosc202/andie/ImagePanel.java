@@ -409,13 +409,13 @@ public class ImagePanel extends JPanel {
 
     /**
      * <p>
-     * Sets the draw mode
+     * Sets the draw mode.
      * </p>
      * 
-     * @param drawMode
-     * @param rectangleMode
-     * @param ovalMode
-     * @param lineMode
+     * @param drawMode Whether drawMode is enabled or not.
+     * @param rectangleMode Whether rectangleMode is enabled or not.
+     * @param ovalMode Whether ovalMode is enabled or not.
+     * @param lineMode whether lineMode is enabled or not.
      */
     public void setDrawMode(boolean drawMode, boolean rectangleMode, boolean ovalMode, boolean lineMode) {
         this.drawMode = drawMode;
@@ -476,6 +476,8 @@ public class ImagePanel extends JPanel {
      * <p>
      * Returns the image panel.
      * </p>
+     * 
+     * @return the current imagePanel
      */
     public ImagePanel getImagePanel() {
         return this;
