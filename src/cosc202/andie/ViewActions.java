@@ -105,7 +105,7 @@ public class ViewActions {
      * Create a menu containing the list of View actions.
      * </p>
      * 
-     * @return
+     * @return The new menu containing the view actions
      */
     public JMenu createMenu() {
         JMenu viewMenu = new JMenu(LanguageSettings.getTranslated("view"));
@@ -124,6 +124,8 @@ public class ViewActions {
      * Note that this action only affects the way the image is displayed, not its
      * actual contents.
      * </p>
+     * 
+     * @see ImageAction
      */
     public class ZoomInAction extends ImageAction {
 
@@ -181,6 +183,8 @@ public class ViewActions {
      * Note that this action only affects the way the image is displayed, not its
      * actual contents.
      * </p>
+     * 
+     * @see ImageAction
      */
     public class ZoomOutAction extends ImageAction {
 
@@ -238,6 +242,8 @@ public class ViewActions {
      * Note that this action only affects the way the image is displayed, not its
      * actual contents.
      * </p>
+     * 
+     * @see ImageAction
      */
     public class ZoomFullAction extends ImageAction {
 
