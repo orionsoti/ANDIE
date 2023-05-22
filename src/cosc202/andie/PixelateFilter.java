@@ -4,15 +4,17 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Creates a pixelated version of an image. The image is first reduced to the specified width and height, then scaled back up to the original size.
+ * Creates a pixelated version of an image. The image is first reduced to the
+ * specified width and height, then scaled back up to the original size.
  * 
  */
 public class PixelateFilter implements ImageOperation, java.io.Serializable {
-    
+
     private int newWidth, newHeight;
 
     /**
      * Creates a new PixelateFilter with the specified width and height.
+     * 
      * @param newWidth
      * @param newHeight
      */
@@ -23,6 +25,7 @@ public class PixelateFilter implements ImageOperation, java.io.Serializable {
 
     /**
      * Applies the pixelate filter to the input image.
+     * 
      * @param input the image to apply the filter to
      */
     @Override
@@ -32,7 +35,7 @@ public class PixelateFilter implements ImageOperation, java.io.Serializable {
 
         // Reduce resolution
         BufferedImage reducedResolutionImage = reduceResolution(input, newWidth, newHeight);
-        
+
         // Scale it back up to the original size
         BufferedImage pixelArtImage = increaseResolution(reducedResolutionImage, originalWidth, originalHeight);
 
@@ -41,6 +44,7 @@ public class PixelateFilter implements ImageOperation, java.io.Serializable {
 
     /**
      * Reduces the resolution of the input image to the specified width and height.
+     * 
      * @param originalImage
      * @param width
      * @param height
@@ -57,7 +61,8 @@ public class PixelateFilter implements ImageOperation, java.io.Serializable {
     }
 
     /**
-     * Increases the resolution of the input image to the specified width and height.
+     * Increases the resolution of the input image to the specified width and
+     * height.
      */
     private BufferedImage increaseResolution(BufferedImage originalImage, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());

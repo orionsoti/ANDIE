@@ -1,4 +1,5 @@
 package cosc202.andie;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -6,7 +7,9 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 
 /**
- * <p> A custom implementation of image convolution operator.</p>
+ * <p>
+ * A custom implementation of image convolution operator.
+ * </p>
  * 
  * @author Orion Soti
  */
@@ -26,11 +29,13 @@ public class ConvolutionOperation {
         kernel.getKernelData(kernelData);
     }
 
-
     /**
-     * <p> Applies the convolution operation to the input image and returns the output image.</p>
+     * <p>
+     * Applies the convolution operation to the input image and returns the output
+     * image.
+     * </p>
      * 
-     * @param inputImage the image to be convolved
+     * @param inputImage  the image to be convolved
      * @param outputImage the image after applying the convolution
      * @return the filtered output image
      */
@@ -40,15 +45,16 @@ public class ConvolutionOperation {
             sum += value;
         }
         switch (Math.round(sum)) {
-            //if the sum is 0, then image is convolved with the values offset by 128
+            // if the sum is 0, then image is convolved with the values offset by 128
             case 0:
                 outputImage = filterOffset(inputImage, outputImage);
                 break;
-            //if the sum is 1, then image is convolved using java's inbuilt convolution operation but with the edge case accounted for
+            // if the sum is 1, then image is convolved using java's inbuilt convolution
+            // operation but with the edge case accounted for
             case 1:
                 outputImage = filterEdgeCase(inputImage, outputImage);
                 break;
-            //default to case 1
+            // default to case 1
             default:
                 outputImage = filterEdgeCase(inputImage, outputImage);
                 break;
@@ -56,11 +62,11 @@ public class ConvolutionOperation {
         return outputImage;
     }
 
-
     /**
-     * Filters the image using Java's inbuilt convolution operation and the edge case accounted for.
+     * Filters the image using Java's inbuilt convolution operation and the edge
+     * case accounted for.
      * 
-     * @param inputImage the image to be convolved
+     * @param inputImage  the image to be convolved
      * @param outputImage the image after applying the convolution
      * @return the filtered output image
      */
@@ -77,11 +83,10 @@ public class ConvolutionOperation {
         return outputImage;
     }
 
-
     /**
      * Filters the image by convolving it using the kernel values offset by 128.
      * 
-     * @param inputImage the image to be convolved
+     * @param inputImage  the image to be convolved
      * @param outputImage the image after applying the convolution
      * @return the filtered output image
      */
@@ -125,7 +130,7 @@ public class ConvolutionOperation {
         }
         return outputImage;
     }
-    
+
     /**
      * Truncates the input value to be between 0 and 255.
      * 
@@ -142,11 +147,3 @@ public class ConvolutionOperation {
         }
     }
 }
-    
-       
-
-
-
-
-    
-

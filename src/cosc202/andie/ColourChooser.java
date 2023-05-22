@@ -14,14 +14,14 @@ import javax.swing.event.ChangeListener;
  * @author Orion Soti
  * @version 1.0
  */
-public class ColourChooser extends JPanel implements ChangeListener{
-     /**
-     * Initilizes a colour variable so it can be called from multiple methods. 
+public class ColourChooser extends JPanel implements ChangeListener {
+    /**
+     * Initilizes a colour variable so it can be called from multiple methods.
      */
     public static Color colour;
     private JColorChooser colourChooser;
 
-    /** 
+    /**
      * Overridden method from ChangeListener interface
      */
     @Override
@@ -30,10 +30,11 @@ public class ColourChooser extends JPanel implements ChangeListener{
     }
 
     /**
-     * Constructor for ColourChooser class that creates a custom colour chooser using only the HSV colour panel
+     * Constructor for ColourChooser class that creates a custom colour chooser
+     * using only the HSV colour panel
      * 
      */
-    public ColourChooser(){
+    public ColourChooser() {
         colourChooser = new JColorChooser();
         Component[] components = colourChooser.getComponents();
         for (Component comp : components) {
@@ -51,5 +52,4 @@ public class ColourChooser extends JPanel implements ChangeListener{
         colour = colourChooser.getColor();
     }
 
-    
 }

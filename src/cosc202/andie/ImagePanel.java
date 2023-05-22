@@ -9,7 +9,8 @@ import javax.swing.*;
 
 /**
  * UI display element for EditableImages.
- * This class extends JPanel to allow for rendering of an image, as well as zooming in and out.
+ * This class extends JPanel to allow for rendering of an image, as well as
+ * zooming in and out.
  */
 public class ImagePanel extends JPanel {
 
@@ -66,7 +67,7 @@ public class ImagePanel extends JPanel {
                     }
                 }
             }
-           
+
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
@@ -82,8 +83,7 @@ public class ImagePanel extends JPanel {
                                     (int) (selectionRectangle.x / scale),
                                     (int) (selectionRectangle.y / scale),
                                     (int) (selectionRectangle.width / scale),
-                                    (int) (selectionRectangle.height / scale)
-                            );
+                                    (int) (selectionRectangle.height / scale));
                             image.apply(new Crop(cropRectangle, 1.0, 0, 0));
                             resetSelection();
                             setCropMode(false);
@@ -96,8 +96,7 @@ public class ImagePanel extends JPanel {
                                 int width = (int) (Math.abs(selectionStart.x - selectionEnd.x) / scale);
                                 int height = (int) (Math.abs(selectionStart.y - selectionEnd.y) / scale);
                                 selectionShape = new Rectangle(x, y, width, height);
-                            } 
-                            else {
+                            } else {
                                 int x = (int) (Math.min(selectionStart.x, selectionEnd.x) / scale);
                                 int y = (int) (Math.min(selectionStart.y, selectionEnd.y) / scale);
                                 int width = (int) (Math.abs(selectionStart.x - selectionEnd.x) / scale);
@@ -116,14 +115,15 @@ public class ImagePanel extends JPanel {
                             Color chosenColor = color;
                             float chosenLineThickness = lineThickness;
                             image.apply(new Draw(null, getZoom() / 100, 0, 0, false, false,
-                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true, chosenColor, chosenLineThickness));
+                                    true, startPoint.x, startPoint.y, endPoint.x, endPoint.y, true, chosenColor,
+                                    chosenLineThickness));
                             setDrawMode(false, false, false, false);
                         }
                         repaint();
                     }
                 }
             }
-            
+
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (isSelecting) {
@@ -132,27 +132,29 @@ public class ImagePanel extends JPanel {
                 }
             }
         };
-    
+
         addMouseListener(mouseAdapter);
         addMouseMotionListener(mouseAdapter);
     }
-    
+
     /**
      * Gets the image to be displayed.
-     * @return 
+     * 
+     * @return
      */
     public EditableImage getImage() {
         return image;
     }
-    
+
     /**
      * Get the current scale of the image.
+     * 
      * @return
      */
     public double getZoom() {
         return 100 * scale;
     }
-    
+
     /**
      * Set the current scale of the image.
      */
@@ -165,7 +167,7 @@ public class ImagePanel extends JPanel {
         }
         scale = zoomPercent / 100;
     }
-    
+
     /**
      * Get preferred size of the image panel.
      */
@@ -178,9 +180,9 @@ public class ImagePanel extends JPanel {
             return new Dimension(450, 450);
         }
     }
-    
+
     /**
-     * Paint the image panel 
+     * Paint the image panel
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -202,10 +204,11 @@ public class ImagePanel extends JPanel {
             g2.dispose();
         }
     }
-    
+
     /**
      * Draw the selection rectangle for crop mode
-     * @param g2 
+     * 
+     * @param g2
      */
     private void drawSelectionRectangle(Graphics2D g2) {
         if (selectionStart != null && selectionEnd != null) {
@@ -218,16 +221,20 @@ public class ImagePanel extends JPanel {
             Area selectedArea = new Area(new Rectangle(x, y, width, height));
             fullArea.subtract(selectedArea);
             g2.fill(fullArea);
-            Stroke stroke = cropMode ? new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[]{10.0f}, 0.0f) : new BasicStroke(2);
+            Stroke stroke = cropMode
+                    ? new BasicStroke(2, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, new float[] { 10.0f },
+                            0.0f)
+                    : new BasicStroke(2);
             g2.setStroke(stroke);
             g2.setColor(Color.WHITE);
             g2.drawRect(x, y, width, height);
         }
     }
-    
+
     /**
      * Draw the selection shape for draw mode
-     * @param g2 
+     * 
+     * @param g2
      */
     private void drawSelectionShape(Graphics2D g2) {
         if (selectionStart != null && selectionEnd != null) {
@@ -242,7 +249,7 @@ public class ImagePanel extends JPanel {
                 selectionShape = new Ellipse2D.Double(x, y, width, height);
             }
             // Calculate the scaled line width based on zoom factor and line thickness
-            float scaledLineWidth = (float) (lineThickness*scale);
+            float scaledLineWidth = (float) (lineThickness * scale);
             if (fillShapes) {
                 // Disable line thickness if the shape is filled
                 g2.setStroke(new BasicStroke(1)); // Set line thickness to 1
@@ -255,9 +262,10 @@ public class ImagePanel extends JPanel {
             }
         }
     }
-    
+
     /**
      * Draw the line for line mode
+     * 
      * @param g2
      */
     private void drawLine(Graphics2D g2) {
@@ -270,15 +278,16 @@ public class ImagePanel extends JPanel {
             int scaledEndX = (int) (endPoint.x * scale);
             int scaledEndY = (int) (endPoint.y * scale);
             // Calculate the scaled line width based on zoom factor
-            float scaledLineWidth = (float) (lineThickness*scale);
+            float scaledLineWidth = (float) (lineThickness * scale);
             g2.setStroke(new BasicStroke(scaledLineWidth));
             g2.setColor(color);
             g2.drawLine(scaledStartX, scaledStartY, scaledEndX, scaledEndY);
         }
     }
-    
+
     /**
      * Get the selection rectangle for draw mode
+     * 
      * @return
      */
     public Rectangle getSelectionRectangle() {
@@ -291,7 +300,7 @@ public class ImagePanel extends JPanel {
         int height = Math.abs(selectionStart.y - selectionEnd.y);
         return new Rectangle(x, y, width, height);
     }
-    
+
     /**
      * Reset the selection for crop mode
      */
@@ -300,9 +309,10 @@ public class ImagePanel extends JPanel {
         selectionEnd = null;
         repaint();
     }
-    
+
     /**
      * Checks if the given point is within the bounds of the image
+     * 
      * @param p The point to check
      * @return True if the point is within the bounds of the image, false otherwise
      */
@@ -314,9 +324,10 @@ public class ImagePanel extends JPanel {
         }
         return false;
     }
-    
+
     /**
      * Limits the given point to the bounds of the image
+     * 
      * @param p The point to limit
      * @return The limited point
      */
@@ -328,17 +339,19 @@ public class ImagePanel extends JPanel {
         }
         return p;
     }
-    
+
     /**
      * Returns true if the crop mode is enabled, false otherwise
+     * 
      * @return
      */
     public boolean getCropMode() {
         return cropMode;
     }
-    
+
     /**
      * Sets the crop mode
+     * 
      * @param cropMode
      */
     public void setCropMode(boolean cropMode) {
@@ -349,17 +362,19 @@ public class ImagePanel extends JPanel {
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
-    
+
     /**
      * Returns true if the draw mode is enabled, false otherwise
+     * 
      * @return
      */
     public boolean getDrawMode() {
         return drawMode;
     }
-    
+
     /**
      * Sets the draw mode
+     * 
      * @param drawMode
      * @param rectangleMode
      * @param ovalMode
@@ -379,9 +394,10 @@ public class ImagePanel extends JPanel {
             setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         }
     }
-    
+
     /**
      * Returns the selection start point
+     * 
      * @return
      */
     public Point getSelectionStartPoint() {
@@ -390,9 +406,10 @@ public class ImagePanel extends JPanel {
         }
         return null;
     }
-    
+
     /**
      * Returns the selection end point
+     * 
      * @return
      */
     public Point getSelectionEndPoint() {
@@ -401,9 +418,10 @@ public class ImagePanel extends JPanel {
         }
         return null;
     }
-    
+
     /**
      * Set the color for drawing
+     * 
      * @param color
      */
     public void setColor(Color color) {
@@ -414,12 +432,13 @@ public class ImagePanel extends JPanel {
     /**
      * Returns the image panel
      */
-	public ImagePanel getImagePanel() {
+    public ImagePanel getImagePanel() {
         return this;
     }
 
     /**
      * Set the option to fill shapes
+     * 
      * @param fillShapes
      */
     public void setFillShapes(boolean fillShapes) {
@@ -428,6 +447,7 @@ public class ImagePanel extends JPanel {
 
     /**
      * Returns true if the shapes should be filled, false otherwise
+     * 
      * @return
      */
     public boolean getFillShapes() {
@@ -437,14 +457,10 @@ public class ImagePanel extends JPanel {
     public float getLineThickness() {
         return lineThickness;
     }
-    
+
     public void setLineThickness(float lineThickness) {
         this.lineThickness = lineThickness;
         repaint();
     }
-    
-	
-}
-    
-    
 
+}
