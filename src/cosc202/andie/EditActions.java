@@ -2,6 +2,7 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
@@ -90,7 +91,7 @@ public class EditActions {
 
         // Create a separator
         JSeparator separator = new JSeparator(JSeparator.VERTICAL);
-        Dimension separatorDimension = new Dimension(separator.getPreferredSize().width,
+        Dimension separatorDimension = new Dimension(10,
                 toolBar.getPreferredSize().height);
         separator.setMaximumSize(separatorDimension);
 
