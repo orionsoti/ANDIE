@@ -10,9 +10,9 @@ import java.awt.image.*;
  * 
  * @author Orion Soti
  * @version 1.0
- * 2 April 2023
+ *          2 April 2023
  */
-public class Resize implements ImageOperation, java.io.Serializable{
+public class Resize implements ImageOperation, java.io.Serializable {
     public int height;
     public int width;
     public double scale;
@@ -21,9 +21,10 @@ public class Resize implements ImageOperation, java.io.Serializable{
      * <p>
      * Creates a new Resize operation.
      * </p>
+     * 
      * @param height The new height of the image
-     * @param width The new width of the image
-     * @param scale The scale of the image
+     * @param width  The new width of the image
+     * @param scale  The scale of the image
      */
     public Resize(int height, int width, double scale) {
         this.height = height;
@@ -35,6 +36,7 @@ public class Resize implements ImageOperation, java.io.Serializable{
      * <p>
      * Resize the image to a new width and height.
      * </p>
+     * 
      * @param input The image to resize
      * @return The resized image
      */
@@ -44,5 +46,5 @@ public class Resize implements ImageOperation, java.io.Serializable{
         output.getGraphics().drawImage(resized, 0, 0, null);
         return output;
     }
-    
+
 }

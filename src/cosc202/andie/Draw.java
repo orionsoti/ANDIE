@@ -9,15 +9,16 @@ import java.awt.image.BufferedImage;
 
 /**
  * Function to allow Draw capabilities
- * The Draw class implements an image drawing operation that allows drawing a specific Shape or lines
+ * The Draw class implements an image drawing operation that allows drawing a
+ * specific Shape or lines
  * from a given input image and returns the modified image.
  */
 public class Draw implements ImageOperation, java.io.Serializable {
 
     private Shape selection;
-    //private double scale;
-    //private int x;
-    //private int y;
+    // private double scale;
+    // private int x;
+    // private int y;
     private boolean rectangle;
     private boolean oval;
     private boolean line;
@@ -28,7 +29,6 @@ public class Draw implements ImageOperation, java.io.Serializable {
     private boolean fill;
     private Color color;
     private float lineThickness;
-
 
     /**
      * <p>
@@ -51,11 +51,12 @@ public class Draw implements ImageOperation, java.io.Serializable {
      * @param lineThickness Thickness of the line/Shape
      */
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
-                boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color, float lineThickness) {
+            boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color,
+            float lineThickness) {
         this.selection = selection;
-        //this.scale = scale;
-        //this.x = x;
-        //this.y = y;
+        // this.scale = scale;
+        // this.x = x;
+        // this.y = y;
         this.rectangle = rectangle;
         this.oval = oval;
         this.line = line;
@@ -69,7 +70,8 @@ public class Draw implements ImageOperation, java.io.Serializable {
     }
 
     /**
-     * Applies the drawing operation on the input image and returns the modified image.
+     * Applies the drawing operation on the input image and returns the modified
+     * image.
      *
      * @param input the input BufferedImage to draw on
      * @return the modified BufferedImage
@@ -82,8 +84,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
             inputGraphics.setStroke(stroke);
             if (fill) {
                 inputGraphics.fill(selection);
-            }
-            else {
+            } else {
                 inputGraphics.draw(selection);
             }
         }
@@ -92,8 +93,7 @@ public class Draw implements ImageOperation, java.io.Serializable {
             inputGraphics.setStroke(stroke);
             if (fill) {
                 inputGraphics.fill(selection);
-            }
-            else {
+            } else {
                 inputGraphics.draw(selection);
             }
         }
@@ -113,11 +113,11 @@ public class Draw implements ImageOperation, java.io.Serializable {
      *
      * @param input the input BufferedImage to create a Graphics2D object from
      * @return the Graphics2D object with scaling and translation applied
-    */
+     */
     private Graphics2D getScaledGraphics(BufferedImage input) {
         Graphics2D g2d = input.createGraphics();
-        //g2d.scale(scale, scale);
-        //g2d.translate(x/scale, y/scale);
+        // g2d.scale(scale, scale);
+        // g2d.translate(x/scale, y/scale);
         return g2d;
     }
 

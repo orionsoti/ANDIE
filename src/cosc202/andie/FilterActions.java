@@ -65,7 +65,9 @@ public class FilterActions {
         actions.add(new PixelateFilterAction(LanguageSettings.getTranslated("pixelateFilter"),
                 new ImageIcon("src/images/pixel.png"), LanguageSettings.getTranslated("pixelateDesc"),
                 Integer.valueOf(KeyEvent.VK_P), 100, 100));
-        actions.add(new AcidFilterAction(LanguageSettings.getTranslated("acidFilter"), new ImageIcon("src/images/smile.png"),LanguageSettings.getTranslated("acidDesc") , Integer.valueOf(KeyEvent.VK_M)));//LanguageSettings.getTranslated("acidDesc")
+        actions.add(new AcidFilterAction(LanguageSettings.getTranslated("acidFilter"),
+                new ImageIcon("src/images/smile.png"), LanguageSettings.getTranslated("acidDesc"),
+                Integer.valueOf(KeyEvent.VK_M)));// LanguageSettings.getTranslated("acidDesc")
 
     }
 
@@ -107,6 +109,14 @@ public class FilterActions {
          */
         MeanFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_1,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -200,6 +210,15 @@ public class FilterActions {
          */
         MedianFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_3,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -292,6 +311,15 @@ public class FilterActions {
          */
         SharpenFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_0,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -354,6 +382,15 @@ public class FilterActions {
          */
         GaussianBlurFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
             super(name, iconName, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_2,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -443,6 +480,15 @@ public class FilterActions {
          */
         EmbossFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
             super(name, iconName, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_4,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -519,6 +565,15 @@ public class FilterActions {
          */
         SobelFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
             super(name, iconName, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_5,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -591,6 +646,15 @@ public class FilterActions {
          */
         MatrixFilterAction(String name, ImageIcon iconName, String desc, Integer mnemonic) {
             super(name, iconName, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_6,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
+
         }
 
         /**
@@ -646,11 +710,33 @@ public class FilterActions {
        AcidFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
            super(name, icon, desc, mnemonic);
        }
+        /**
+         * <p>
+         * Create a new contrast adjustment action.
+         * </p>
+         * 
+         * @param name     The name of the action (ignored if null).
+         * @param icon     An icon to use to represent the action (ignored if null).
+         * @param desc     A brief description of the action (ignored if null).
+         * @param mnemonic A mnemonic key to use as a shortcut (ignored if null).
+         */
+        AcidFilterAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
+            super(name, icon, desc, mnemonic);
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_9,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
 
        
        /**
         * <p>
-        * Callback for when the AcidFilterAction is triggered.
+        * Callback for when the ContrastAdjustAction is triggered.
+        * </p>
+        * 
+        * <p>
+        * This method is called whenever the ContrastAdjustAction is triggered.
+        * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
+        * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
+        * and 0 to the brightness parameter.
         * </p>
         * 
         * @param e The event triggering this callback.
@@ -689,7 +775,7 @@ public class FilterActions {
                        
        }
 
-   }
+    }
 
     /**
      * <p>
@@ -718,6 +804,14 @@ public class FilterActions {
             super(name, iconName, desc, mnemonic);
             this.newWidth = newWidth;
             this.newHeight = newHeight;
+            KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_8,
+                    Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, stroke);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(stroke, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
