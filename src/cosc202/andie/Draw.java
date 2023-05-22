@@ -31,8 +31,10 @@ public class Draw implements ImageOperation, java.io.Serializable {
 
 
     /**
+     * <p>
      * Constructs a Draw object with the specified Shape selection, scale, offsets, and line coordinates.
-     *
+     * </p>
+     * 
      * @param selection the Shape to draw from the input image
      * @param scale     the scale factor to apply to the input image
      * @param x         the horizontal offset to apply to the input image
@@ -44,6 +46,9 @@ public class Draw implements ImageOperation, java.io.Serializable {
      * @param lineY1    the y-coordinate of the starting point of the line
      * @param lineX2    the x-coordinate of the ending point of the line
      * @param lineY2    the y-coordinate of the ending point of the line
+     * @param fill      boolean for determining if the shape is filled or not
+     * @param color     Color of the new shape or line
+     * @param lineThickness Thickness of the line/Shape
      */
     public Draw(Shape selection, double scale, int x, int y, boolean rectangle, boolean oval,
                 boolean line, int lineX1, int lineY1, int lineX2, int lineY2, boolean fill, Color color, float lineThickness) {

@@ -570,6 +570,14 @@ public class FilterActions {
 
     }
 
+    /**
+     * <p>
+     * Matrix Filter Action
+     * </p>
+     * 
+     * @see ImageAction
+     * @see MatrixFilter
+     */
     public class MatrixFilterAction extends ImageAction {
         /**
          * <p>
@@ -585,6 +593,9 @@ public class FilterActions {
             super(name, iconName, desc, mnemonic);
         }
 
+        /**
+         * Call back for when the MatrixFilterAction is triggered
+         */
         public void actionPerformed(ActionEvent e) {
             if (!target.getImage().hasImage()) {
                 return;
@@ -614,16 +625,17 @@ public class FilterActions {
     }
     /** 
     * <p>
-    * Action to adjust the contrast of an image.
+    * Action to give the image a trip.
     * </p>
     * 
+    * @see ImageAction
     * @see ContrastBrightnessAdjust
     */
    public class AcidFilterAction extends ImageAction {
 
        /**
         * <p>
-        * Create a new contrast adjustment action.
+        * Create a new AcidFilterAction.
         * </p>
         * 
         * @param name The name of the action (ignored if null).
@@ -638,14 +650,7 @@ public class FilterActions {
        
        /**
         * <p>
-        * Callback for when the ContrastAdjustAction is triggered.
-        * </p>
-        * 
-        * <p>
-        * This method is called whenever the ContrastAdjustAction is triggered.
-        * It opens a JSlider window that allows the user to adjust the image's contrast in between -100 and 100.
-        * Once contrast has been selected will create an instance of ContrastBrightnessAdjust passing the value to the contrast parameter
-        * and 0 to the brightness parameter.
+        * Callback for when the AcidFilterAction is triggered.
         * </p>
         * 
         * @param e The event triggering this callback.
@@ -693,8 +698,8 @@ public class FilterActions {
      * 
      */
     public class PixelateFilterAction extends ImageAction {
-        private int newWidth;
-        private int newHeight;
+        private int newWidth; /** int for the new width of the image */
+        private int newHeight; /** int for the new height of the image */
 
         /**
          * <p>
@@ -720,6 +725,7 @@ public class FilterActions {
          * Callback for when the PixelArtFilter action is triggered.
          * </p>
          * 
+         * @param 2 the event triggering this action
          */
         public void actionPerformed(ActionEvent e) {
             if (!target.getImage().hasImage()) {
