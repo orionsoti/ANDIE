@@ -10,7 +10,6 @@ import java.awt.image.*;
  * 
  * @author Orion Soti
  * 
- * @var
  */
 public class EmbossFilter implements ImageOperation, java.io.Serializable {
 
