@@ -15,14 +15,14 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
 
     private int direction;
 
-    public static final int WEST = 0; //West is represented with the int value 0
-    public static final int NORTHWEST = 1; //NorthWest is represented with the int value 1
-    public static final int NORTH = 2; //North is represented with the int value 2
-    public static final int NORTHEAST = 3; //NorthWest is represented with the int value 3
-    public static final int EAST = 4; //East is represented with the int value 4
-    public static final int SOUTHEAST = 5; //SouthEast is represented with the int value 5
-    public static final int SOUTH = 6; //South is represented with the int value 6
-    public static final int SOUTHWEST = 7; //SouthWest is represented with the int value 7
+    public static final int WEST = 0; /* West is represented with the int value 0 */
+    public static final int NORTHWEST = 1; /* NorthWest is represented with the int value 1 */
+    public static final int NORTH = 2; /* North is represented with the int value 2 */
+    public static final int NORTHEAST = 3; /* NorthWest is represented with the int value 3 */
+    public static final int EAST = 4; /* East is represented with the int value 4 */
+    public static final int SOUTHEAST = 5; /* SouthEast is represented with the int value 5 */
+    public static final int SOUTH = 6; /* South is represented with the int value 6 */
+    public static final int SOUTHWEST = 7; /* SouthWest is represented with the int value 7 */
 
     // A 2D array of floats representing the kernel matrix for the emboss effect
     // based on the specified direction
