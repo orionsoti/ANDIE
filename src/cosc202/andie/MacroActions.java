@@ -188,7 +188,11 @@ public class MacroActions {
         CurrentMacroStack.add(op);
     }
 
-    /**
+    public static void popFromStack(){
+        CurrentMacroStack.pop();
+    }
+
+     /**
      * <p>
      * Create a menu contianing the list of Colour actions.
      * </p>

@@ -365,6 +365,10 @@ class EditableImage {
      */
     public void popRedo() {
         redoOps.pop();
+
+        if(MacroActions.isRecording()){
+            MacroActions.popFromStack();
+        }
     }
 
     /**

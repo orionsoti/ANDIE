@@ -65,11 +65,13 @@ public class Andie {
         JScrollPane scrollPane = new JScrollPane(imagePanel);
         frame.add(scrollPane, BorderLayout.CENTER);
         menuBar1 = frame;
+
         // customise the frame a bit
         frame.setPreferredSize(new Dimension(800, 800));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
         // Add in menus for various types of action the user may perform.
         createMenuBar();
         createToolMenu();
@@ -106,8 +108,8 @@ public class Andie {
     public static void createMenuBar() {
         // menuBar1.setVisible(false);
         JMenuBar menuBar = new JMenuBar();
-        // File menus are pretty standard, so things that usually go in File menus go
-        // here.
+
+        // File menus are pretty standard, so things that usually go in File menus go here.
         FileActions fileActions = new FileActions();
         menuBar.add(fileActions.createMenu());
 
@@ -115,35 +117,25 @@ public class Andie {
         EditActions editActions = new EditActions();
         menuBar.add(editActions.createMenu());
 
-        // View actions control how the image is displayed, but do not alter its actual
-        // content
+        // View actions control how the image is displayed, but do not alter its actual countent.
         ViewActions viewActions = new ViewActions();
         menuBar.add(viewActions.createMenu());
 
-        // Filters apply a per-pixel operation to the image, generally based on a local
-        // window
+        // Filters apply a per-pixel operation to the image, generally based on a local window.
         FilterActions filterActions = new FilterActions();
         menuBar.add(filterActions.createMenu());
 
-        // Actions that affect the representation of colour in the image
+        // Actions that affect the representation of colour in the image.
         ColourActions colourActions = new ColourActions();
         menuBar.add(colourActions.createMenu());
 
+        // Actions that transform the properties of the image.
         TransformActions transformActions = new TransformActions();
         menuBar.add(transformActions.createMenu());
 
+        // Macro controls in here
         MacroActions macroActions = new MacroActions();
         menuBar.add(macroActions.createMenu());
-
-        // View actions control how the image is displayed, but do not alter its actual
-        // content
-        // Rather than making the menu and adding it to menuBar it directly adds the
-        // buttons to
-        // menuBar
-        // create menu to the right of the menu bar
-
-        // ViewActions viewActions2 = new ViewActions();
-        // menuBar.add(viewActions2.createToolMenu());
 
         menuBar1.setJMenuBar(menuBar);
         // menuBar1.pack();

@@ -307,7 +307,7 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 ---
 
 ## Testing:
->Please navigate to the Andie Project Testing Doccumentation in contained in the andie folder for extensive testing 
+>Please navigate to the Andie Project Testing Documentation in contained in the Andie folder for extensive testing 
 >of GUI any code refactoring and Testing with outside sources (Flatmates) for feedback and suggestions.
 >Testing Doccumnet Completed by: Tyler Birkett
 >JUnit Testing for Part 1 Completed by: Tyler Birkett

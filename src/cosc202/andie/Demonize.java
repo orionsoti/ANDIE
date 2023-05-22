@@ -11,38 +11,8 @@ import java.awt.Color;
  * @author Josiah Astwood
  * @version 1.0
  */
-public class Demonize implements ImageOperation, java.io.Serializable {
-
-    private int percentage;
-
-    /**
-     * <p>
-     * Create a new ContrastBrightnessAdjust operation.
-     * </p>
-     */
-
-    // Default constructor, sets datafield values to 0 (no adjustment)
-    Demonize() {
-        percentage = 0;
-    }
-
-    /**
-     * Constructor takes brightness or contrast entered by a user and applies an
-     * adjustment to the image.
-     * If contrast is given a value, brightness will be set to 0 so as not to adjust
-     * both in one operation.
-     * If brightness is given a value, contrast will be set to 0 so as not to adjust
-     * both in one operation.
-     * 
-     * @param contrast   a value between -100 and 100 that the current image will
-     *                   have its contrast adjusted by.
-     * @param brightness a value between -100 and 100 that the current image wil
-     *                   have its brightness adjusted by.
-     */
-    Demonize(int percentage) {
-        this.percentage = percentage;
-    }
-
+public class Demonize implements ImageOperation, java.io.Serializable {   
+                
     /**
      * <p>
      * Apply demonize function to an image.
