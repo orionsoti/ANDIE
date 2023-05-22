@@ -181,6 +181,9 @@ public class MacroActions {
         CurrentMacroStack.add(op);
     }
 
+    public static void popFromStack(){
+        CurrentMacroStack.pop();
+    }
 
      /**
      * <p>

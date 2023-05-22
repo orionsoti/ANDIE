@@ -19,6 +19,7 @@ public class ImageRotation implements ImageOperation, java.io.Serializable{
      * <p>
      * Creates a new ImageRotation operation
      * </p>
+     * 
      * @param rotation determines whether the image rotates left or right
      */
   public ImageRotation(int rotation){
@@ -29,6 +30,7 @@ public class ImageRotation implements ImageOperation, java.io.Serializable{
      * <p>
      * Rotates the BufferedImage input left or right based on rotation
      * </p>
+     * 
      * @param input The image to be rotated
      * @return New rotated image
      */
