@@ -1,11 +1,10 @@
 package cosc202.andie;
+
 import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 
 import java.util.*;
-
-
 
 /**
  * <p>
@@ -14,14 +13,15 @@ import java.util.*;
  * 
  * <p>
  * This class sets the prefrences and bundles for the application
- * includes methods for changing language mid run and for getting translated words
+ * includes methods for changing language mid run and for getting translated
+ * words
  * </p>
  * 
  * @author Tyler Birkett
  * @version 1.0
  */
 
-public class LanguageSettings{
+public class LanguageSettings {
 
     private static Preferences prefs;
     private static ResourceBundle langBundle;
@@ -29,85 +29,88 @@ public class LanguageSettings{
     /**
      * <p>
      * Constructor initiated before any Jpanels have been created in main
-     * Sets the Prefrences and Resource Bundle 
+     * Sets the Prefrences and Resource Bundle
      */
 
-    public LanguageSettings(){  
+    public LanguageSettings() {
         prefs = Preferences.userNodeForPackage(Andie.class);
         Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-        
-        try{
-        langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
 
-        }catch(Exception e){
-            
-            Object[] options = {LanguageSettings.getTranslated("ok")};
-            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("langErrorMsg"), LanguageSettings.getTranslated("langError"),
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]);
+        try {
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
+
+        } catch (Exception e) {
+
+            Object[] options = { LanguageSettings.getTranslated("ok") };
+            JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("langErrorMsg"),
+                    LanguageSettings.getTranslated("langError"),
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             prefs.put("language", "en");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
-        
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
+
         }
-        
+
     }
-    
+
     /**
      * <p>
-     * Method that is called when the language Combobox for FileActions.java is called:
-     * When called will check which language has been selected then update prefrences and reload the new langBundle Resourse Bundle
+     * Method that is called when the language Combobox for FileActions.java is
+     * called:
+     * When called will check which language has been selected then update
+     * prefrences and reload the new langBundle Resourse Bundle
      * </p>
      * 
      * @param s The language being switched to.
      */
-    public static void changeLang(String s){
-           
-        if(s == "English"){
+    public static void changeLang(String s) {
+
+        if (s == "English") {
             prefs.put("language", "en");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
-        }else if(s == "Spanish"){
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
+        } else if (s == "Spanish") {
 
             prefs.put("language", "es");
             prefs.put("country", "SP");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
 
-        }else if(s == "Maori"){
+        } else if (s == "Maori") {
 
             prefs.put("language", "mi");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
-           
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
 
-        }else if(s == "Pirate"){
+        } else if (s == "Pirate") {
 
             prefs.put("language", "pi");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "pi"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
 
-        }else{
+        } else {
             prefs.put("language", "en");
             prefs.put("country", "NZ");
             Locale.setDefault(new Locale(prefs.get("language", "en"), prefs.get("country", "NZ")));
-            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle"); 
-        }       
+            langBundle = ResourceBundle.getBundle("cosc202.andie.LanguageBundle");
+        }
 
     }
-    
+
     /**
      * <p>
-     * method takes in a string input and returns a string from the current langBundle loaded
+     * method takes in a string input and returns a string from the current
+     * langBundle loaded
      * </p>
      * 
      * @param s the language to be translated to.
      * @return The translated statement.
      */
-    public static String getTranslated(String s){
+    public static String getTranslated(String s) {
         return langBundle.getString(s);
     }
 }

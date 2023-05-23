@@ -18,17 +18,52 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 
 ## HotKeys:
 
->Save(Ctrl+S)
->SaveAs(Ctrl+Shift+S)
->Open(Ctr+O)
->Export(Ctrl+Shift+E) 
->Undo(Ctrl+Z)
+**File Menu**
+>Save(Ctrl+S),
+>SaveAs(Ctrl+Shift+S),
+>Open(Ctr+O),
+>Export(Ctrl+Shift+E), 
+>Language(Ctrl+Shift+L)
+
+**Edit Menu**
+>Undo(Ctrl+Z),
 >Redo(Ctrl+Y) 
->Rotate(Ctrl+R)
->ZoomIn(Ctrl + =)
->ZoomOut(Ctrl + -)
->ZoomFull(Ctrl + 1)
->Crop(Ctr + Shift + C)
+
+**View Menu**
+>ZoomIn(Ctrl + =),
+>ZoomOut(Ctrl + -),
+>ZoomFull(Ctrl + Shift + 1)
+
+**Filter Menu**
+>Sharpen Filter(Ctrl + 0),
+>Mean Filter(Ctrl +1 ),
+>Gaussian Blur Filter(Ctrl + 2),
+>Median Filter(Ctrl + 3),
+>Emboss Filter(Ctrl + 4),
+>Sobel Filter(Ctrl + 5),
+>Matrix Filter(Ctrl + 6),
+>Pixelate Filter(Ctrl + 7),
+>Acid Filter(Ctrl + 8)
+
+**Colour Menu**
+>Greyscale (Ctrl + G),
+>Contrast Adjust(Ctrl + Shift + B),
+>Brightness Adjust(Ctrl + B)
+
+**Transform Menu**
+>Resize (Ctrl + Shift + R),
+>Rotate Left (Ctrl + E),
+>Rotate Right (Ctrl + R),
+>Flip Vertical(Ctrl + V),
+>Flip Horizontal(Ctrl + H),
+>Crop (Ctrl + Shift + C),
+>Draw (Ctrl + Shift + D)
+
+**Macro Menu**
+>Macro Start(Ctrl + M),
+>Macro Load(Ctrl + Shift + M),
+>Preset1 (Ctrl + F1),
+>Preset2 (Ctrl + F2)
 ---
 
 
@@ -307,9 +342,9 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 ---
 
 ## Testing:
->Please navigate to the Andie Project Testing Doccumentation in contained in the andie folder for extensive testing 
+>Please navigate to the Andie Project Testing Documentation in contained in the Andie folder for extensive testing 
 >of GUI any code refactoring and Testing with outside sources (Flatmates) for feedback and suggestions.
->Testing Doccumnet Completed by: Tyler Birkett
+>Testing Document Completed by: Tyler Birkett
 >JUnit Testing for Part 1 Completed by: Tyler Birkett
 >JUnit Testing for Part 2 Completed by: Liam Hayward
 ---

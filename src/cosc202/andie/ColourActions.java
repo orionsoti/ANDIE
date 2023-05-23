@@ -2,7 +2,6 @@ package cosc202.andie;
 
 import java.util.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,6 +89,14 @@ public class ColourActions {
          */
         ConvertToGreyAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            // Set the hotkey 'ctrl + g' to trigger a convert to grey action.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_G, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -143,6 +150,14 @@ public class ColourActions {
          */
         ContrastAdjustAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            // Set the hotkey 'ctrl + shift + b' to trigger a contrastAdjustAction action.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_B, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK, enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -165,7 +180,6 @@ public class ColourActions {
             if (!target.getImage().hasImage()) {
                 return;
             }
-            BufferedImage original = target.getImage().getCurrentImage();
             // Pop-up dialog box to ask for the intensity value of the contrast.
             DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
             JSlider intensitySlider = new JSlider(intensityModel);
@@ -208,17 +222,25 @@ public class ColourActions {
                     JOptionPane.QUESTION_MESSAGE, contrastIcon,
                     new String[] { LanguageSettings.getTranslated("ok"), LanguageSettings.getTranslated("cancel") },
                     null);
+
             // Check the return value from the dialog box.
             if (option == 1 || option == -1) {
-                target.getImage().setCurrentImage(original);
+                target.getImage().undo();
+                target.getImage().popRedo();
+
                 target.repaint();
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
                 int intensity = intensitySlider.getValue();
                 try {
-                    target.getImage().apply(new ContrastBrightnessAdjust(intensity, 0));
-                    target.repaint();
-                    target.getParent().revalidate();
+                    if(intensity != 0){
+                        target.getImage().undo();
+                        target.getImage().popRedo();
+
+                        target.getImage().apply(new ContrastBrightnessAdjust(intensity, 0));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }
                 } catch (NullPointerException exception) {
                     Object[] options = { LanguageSettings.getTranslated("ok") };
                     JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
@@ -253,6 +275,14 @@ public class ColourActions {
          */
         BrightnessAdjustAction(String name, ImageIcon icon, String desc, Integer mnemonic) {
             super(name, icon, desc, mnemonic);
+            // Set the hotkey 'ctrl + b' to trigger a contrastAdjustAction action.
+            KeyStroke o = KeyStroke.getKeyStroke(KeyEvent.VK_B, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx(), enabled);
+            putValue(Action.ACCELERATOR_KEY, o);
+
+            InputMap inputMap = target.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            inputMap.put(o, getValue(Action.NAME));
+
+            target.getActionMap().put(getValue(Action.NAME), this);
         }
 
         /**
@@ -275,7 +305,6 @@ public class ColourActions {
             if (!target.getImage().hasImage()) {
                 return;
             }
-            BufferedImage original = target.getImage().getCurrentImage();
             // Pop-up dialog box to ask for the intensity value of the brightness.
             DefaultBoundedRangeModel intensityModel = new DefaultBoundedRangeModel(0, 0, -100, 100);
             JSlider intensitySlider = new JSlider(intensityModel);
@@ -310,10 +339,6 @@ public class ColourActions {
                 }
             });
 
-            // Hashtable<Integer, JComponent> sliderLabels =
-            // intensitySlider.createStandardLabels(25, -100); // create the labels for the
-            // slider
-            // intensitySlider.setLabelTable(sliderLabels);
             intensitySlider.setPaintLabels(true);
             ImageIcon brightnessIcon = new ImageIcon("src/images/brightness-1.png", "Brightness Icon");
             int option = JOptionPane.showOptionDialog(null, intensitySlider,
@@ -323,15 +348,30 @@ public class ColourActions {
                     null);
             // Check the return value from the dialog box.
             if (option == 1 || option == -1) {
-                target.getImage().setCurrentImage(original);
+                target.getImage().undo();
+                target.getImage().popRedo();
+
                 target.repaint();
                 return;
             } else if (option == JOptionPane.OK_OPTION) {
+                int intensity = intensitySlider.getValue();
+                try {
+                    if(intensity != 0){
+                        target.getImage().undo();
+                        target.getImage().popRedo();
+                        
+                        target.getImage().apply(new ContrastBrightnessAdjust(0, intensity));
+                        target.repaint();
+                        target.getParent().revalidate();
+                    }
+                } catch (NullPointerException exception) {
+                    Object[] options = { LanguageSettings.getTranslated("ok") };
+                    JOptionPane.showOptionDialog(null, LanguageSettings.getTranslated("noInput"),
+                            LanguageSettings.getTranslated("alert"),
+                            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
+                }
                 return;
             }
-
-            // Create and apply the filter
-
         }
 
     }

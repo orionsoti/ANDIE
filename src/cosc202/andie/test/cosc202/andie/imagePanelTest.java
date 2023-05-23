@@ -26,4 +26,25 @@ public class imagePanelTest {
         testPanel.setZoom(20);
         Assertions.assertEquals(50, testPanel.getZoom());   
     }
-}
+    @Test 
+    void cropModeTest(){
+        ImagePanel testPanel = new ImagePanel();
+        testPanel.setCropMode(true);
+        Assertions.assertTrue(testPanel.getCropMode());
+    }
+    @Test 
+    void drawModeTest(){
+        ImagePanel testPanel = new ImagePanel();
+        testPanel.setDrawMode(true,false,false,false);
+        Assertions.assertTrue(testPanel.getDrawMode());
+    }
+    @Test 
+    void lineThicknessTest(){
+        ImagePanel testPanel = new ImagePanel();
+        testPanel.setLineThickness(20);
+        float f = 20F;
+        Assertions.assertEquals(f, testPanel.getLineThickness());
+    }
+
+    }
+

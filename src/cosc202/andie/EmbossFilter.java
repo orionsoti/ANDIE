@@ -4,26 +4,36 @@ import java.awt.image.*;
 
 /**
  * This class applies an emboss effect to a given BufferedImage.
- * The emboss effect creates a 3D-like appearance by highlighting the edges in the image
+ * The emboss effect creates a 3D-like appearance by highlighting the edges in
+ * the image
  * based on the specified direction.
  * 
  * @author Orion Soti
+ * 
  */
 public class EmbossFilter implements ImageOperation, java.io.Serializable {
 
     private int direction;
-
-    public static final int WEST = 0;
-    public static final int NORTHWEST = 1;
-    public static final int NORTH = 2;
-    public static final int NORTHEAST = 3;
-    public static final int EAST = 4;
-    public static final int SOUTHEAST = 5;
-    public static final int SOUTH = 6;
-    public static final int SOUTHWEST = 7;
     
+    /** West is represented with the int value 0 */
+    public static final int WEST = 0; 
+    /** NorthWest is represented with the int value 1 */
+    public static final int NORTHWEST = 1;
+    /** North is represented with the int value 2 */ 
+    public static final int NORTH = 2; 
+    /** NorthWest is represented with the int value 3 */
+    public static final int NORTHEAST = 3; 
+    /** East is represented with the int value 4 */
+    public static final int EAST = 4; 
+    /** SouthEast is represented with the int value 5 */
+    public static final int SOUTHEAST = 5; 
+    /** South is represented with the int value 6 */
+    public static final int SOUTH = 6; 
+    /** SouthWest is represented with the int value 7 */
+    public static final int SOUTHWEST = 7; 
 
-    // A 2D array of floats representing the kernel matrix for the emboss effect based on the specified direction
+    // A 2D array of floats representing the kernel matrix for the emboss effect
+    // based on the specified direction
     private static final float[][] KERNELS = {
             { 0, 0, 0, 1, 0, -1, 0, 0, 0 },
             { 1, 0, 0, 0, 0, 0, 0, 0, -1 },
@@ -33,7 +43,7 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
             { -1, 0, 0, 0, 0, 0, 0, 0, 1 },
             { 0, -1, 0, 0, 0, 0, 0, 1, 0 },
             { 0, 0, -1, 0, 0, 0, 1, 0, 0 },
-            
+
     };
 
     /**
@@ -69,4 +79,3 @@ public class EmbossFilter implements ImageOperation, java.io.Serializable {
     }
 
 }
-
