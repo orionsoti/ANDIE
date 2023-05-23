@@ -303,6 +303,23 @@ Icons by <a target="_blank" href="https://icons8.com">Icons8</a> and <a target="
 >>
 >> *Errors:* No known errors.
 >
+> **Real-Time Previewing**
+>> *Description* Allows the user to preview certain filters and actions before they are applied.
+>>
+>> *Contributors* Jacob Myron, Tyler Birkett
+>>
+>> *Accessed Via*  Filter Actions: Guassian Filter, Mean Filter, Median Filter. Colour Actions: Contrast, Brightness.
+>>
+>> *Testing* Was running into errors where the filter would be continuously applied (e.g. sliding the mean filter from 1 to 2 would apply the meanFilter(2) over the meanFilter(1)). Implemented a janky fix where it would undo before applying the next preview, this caused issues with the macro recording. I implemented a new fix where it would revert to the original image and not add the imageOperation to the ops list until after ok was pressed. This fix did not work with the colour actions after rigorous experimentation, colour actions kept the jank undo fix however they would then be popped from the stack alongside the macroStack if the macro recording was enabled.
+>
+>**Tool-Bar**
+>> *Description* Adds a tool bar of frequently used and helpful actions.
+>>
+>> *Contributors* Jacob Myron
+>>
+>> *Accessed Via* Just under the menuBar.
+>>
+>> *Testing* No known errors.
 ---
 <br/>
 
